@@ -17,6 +17,8 @@ def normalize_question(question):
 
 def parse_generation(s):
     s = s.lstrip('\n').split('\n')[0]
+    if(len(s.split()) == 0):
+        return s
     if s.startswith("Yes") or s.startswith("yes"):
         s = "Yes"
     elif (s.split()[0]).startswith("No") or (s.split()[0]).startswith("no"):
@@ -39,6 +41,7 @@ def normalize_answer(s):
 
     return white_space_fix(remove_articles(remove_punc(lower(s))))
 
+# For Mistral.
 def build_qa_prompt(example, query_prompt):
 
     q = normalize_question(example["question"])
@@ -48,10 +51,23 @@ def build_qa_prompt(example, query_prompt):
     q_prompt = f"{query_prompt}{q}\nAnswer:"
     return doc_prompts, q_prompt
 
+# For deepseek
+def build_qa_prompt_deepseek(example, query_prompt):
+    q = example["question"]
+    doc_prompts = [f"<|User|>{ctx['title']}\n\n{ctx['text']}\n\n" for ctx in example["ctxs"]]
+    q_prompt = f"{query_prompt}{q}\nAnswer:<|Assistant|><think>\n"
+    return doc_prompts, q_prompt
+
 def build_fewshot_prompt(example):
     q = "\n\n"+example["question"]
     doc_prompts = [f"{ctx['text']}" for ctx in example["ctxs"]]
     q_prompt = f"{q}"
+    return doc_prompts, q_prompt
+
+def build_fewshot_prompt_deepseek(example):
+    q = "\n\n"+example["question"]
+    doc_prompts = [f"<|User|>{ctx['text']}\n\n" for ctx in example["ctxs"]]
+    q_prompt = f"{q}\nAnswer:<|Assistant|><think>\n"
     return doc_prompts, q_prompt
 
 def compute_f1(a_pred, a_gold, tokenizer):
@@ -77,3 +93,11 @@ def compute_rl(pred, gold):
     scorer = rouge_scorer.RougeScorer(['rougeL'], use_stemmer=True)
     rougeL = scorer.score(gold, pred)['rougeL'].fmeasure
     return rougeL
+
+def extract_after_think(text):
+    marker = '</think>\n\n'
+    index = text.find(marker)
+    if index != -1:
+        return text[index + len(marker):]
+    else:
+        return ''

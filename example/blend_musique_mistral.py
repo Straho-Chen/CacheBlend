@@ -72,13 +72,12 @@ for ex in eval_dataset:
     #s_end = [518, 29914, 25580, 29962]
     s_end = [733, 28748, 16289, 28793]
     s_end_len = len(s_end)
-    old_kvs = []
 
     doc_chunk_ids = [s_start+chunk_ids for chunk_ids in doc_chunk_ids]
     doc_chunk_ids = [s_start_full] + doc_chunk_ids
     doc_chunk_ids = doc_chunk_ids + [s_start+q_ids+s_end]
 
-    last_len = len([q_ids+s_end])
+    last_len = len(q_ids+s_end)
 
     if args.use_cache:
 
@@ -107,9 +106,7 @@ for ex in eval_dataset:
                 else:
                     chunk_past_key_values[j][0] = torch.cat((chunk_past_key_values[j][0],temp_k), dim=0)
                     chunk_past_key_values[j][1] = torch.cat((chunk_past_key_values[j][1],temp_v), dim=0)
-
-            llm.llm_engine.model_executor.driver_worker.model_runner.model.model.old_kvs = chunk_past_key_values
-            # print(chunk_past_key_values[0][0].shape)
+        llm.llm_engine.model_executor.driver_worker.model_runner.model.model.old_kvs = chunk_past_key_values
         
     input_ids = []
 

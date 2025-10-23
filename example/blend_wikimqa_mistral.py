@@ -79,13 +79,12 @@ for ex in eval_dataset:
     doc_chunk_ids = [s_start_full] + doc_chunk_ids
     doc_chunk_ids = doc_chunk_ids + [s_start+q_ids+s_end]
 
-    last_len = len([q_ids+s_end])
+    last_len = len(q_ids+s_end)
 
     if args.use_cache:
 
         cache_fuse_metadata['collect'] = True
         cache_fuse_metadata["check"] = False
-        num_layer = 32
         chunk_past_key_values = []
     
         # Concatenate old KVs
@@ -94,6 +93,7 @@ for ex in eval_dataset:
             llm.generate(prompts, sampling_params)
 
             llm_layers = llm.llm_engine.model_executor.driver_worker.model_runner.model.model.layers
+            num_layer = len(llm_layers)
             for j in range(num_layer):
                 past_key_values = llm_layers[j].self_attn.hack_kv
                 if i == 0:
@@ -108,7 +108,7 @@ for ex in eval_dataset:
                 else:
                     chunk_past_key_values[j][0] = torch.cat((chunk_past_key_values[j][0],temp_k), dim=0)
                     chunk_past_key_values[j][1] = torch.cat((chunk_past_key_values[j][1],temp_v), dim=0)
-            llm.llm_engine.model_executor.driver_worker.model_runner.model.model.old_kvs = chunk_past_key_values
+        llm.llm_engine.model_executor.driver_worker.model_runner.model.model.old_kvs = chunk_past_key_values
         
     input_ids = []
 

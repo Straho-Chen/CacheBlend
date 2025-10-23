@@ -9,7 +9,7 @@ from itertools import chain
 import argparse
 
 # Parse command-line arguments
-parser = argparse.ArgumentParser(description="Run cache-fuse blending test for musique dataset")
+parser = argparse.ArgumentParser(description="Run cache-fuse blending test for samsum dataset")
 parser.add_argument("--recomp-ratio", dest="recomp_ratio", type=float, default=0.16,
                     help="Recomputation ratio for cache-fuse (float between 0 and 1)")
 parser.add_argument("--cache", dest="use_cache", action="store_true", help="Whether to use cache-fuse blending")
@@ -84,7 +84,6 @@ for sample_idx, ex in enumerate(eval_dataset):
 
         cache_fuse_metadata['collect'] = True
         cache_fuse_metadata["check"] = False
-        num_layer = 32
         chunk_past_key_values = []
         shift = 0
         # Concatenate old KVs
@@ -93,6 +92,7 @@ for sample_idx, ex in enumerate(eval_dataset):
             llm.generate(prompts, sampling_params)
             shift += len(doc_chunk_ids[i])
             llm_layers = llm.llm_engine.model_executor.driver_worker.model_runner.model.model.layers
+            num_layer = len(llm_layers)
             for j in range(num_layer):
                 past_key_values = llm_layers[j].self_attn.hack_kv
                 if i == 0:
