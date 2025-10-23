@@ -23,6 +23,11 @@ with PdfPages("performance_comparison.pdf") as pdf:
         blend_subset = subset[subset["name"].str.startswith("blend-")].copy()
         full_prefill_subset = subset[subset["name"] == "full_prefill"]
 
+        # 将 blend-0.0 单独处理，并改为 full_reuse
+        full_reuse_subset = blend_subset[blend_subset["name"] == "blend-0.0"].copy()
+        full_reuse_subset["name"] = "full_reuse"
+        blend_subset = blend_subset[blend_subset["name"] != "blend-0.0"]
+
         # 提取 numeric ratio 方便排序
         blend_subset["ratio"] = blend_subset["name"].apply(lambda x: float(re.search(r"blend-(\d\.\d+)", x).group(1)))
         blend_subset = blend_subset.sort_values(by="ratio")
@@ -30,10 +35,18 @@ with PdfPages("performance_comparison.pdf") as pdf:
         # 绘图
         plt.figure(figsize=(7, 5))
 
-        # 绘制 blend 趋势线
+        # 绘制 blend 趋势线（不包含 blend-0.0）
         plt.plot(blend_subset["ttft"], blend_subset["f1"],
                  marker="o", linestyle="-", color="tab:orange",
                  label="Blend Trend (varying ratio)", zorder=10)
+
+        # 绘制 full_reuse（原 blend-0.0）点
+        if not full_reuse_subset.empty:
+            plt.scatter(full_reuse_subset["ttft"], full_reuse_subset["f1"],
+                        color="tab:green", s=80, label="Full Reuse", zorder=15)
+            for _, row in full_reuse_subset.iterrows():
+                plt.text(row["ttft"], row["f1"], "full_reuse",
+                         fontsize=9, ha="left", va="bottom", color="tab:green")
 
         # 绘制 full_prefill 点
         if not full_prefill_subset.empty:

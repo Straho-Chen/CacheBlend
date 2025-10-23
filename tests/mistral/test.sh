@@ -23,8 +23,7 @@ DATASET=("musique" "samsum" "wikimqa")
 # DATASET=("samsum")
 # DATASET=("wikimqa")
 
-# RATIO=("0" "0.1" "0.2" "0.3" "0.4" "0.5" "0.6" "0.7" "0.8" "0.9")
-RATIO=("0")
+RATIO=("0.0" "0.1" "0.2" "0.3" "0.4" "0.5" "0.6" "0.7" "0.8" "0.9")
 
 for DATASET_NAME in ${DATASET[@]}; do
     for recomp_ratio in ${RATIO[@]}; do
@@ -38,14 +37,14 @@ for DATASET_NAME in ${DATASET[@]}; do
     done
 done
 
-# for DATASET_NAME in ${DATASET[@]}; do
-#     echo "Testing $DATASET_NAME..."
-#     log_file=$OUTPUT_DIR/blend_${DATASET_NAME}_mistral.txt
-#     cd $ROOT_DIR && python example/blend_${DATASET_NAME}_mistral.py > $log_file 2>&1
+for DATASET_NAME in ${DATASET[@]}; do
+    echo "Testing $DATASET_NAME..."
+    log_file=$OUTPUT_DIR/blend_${DATASET_NAME}_mistral.txt
+    cd $ROOT_DIR && python example/blend_${DATASET_NAME}_mistral.py > $log_file 2>&1
     
-#     ttft=$(grep "Avg TTFT:" $log_file | awk '{print $NF}')
-#     f1=$(grep "Avg F1:" $log_file | awk '{print $NF}')
-#     table_add_row "$TABLE_NAME" "$DATASET_NAME full_prefill $ttft $f1"
-# done
+    ttft=$(grep "Avg TTFT:" $log_file | awk '{print $NF}')
+    f1=$(grep "Avg F1:" $log_file | awk '{print $NF}')
+    table_add_row "$TABLE_NAME" "$DATASET_NAME full_prefill $ttft $f1"
+done
 
 echo "All tests done. Outputs are saved in $OUTPUT_DIR"
