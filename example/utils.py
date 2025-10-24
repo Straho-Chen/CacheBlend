@@ -134,6 +134,9 @@ def gen_surrounding_tokens(model):
     elif model == "deepseek":
         start="<|User|>"
         end="<|Assistant|><think>\n"
+    elif model == "deepseek-nothink":
+        start="<|User|>"
+        end="<|Assistant|></think>\n"
     elif model == "qwen":
         start="<|im_start|>user\n"
         end="<|im_end|>\n<|im_start|>assistant\n"
