@@ -18,24 +18,25 @@ echo "root_dir should be the repo path! current root_dir is $ROOT_DIR"
 
 mkdir -p $OUTPUT_DIR
 
-DATASET=("musique" "samsum" "wikimqa")
+# DATASET=("musique" "samsum" "wikimqa")
 # DATASET=("musique")
 # DATASET=("samsum")
 # DATASET=("wikimqa")
+DATASET=("samsum" "wikimqa")
 
 RATIO=("0.0" "0.1" "0.2" "0.3" "0.4" "0.5" "0.6" "0.7" "0.8" "0.9" "1.0")
 
-for DATASET_NAME in ${DATASET[@]}; do
-    for recomp_ratio in ${RATIO[@]}; do
-        echo "Testing $DATASET_NAME..."
-        log_file=$OUTPUT_DIR/blend_${DATASET_NAME}_mistral.txt
-        cd $ROOT_DIR && python example/blend_${DATASET_NAME}_mistral.py --cache --recomp-ratio $recomp_ratio > $log_file 2>&1
+# for DATASET_NAME in ${DATASET[@]}; do
+#     for recomp_ratio in ${RATIO[@]}; do
+#         echo "Testing $DATASET_NAME..."
+#         log_file=$OUTPUT_DIR/blend_${DATASET_NAME}_mistral.txt
+#         cd $ROOT_DIR && python example/blend_${DATASET_NAME}_mistral.py --cache --recomp-ratio $recomp_ratio > $log_file 2>&1
     
-        ttft=$(grep "Avg TTFT:" $log_file | awk '{print $NF}')
-        f1=$(grep "Avg F1:" $log_file | awk '{print $NF}')
-        table_add_row "$TABLE_NAME" "$DATASET_NAME blend-$recomp_ratio $ttft $f1"
-    done
-done
+#         ttft=$(grep "Avg TTFT:" $log_file | awk '{print $NF}')
+#         f1=$(grep "Avg F1:" $log_file | awk '{print $NF}')
+#         table_add_row "$TABLE_NAME" "$DATASET_NAME blend-$recomp_ratio $ttft $f1"
+#     done
+# done
 
 for DATASET_NAME in ${DATASET[@]}; do
     echo "Testing $DATASET_NAME..."

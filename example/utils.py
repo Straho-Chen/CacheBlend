@@ -52,10 +52,15 @@ def build_qa_prompt(example, query_prompt):
     return doc_prompts, q_prompt
 
 # For deepseek
-def build_qa_prompt_deepseek(example, query_prompt):
+def build_qa_prompt_deepseek(example, query_prompt, think_marker=True):
     q = example["question"]
     doc_prompts = [f"<|User|>{ctx['title']}\n\n{ctx['text']}\n\n" for ctx in example["ctxs"]]
-    q_prompt = f"{query_prompt}{q}\nAnswer:<|Assistant|><think>\n"
+    if think_marker:
+        print("think marker enabled")
+        q_prompt = f"{query_prompt}{q}\nAnswer:<|Assistant|><think>\n"
+    else:
+        print("think marker disabled")
+        q_prompt = f"{query_prompt}{q}\nAnswer:<|Assistant|></think>\n"
     return doc_prompts, q_prompt
 
 def build_fewshot_prompt(example):
@@ -64,10 +69,15 @@ def build_fewshot_prompt(example):
     q_prompt = f"{q}"
     return doc_prompts, q_prompt
 
-def build_fewshot_prompt_deepseek(example):
+def build_fewshot_prompt_deepseek(example, think_marker=True):
     q = "\n\n"+example["question"]
     doc_prompts = [f"<|User|>{ctx['text']}\n\n" for ctx in example["ctxs"]]
-    q_prompt = f"{q}\nAnswer:<|Assistant|><think>\n"
+    if think_marker:
+        print("think marker enabled")
+        q_prompt = f"{q}\nAnswer:<|Assistant|><think>\n"
+    else:
+        print("think marker disabled")
+        q_prompt = f"{q}\nAnswer:<|Assistant|></think>\n"
     return doc_prompts, q_prompt
 
 def compute_f1(a_pred, a_gold, tokenizer):
@@ -101,3 +111,50 @@ def extract_after_think(text):
         return text[index + len(marker):]
     else:
         return ''
+
+# For qwen
+def build_qa_prompt_qwen(example, query_prompt):
+    q = example["question"]
+    doc_prompts = [f"<|im_start|>user\n{ctx['title']}\n\n{ctx['text']}\n\n" for ctx in example["ctxs"]]
+    q_prompt = f"{query_prompt}{q}\nAnswer:<|im_end|>\n<|im_start|>assistant\n"
+    return doc_prompts, q_prompt
+
+def build_fewshot_prompt_qwen(example):
+    q = "\n\n"+example["question"]
+    doc_prompts = [f"<|im_start|>user\n{ctx['text']}\n\n" for ctx in example["ctxs"]]
+    q_prompt = f"{q}\nAnswer:<|im_end|>\n<|im_start|>assistant\n"
+    return doc_prompts, q_prompt
+
+# for normal LLMs
+def gen_surrounding_tokens(model):
+    # feel free to add you prompting templates here =)
+    if model == "mistral":
+        start="[INST]"
+        end="[/INST]"
+    elif model == "deepseek":
+        start="<|User|>"
+        end="<|Assistant|><think>\n"
+    elif model == "qwen":
+        start="<|im_start|>user\n"
+        end="<|im_end|>\n<|im_start|>assistant\n"
+    else:
+        start=""
+        end=""
+    return start, end
+
+def build_qa_prompt_normal(model, prefix, example, query):
+    q = normalize_question(example["question"])
+    doc_prompts = [f"{ctx['title']}\n\n{ctx['text']}\n\n" for ctx in example["ctxs"]]
+    q_prompt = f"{query}{q}\nAnswer:"
+    start, end = gen_surrounding_tokens(model)
+    p_prompt = f"{start}{prefix}"
+    q_prompt = f"{q_prompt}{end}"
+    return p_prompt, doc_prompts, q_prompt
+    
+def build_fewshot_prompt_normal(model, prefix, example):
+    q="\n\n"+example["question"]
+    doc_prompts = [f"{ctx['text']}" for ctx in example["ctxs"]]
+    start, end = gen_surrounding_tokens(model)
+    p_prompt = f"{start}{prefix}"
+    q_prompt = f"{q}{end}"
+    return p_prompt, doc_prompts, q_prompt

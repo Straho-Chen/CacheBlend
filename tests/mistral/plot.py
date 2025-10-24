@@ -58,6 +58,8 @@ with PdfPages("performance_comparison.pdf") as pdf:
 
         # 添加每个 blend 点标签
         for _, row in blend_subset.iterrows():
+            if row["name"] == "blend-1.0":
+                continue
             plt.text(row["ttft"], row["f1"], f"{row['name']}",
                      fontsize=8, ha="left", va="bottom", color="tab:orange")
 
