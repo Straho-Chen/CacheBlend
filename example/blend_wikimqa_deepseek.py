@@ -1,11 +1,8 @@
 from vllm import LLM, SamplingParams
 import torch
-import json
 import numpy as np
 from transformers import AutoTokenizer
-from utils import load_dataset, normalize_question, build_qa_prompt_deepseek, compute_f1, extract_after_think
-from pathlib import Path
-from itertools import chain
+from utils import load_dataset, build_qa_prompt_normal, compute_f1, extract_after_think
 import argparse
 
 # Parse command-line arguments
@@ -50,11 +47,12 @@ for ex in eval_dataset:
     sample += 1
     answers = ex["answers"]
     if args.enable_think:
-        doc_prompts, q_prompt = build_qa_prompt_deepseek(ex, query_prompt, True)
+        p_promt, doc_prompts, q_prompt = build_qa_prompt_normal("deepseek", prefix_prompt, ex, query_prompt)
     else:
-        doc_prompts, q_prompt = build_qa_prompt_deepseek(ex, query_prompt, False)
+        p_promt, doc_prompts, q_prompt = build_qa_prompt_normal("deepseek-nothink", prefix_prompt, ex, query_prompt)
     doc_chunk_ids = [tokenizer.encode(doc)[1:] for doc in doc_prompts]
     q_ids = tokenizer.encode(q_prompt)[1:]
+    p_ids = tokenizer.encode(p_promt)[1:]
 
     # drop last chunks
     #while len(list(chain.from_iterable(doc_chunk_ids))) > max_ctx_len:
@@ -69,23 +67,18 @@ for ex in eval_dataset:
     cache_fuse_metadata['collect'] = False
     cache_fuse_metadata['check'] = False
 
-    s_start_full = tokenizer.encode(prefix_prompt)[1:]
-    s_start_len = len(s_start_full) + 1
+    s_start_len = len(p_ids) + 1
 
     s_start = []
     s_start_1_len = len(s_start) + 1
 
-    # s_end = [733, 28748, 16289, 28793]
-    s_end = []
-    s_end_len = len(s_end)
-
     s_start_prefix = [151646]
 
     doc_chunk_ids = [s_start+chunk_ids for chunk_ids in doc_chunk_ids]
-    doc_chunk_ids = [s_start_full] + doc_chunk_ids
-    doc_chunk_ids = doc_chunk_ids + [s_start+q_ids+s_end]
+    doc_chunk_ids = [p_ids] + doc_chunk_ids
+    doc_chunk_ids = doc_chunk_ids + [s_start+q_ids]
 
-    last_len = len(q_ids+s_end)
+    last_len = len(q_ids)
 
     cache_fuse_metadata['collect'] = True
     cache_fuse_metadata["check"] = False
