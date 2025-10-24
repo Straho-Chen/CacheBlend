@@ -11,6 +11,7 @@ import argparse
 # Parse command-line arguments
 parser = argparse.ArgumentParser(description="Run cache-fuse blending test for samsum dataset")
 parser.add_argument("--model-size", dest="model_size", type=str, default="7B")
+parser.add_argument("--enable-think", dest="enable_think", action="store_true", help="Whether to enable think marker in DeepSeek")
 args = parser.parse_args()
 
 eval_dataset = load_dataset("inputs/samsum.json")
@@ -19,10 +20,10 @@ test_model_7B="/mnt/nvme0n1/modelscope/deepseek-ai/DeepSeek-R1-Distill-Qwen-7B"
 test_model_14B="/mnt/nvme0n1/modelscope/deepseek-ai/DeepSeek-R1-Distill-Qwen-14B"
 
 if args.model_size == "7B":
-    print("Using 7B model")
+    print("Using 7B model, think mode:", args.enable_think)
     test_model = test_model_7B
 else:
-    print("Using 14B model")
+    print("Using 14B model, think mode:", args.enable_think)
     test_model = test_model_14B
 
 llm = LLM(model=test_model, gpu_memory_utilization=0.95, dtype=torch.bfloat16, max_model_len=20000,
@@ -44,7 +45,10 @@ max_ctx_len = 3400
 #TODO (Jiayi): fix filler tokens at the begining or pass in tokenizer
 for sample_idx, ex in enumerate(eval_dataset):
     answers = ex["answers"]
-    doc_prompts, q_prompt = build_fewshot_prompt_deepseek(ex)
+    if args.enable_think:
+        doc_prompts, q_prompt = build_fewshot_prompt_deepseek(ex, True)
+    else:
+        doc_prompts, q_prompt = build_fewshot_prompt_deepseek(ex, False)
     doc_chunk_ids = [tokenizer.encode(doc)[1:] for doc in doc_prompts]
     q_ids = tokenizer.encode(q_prompt)[1:]
 
@@ -131,7 +135,6 @@ for sample_idx, ex in enumerate(eval_dataset):
     cache_fuse_metadata['recomp_ratio'] = 0.2
     cache_fuse_metadata['fast_attention'] = True
     cache_fuse_metadata['suffix_len'] = last_len
-    print(f"Sample idx: {sample_idx}")
     output = llm.generate(None, sampling_params, prompt_token_ids=[input_ids])
     res = output[0].outputs[0].text
     res = extract_after_think(res)
@@ -151,7 +154,6 @@ for sample_idx, ex in enumerate(eval_dataset):
     cache_fuse_metadata['recomp_ratio'] = 0.0
     cache_fuse_metadata['fast_attention'] = True
     cache_fuse_metadata['suffix_len'] = last_len
-    print(f"Sample idx: {sample_idx}")
     output = llm.generate(None, sampling_params, prompt_token_ids=[input_ids])
     res = output[0].outputs[0].text
     res = extract_after_think(res)

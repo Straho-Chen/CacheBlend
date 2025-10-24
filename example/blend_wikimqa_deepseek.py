@@ -11,6 +11,7 @@ import argparse
 # Parse command-line arguments
 parser = argparse.ArgumentParser(description="Run cache-fuse blending test for wikimqa dataset")
 parser.add_argument("--model-size", dest="model_size", type=str, default="7B")
+parser.add_argument("--enable-think", dest="enable_think", action="store_true", help="Whether to enable think marker in DeepSeek")
 args = parser.parse_args()
 
 eval_dataset = load_dataset("inputs/wikimqa_s.json")
@@ -19,10 +20,10 @@ test_model_7B="/mnt/nvme0n1/modelscope/deepseek-ai/DeepSeek-R1-Distill-Qwen-7B"
 test_model_14B="/mnt/nvme0n1/modelscope/deepseek-ai/DeepSeek-R1-Distill-Qwen-14B"
 
 if args.model_size == "7B":
-    print("Using 7B model")
+    print("Using 7B model, think mode:", args.enable_think)
     test_model = test_model_7B
 else:
-    print("Using 14B model")
+    print("Using 14B model, think mode:", args.enable_think)
     test_model = test_model_14B
 
 llm = LLM(model=test_model, gpu_memory_utilization=0.95, dtype=torch.bfloat16, max_model_len=20000,
@@ -48,7 +49,10 @@ sample = 0
 for ex in eval_dataset:
     sample += 1
     answers = ex["answers"]
-    doc_prompts, q_prompt = build_qa_prompt_deepseek(ex, query_prompt)
+    if args.enable_think:
+        doc_prompts, q_prompt = build_qa_prompt_deepseek(ex, query_prompt, True)
+    else:
+        doc_prompts, q_prompt = build_qa_prompt_deepseek(ex, query_prompt, False)
     doc_chunk_ids = [tokenizer.encode(doc)[1:] for doc in doc_prompts]
     q_ids = tokenizer.encode(q_prompt)[1:]
 
@@ -118,7 +122,7 @@ for ex in eval_dataset:
         else:
             temp_ids = doc_chunk_ids[i][s_start_1_len-1:]
         input_ids += temp_ids
-    print(len(input_ids))
+    # print(len(input_ids))
     input_prompt = tokenizer.decode(input_ids)
     
     # for blend
@@ -130,6 +134,7 @@ for ex in eval_dataset:
     cache_fuse_metadata['suffix_len'] = last_len
     output = llm.generate(None, sampling_params, prompt_token_ids=[input_ids])
     res = output[0].outputs[0].text
+    # print(f"Raw generation: {res}")
     res = extract_after_think(res)
     print(f"blend generation: {res}")
     ttft = output[0].metrics.first_token_time-output[0].metrics.first_scheduled_time
@@ -147,6 +152,7 @@ for ex in eval_dataset:
     cache_fuse_metadata['suffix_len'] = last_len
     output = llm.generate(None, sampling_params, prompt_token_ids=[input_ids])
     res = output[0].outputs[0].text
+    # print(f"Raw generation: {res}")
     res = extract_after_think(res)
     print(f"full reuse generation: {res}")
     ttft = output[0].metrics.first_token_time-output[0].metrics.first_scheduled_time
@@ -162,6 +168,7 @@ for ex in eval_dataset:
     cache_fuse_metadata['collect'] = False
     output = llm.generate([input_prompt], sampling_params)
     res = output[0].outputs[0].text
+    # print(f"Raw generation: {res}")
     res = extract_after_think(res)
     print(f"full prefill generation: {res}")
     ttft = output[0].metrics.first_token_time-output[0].metrics.first_scheduled_time
