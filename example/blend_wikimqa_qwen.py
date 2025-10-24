@@ -93,7 +93,7 @@ for ex in eval_dataset:
         else:
             temp_ids = doc_chunk_ids[i][s_start_1_len:]
         input_ids += temp_ids
-    print(len(input_ids))
+    # print(len(input_ids))
     input_prompt = tokenizer.decode(input_ids)
 
     # for blend
@@ -108,7 +108,7 @@ for ex in eval_dataset:
     ttft = output[0].metrics.first_token_time-output[0].metrics.first_scheduled_time
     print(f"sample: {sample}, TTFT: {ttft}")
     ttft_blend.append(ttft)
-    f1 = max([compute_f1(res, answer, tokenizer) for answer in answers])
+    f1 = max([compute_f1(res, answer[0], tokenizer) for answer in answers])
     f1_blend.append(f1)
 
     # for full reuse
@@ -123,7 +123,7 @@ for ex in eval_dataset:
     ttft = output[0].metrics.first_token_time-output[0].metrics.first_scheduled_time
     print(f"sample: {sample}, TTFT: {ttft}")
     ttft_full_reuse.append(ttft)
-    f1 = max([compute_f1(res, answer, tokenizer) for answer in answers])
+    f1 = max([compute_f1(res, answer[0], tokenizer) for answer in answers])
     f1_full_reuse.append(f1)
 
     sampling_params = SamplingParams(temperature=0, max_tokens=32)
@@ -135,7 +135,7 @@ for ex in eval_dataset:
     ttft = output[0].metrics.first_token_time-output[0].metrics.first_scheduled_time
     print(f"sample: {sample}, TTFT: {ttft}")
     ttft_full_prefill.append(ttft)
-    f1 = max([compute_f1(res, answer, tokenizer) for answer in answers])
+    f1 = max([compute_f1(res, answer[0], tokenizer) for answer in answers])
     f1_full_prefill.append(f1)
     print("------------")
     

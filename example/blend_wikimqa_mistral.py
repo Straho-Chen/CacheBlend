@@ -108,7 +108,7 @@ for ex in eval_dataset:
         else:
             temp_ids = doc_chunk_ids[i][s_start_1_len-1:]
         input_ids += temp_ids
-    print(len(input_ids))
+    # print(len(input_ids))
     input_prompt = tokenizer.decode(input_ids)
     
     sampling_params = SamplingParams(temperature=0, max_tokens=32)
