@@ -63,6 +63,9 @@ for dataset in datasets:
         plt.ylabel("RL Score", fontsize=12)
     else:
         plt.ylabel("F1 Score", fontsize=12)
+
+    plt.ylim(bottom=0)
+
     plt.grid(True, linestyle='--', alpha=0.6)
 
     # Combine legends (both method & size) and place them at bottom right

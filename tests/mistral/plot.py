@@ -69,6 +69,9 @@ with PdfPages("performance_comparison.pdf") as pdf:
             plt.ylabel("RL Score")
         else:
             plt.ylabel("F1 Score")
+
+        plt.ylim(bottom=0)
+
         plt.grid(True, linestyle="--", alpha=0.5)
         plt.legend()
         plt.tight_layout()

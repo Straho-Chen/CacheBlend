@@ -25,9 +25,9 @@ markers = {
 # 获取所有数据集
 datasets = df["dataset"].unique()
 
-# 创建子图
+# ✅ 不共享坐标轴，让每个子图独立
 num_datasets = len(datasets)
-fig, axes = plt.subplots(1, num_datasets, figsize=(6 * num_datasets, 5), sharey=True)
+fig, axes = plt.subplots(1, num_datasets, figsize=(6 * num_datasets, 5), sharex=False, sharey=False)
 
 if num_datasets == 1:
     axes = [axes]  # 确保axes可迭代
@@ -37,12 +37,19 @@ for ax, dataset in zip(axes, datasets):
     
     for name in subset["name"].unique():
         part = subset[subset["name"] == name]
+
+        # 自动识别系列类型以选择颜色和marker
+        if name.startswith("blend"):
+            style_key = "blend"
+        else:
+            style_key = name  # full_reuse / full_prefill 等
+        
         ax.scatter(
             part["ttft"],
             part["f1"],
             label=name,
-            color=colors.get(name, "gray"),
-            marker=markers.get(name, "o"),
+            color=colors.get(style_key, "gray"),
+            marker=markers.get(style_key, "o"),
             s=80,
             edgecolor="black",
         )
@@ -52,13 +59,21 @@ for ax, dataset in zip(axes, datasets):
     ax.set_xlim(left=0)
     ax.grid(True)
 
-    # ✅ 特殊处理：samsum用 RL Score
-    ax.set_ylabel("F1 Score", fontsize=12)
+    # ✅ 特殊处理：samsum 用 RL Score
     if dataset == "samsum":
         ax.set_ylabel("RL Score", fontsize=12)
+    else:
+        ax.set_ylabel("F1 Score", fontsize=12)
 
-# 图例放右下角
-plt.legend(loc="lower right", fontsize=10)
+    # ✅ 每个子图的纵坐标单独确定范围
+    ymin = 0
+    ymax = subset["f1"].max() * 1.1  # 留一点空白
+    ax.set_ylim(ymin, ymax)
+
+# ✅ 每个子图独立图例（在右下角）
+for ax in axes:
+    ax.legend(loc="lower right", fontsize=10)
+
 plt.tight_layout()
 
 # 输出为 PDF
