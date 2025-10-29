@@ -136,13 +136,14 @@ def gen_surrounding_tokens(model):
         end="<|Assistant|><think>\n"
     elif model == "deepseek-nothink":
         start="<|User|>"
-        end="<|Assistant|></think>\n"
+        end="<|Assistant|><think>Okay, I think I have finished thinking.\n</think>\n"
     elif model == "qwen":
         start="<|im_start|>user\n"
         end="<|im_end|>\n<|im_start|>assistant\n"
     else:
         start=""
         end=""
+    print(f"Using surrounding tokens: {start} ... {end}")
     return start, end
 
 def build_qa_prompt_normal(model, prefix, example, query):

@@ -13,8 +13,8 @@ args = parser.parse_args()
 
 eval_dataset = load_dataset("inputs/musique_s.json")
 
-test_model_7B="/mnt/nvme0n1/modelscope/deepseek-ai/DeepSeek-R1-Distill-Qwen-7B"
-test_model_14B="/mnt/nvme0n1/modelscope/deepseek-ai/DeepSeek-R1-Distill-Qwen-14B"
+test_model_7B="/workspaces/modelscope-yrcache/modelscope/deepseek-ai/DeepSeek-R1-Distill-Qwen-7B"
+test_model_14B="/workspaces/modelscope-yrcache/modelscope/deepseek-ai/DeepSeek-R1-Distill-Qwen-14B"
 
 if args.model_size == "7B":
     print("Using 7B model, think mode:", args.enable_think)
@@ -130,7 +130,7 @@ for ex in eval_dataset:
     output = llm.generate(None, sampling_params, prompt_token_ids=[input_ids])
     res = output[0].outputs[0].text
     # print(f"Raw generation: {res}")
-    res = extract_after_think(res)
+    # res = extract_after_think(res)
     print(f"blend generation: {res}")
     ttft = output[0].metrics.first_token_time-output[0].metrics.first_scheduled_time
     print(f"sample: {sample}, TTFT: {ttft}")
@@ -147,7 +147,7 @@ for ex in eval_dataset:
     output = llm.generate(None, sampling_params, prompt_token_ids=[input_ids])
     res = output[0].outputs[0].text
     # print(f"Raw generation: {res}")
-    res = extract_after_think(res)
+    # res = extract_after_think(res)
     print(f"full reuse generation: {res}")
     ttft = output[0].metrics.first_token_time-output[0].metrics.first_scheduled_time
     print(f"sample: {sample}, TTFT: {ttft}")
@@ -163,7 +163,7 @@ for ex in eval_dataset:
     output = llm.generate(None, sampling_params, prompt_token_ids=[input_ids])
     res = output[0].outputs[0].text
     # print(f"Raw generation: {res}")
-    res = extract_after_think(res)
+    # res = extract_after_think(res)
     print(f"full prefill generation: {res}")
     ttft = output[0].metrics.first_token_time-output[0].metrics.first_scheduled_time
     print(f"sample: {sample}, TTFT: {ttft}")

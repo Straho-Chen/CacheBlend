@@ -14,8 +14,8 @@ args = parser.parse_args()
 
 eval_dataset = load_dataset("inputs/samsum.json")
 
-test_model_7B="/mnt/nvme0n1/modelscope/deepseek-ai/DeepSeek-R1-Distill-Qwen-7B"
-test_model_14B="/mnt/nvme0n1/modelscope/deepseek-ai/DeepSeek-R1-Distill-Qwen-14B"
+test_model_7B="/workspaces/modelscope-yrcache/modelscope/deepseek-ai/DeepSeek-R1-Distill-Qwen-7B"
+test_model_14B="/workspaces/modelscope-yrcache/modelscope/deepseek-ai/DeepSeek-R1-Distill-Qwen-14B"
 
 if args.model_size == "7B":
     print("Using 7B model, think mode:", args.enable_think)
@@ -131,7 +131,7 @@ for sample_idx, ex in enumerate(eval_dataset):
     cache_fuse_metadata['suffix_len'] = last_len
     output = llm.generate(None, sampling_params, prompt_token_ids=[input_ids])
     res = output[0].outputs[0].text
-    res = extract_after_think(res)
+    # res = extract_after_think(res)
     # TODO(Jiayi): please move this to utils
     res = res.lstrip('\n').split('\n')[0]
     print(f"cache generation: {res}")
@@ -150,7 +150,7 @@ for sample_idx, ex in enumerate(eval_dataset):
     cache_fuse_metadata['suffix_len'] = last_len
     output = llm.generate(None, sampling_params, prompt_token_ids=[input_ids])
     res = output[0].outputs[0].text
-    res = extract_after_think(res)
+    # res = extract_after_think(res)
     # TODO(Jiayi): please move this to utils
     res = res.lstrip('\n').split('\n')[0]
     print(f"full reuse generation: {res}")
@@ -166,7 +166,7 @@ for sample_idx, ex in enumerate(eval_dataset):
     cache_fuse_metadata['collect'] = False
     output = llm.generate([input_prompt], sampling_params)
     res = output[0].outputs[0].text
-    res = extract_after_think(res)
+    # res = extract_after_think(res)
     res = res.lstrip('\n').split('\n')[0]
     print(f"full prefill generation: {res}")
     ttft = output[0].metrics.first_token_time-output[0].metrics.first_scheduled_time

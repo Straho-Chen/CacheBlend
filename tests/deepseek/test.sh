@@ -25,41 +25,41 @@ DATASET=("musique" "samsum" "wikimqa")
 
 MODEL_SIZE=("14B" "7B")
 
-for DATASET_NAME in ${DATASET[@]}; do
-    for size in ${MODEL_SIZE[@]}; do
+for size in ${MODEL_SIZE[@]}; do
+    for DATASET_NAME in ${DATASET[@]}; do
         echo "Testing $DATASET_NAME mode size $size..."
-        log_file=$OUTPUT_DIR/blend_${DATASET_NAME}_${size}_deepseek.txt
 
-        # test for think model
-        cd $ROOT_DIR && python example/blend_${DATASET_NAME}_deepseek.py --model-size $size --enable-think > $log_file 2>&1
-
-        blend_ttft=$(grep "Avg TTFT with cache:" $log_file | awk '{print $NF}')
-        blend_f1=$(grep "Avg F1 with cache:" $log_file | awk '{print $NF}')
-        table_add_row "$TABLE_NAME" "deepseek-think $DATASET_NAME blend-$size $blend_ttft $blend_f1"
-
-        full_reuse_ttft=$(grep "Avg TTFT with full reuse:" $log_file | awk '{print $NF}')
-        full_reuse_f1=$(grep "Avg F1 with full reuse:" $log_file | awk '{print $NF}')
-        table_add_row "$TABLE_NAME" "deepseek-think $DATASET_NAME full_reuse-$size $full_reuse_ttft $full_reuse_f1"
-
-        full_prefill_ttft=$(grep "Avg TTFT with full prefill:" $log_file | awk '{print $NF}')
-        full_prefill_f1=$(grep "Avg F1 with full prefill:" $log_file | awk '{print $NF}')
-        table_add_row "$TABLE_NAME" "deepseek-think $DATASET_NAME full_prefill-$size $full_prefill_ttft $full_prefill_f1"
-
-        # test for unthink model
-        # TODO: failed to disable think mode
-        # cd $ROOT_DIR && python example/blend_${DATASET_NAME}_deepseek.py --model-size $size > $log_file 2>&1
+        # # test for think model
+        # log_file=$OUTPUT_DIR/blend_${DATASET_NAME}_${size}_deepseek.txt
+        # cd $ROOT_DIR && python example/blend_${DATASET_NAME}_deepseek.py --model-size $size --enable-think > $log_file 2>&1
 
         # blend_ttft=$(grep "Avg TTFT with cache:" $log_file | awk '{print $NF}')
         # blend_f1=$(grep "Avg F1 with cache:" $log_file | awk '{print $NF}')
-        # table_add_row "$TABLE_NAME" "deepseek $DATASET_NAME blend-$size $blend_ttft $blend_f1"
+        # table_add_row "$TABLE_NAME" "deepseek-think $DATASET_NAME blend-$size $blend_ttft $blend_f1"
 
         # full_reuse_ttft=$(grep "Avg TTFT with full reuse:" $log_file | awk '{print $NF}')
         # full_reuse_f1=$(grep "Avg F1 with full reuse:" $log_file | awk '{print $NF}')
-        # table_add_row "$TABLE_NAME" "deepseek $DATASET_NAME full_reuse-$size $full_reuse_ttft $full_reuse_f1"
+        # table_add_row "$TABLE_NAME" "deepseek-think $DATASET_NAME full_reuse-$size $full_reuse_ttft $full_reuse_f1"
 
         # full_prefill_ttft=$(grep "Avg TTFT with full prefill:" $log_file | awk '{print $NF}')
         # full_prefill_f1=$(grep "Avg F1 with full prefill:" $log_file | awk '{print $NF}')
-        # table_add_row "$TABLE_NAME" "deepseek $DATASET_NAME full_prefill-$size $full_prefill_ttft $full_prefill_f1"
+        # table_add_row "$TABLE_NAME" "deepseek-think $DATASET_NAME full_prefill-$size $full_prefill_ttft $full_prefill_f1"
+
+        # test for unthink model
+        log_file=$OUTPUT_DIR/blend_${DATASET_NAME}_${size}_deepseek_nothink.txt
+        cd $ROOT_DIR && python example/blend_${DATASET_NAME}_deepseek.py --model-size $size > $log_file 2>&1
+
+        blend_ttft=$(grep "Avg TTFT with cache:" $log_file | awk '{print $NF}')
+        blend_f1=$(grep "Avg F1 with cache:" $log_file | awk '{print $NF}')
+        table_add_row "$TABLE_NAME" "deepseek-nothink $DATASET_NAME blend-$size $blend_ttft $blend_f1"
+
+        full_reuse_ttft=$(grep "Avg TTFT with full reuse:" $log_file | awk '{print $NF}')
+        full_reuse_f1=$(grep "Avg F1 with full reuse:" $log_file | awk '{print $NF}')
+        table_add_row "$TABLE_NAME" "deepseek-nothink $DATASET_NAME full_reuse-$size $full_reuse_ttft $full_reuse_f1"
+
+        full_prefill_ttft=$(grep "Avg TTFT with full prefill:" $log_file | awk '{print $NF}')
+        full_prefill_f1=$(grep "Avg F1 with full prefill:" $log_file | awk '{print $NF}')
+        table_add_row "$TABLE_NAME" "deepseek-nothink $DATASET_NAME full_prefill-$size $full_prefill_ttft $full_prefill_f1"
     done
 done
 

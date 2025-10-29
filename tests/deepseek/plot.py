@@ -3,8 +3,8 @@ import matplotlib.pyplot as plt
 import os
 
 # ======= Config =======
-INPUT_FILE = "performance-comparison-table"  # Input data file
-OUTPUT_FORMAT = "pdf"                        # Output format
+INPUT_FILE = "performance-comparison-table-bak"  # Input data file
+OUTPUT_FORMAT = "pdf"                            # Output format
 
 # ======= Read Data =======
 df = pd.read_csv(INPUT_FILE, delim_whitespace=True)
@@ -27,19 +27,16 @@ sizes = df["size"].unique()
 color_map = {m: colors[i % len(colors)] for i, m in enumerate(methods)}
 marker_map = {s: markers[i % len(markers)] for i, s in enumerate(sizes)}
 
-# ======= Plot for each dataset =======
-datasets = df["dataset"].unique()
-for dataset in datasets:
-    data = df[df["dataset"] == dataset]
+# ======= Function: draw scatter =======
+def draw_scatter(data, title, output_file):
     plt.figure(figsize=(7, 5))
 
-    # Draw points
     for _, row in data.iterrows():
         plt.scatter(
             row["ttft"],
             row["f1"],
-            color=color_map[row["method"]],
-            marker=marker_map[row["size"]],
+            color=color_map.get(row["method"], "gray"),
+            marker=marker_map.get(row["size"], "o"),
             s=80,
             edgecolor="black",
             linewidth=0.6
@@ -57,26 +54,74 @@ for dataset in datasets:
         for s in sizes
     ]
 
-    plt.title(f"Dataset: {dataset}", fontsize=14, weight='bold')
+    plt.title(title, fontsize=14, weight='bold')
     plt.xlabel("TTFT (s)", fontsize=12)
-    if dataset == "samsum":
+    if "samsum" in title.lower():
         plt.ylabel("RL Score", fontsize=12)
     else:
         plt.ylabel("F1 Score", fontsize=12)
 
     plt.ylim(bottom=0)
-
     plt.grid(True, linestyle='--', alpha=0.6)
 
-    # Combine legends (both method & size) and place them at bottom right
     handles = method_handles + size_handles
     plt.legend(handles=handles, title="Legend", loc='lower right', fontsize=9, title_fontsize=10)
 
     plt.tight_layout()
-
-    # Save PDF
-    output_file = f"{dataset}_scatter.{OUTPUT_FORMAT}"
     plt.savefig(output_file, format=OUTPUT_FORMAT)
     plt.close()
+    print(f"✅ Saved: {output_file}")
 
-print("✅ All scatter plots have been generated and saved as PDF files in the current directory.")
+# ======= 1️⃣ Original: Draw for each dataset (all models together) =======
+for dataset in df["dataset"].unique():
+    data = df[df["dataset"] == dataset]
+    draw_scatter(data, f"Dataset: {dataset}", f"{dataset}_scatter.{OUTPUT_FORMAT}")
+
+# ======= 2️⃣ Per-model plots =======
+for model in df["model"].unique():
+    model_data = df[df["model"] == model]
+    for dataset in model_data["dataset"].unique():
+        data = model_data[model_data["dataset"] == dataset]
+        draw_scatter(data, f"{model} — {dataset}", f"{model}_{dataset}_scatter.{OUTPUT_FORMAT}")
+
+# ======= 3️⃣ Full prefill comparison =======
+full_keywords = {"full_prefill"}
+full_df = df[df["method"].isin(full_keywords)]
+
+for dataset in full_df["dataset"].unique():
+    subset = full_df[full_df["dataset"] == dataset]
+    for size in subset["size"].unique():
+        same_size = subset[subset["size"] == size]
+        if same_size["model"].nunique() < 2:
+            continue  # skip if only one model
+        plt.figure(figsize=(7, 5))
+        models = same_size["model"].unique()
+        color_map_model = {m: colors[i % len(colors)] for i, m in enumerate(models)}
+        for _, row in same_size.iterrows():
+            plt.scatter(
+                row["ttft"],
+                row["f1"],
+                color=color_map_model[row["model"]],
+                marker="o",
+                s=90,
+                edgecolor="black",
+                linewidth=0.6,
+                label=row["model"]
+            )
+
+        plt.title(f"{dataset} — Full Prefill (size={size})", fontsize=14, weight="bold")
+        plt.xlabel("TTFT (s)", fontsize=12)
+        if dataset == "samsum":
+            plt.ylabel("RL Score", fontsize=12)
+        else:
+            plt.ylabel("F1 Score", fontsize=12)
+        plt.ylim(bottom=0)
+        plt.grid(True, linestyle="--", alpha=0.6)
+        plt.legend(title="Model", loc="lower right", fontsize=9, title_fontsize=10)
+        plt.tight_layout()
+        output_file = f"{dataset}_fullprefill_compare_size{size}.{OUTPUT_FORMAT}"
+        plt.savefig(output_file, format=OUTPUT_FORMAT)
+        plt.close()
+        print(f"✅ Saved: {output_file}")
+
+print("\n🎉 All plots generated successfully!")
