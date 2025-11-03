@@ -191,9 +191,12 @@ class XFormersImpl(AttentionImpl):
             shape = [num_tokens, num_heads * head_size]
         """
         num_tokens, hidden_size = query.shape
+        # print(f"num_tokens: {num_tokens}, hidden_size: {hidden_size}")
         query = query.view(-1, self.num_heads, self.head_size)
         key = key.view(-1, self.num_kv_heads, self.head_size)
         value = value.view(-1, self.num_kv_heads, self.head_size)
+
+        # print(f"query shape after view: {query.shape}, key shape after view: {key.shape}")
 
         # Jiayi modified start
         # TODO(Jiayi): The following `view`s can be saved
@@ -207,6 +210,7 @@ class XFormersImpl(AttentionImpl):
             last_indices = [total_len-last_len+l for l in range(last_len)]
 
             topk_num = int((total_len-last_len)*cache_fuse_metadata["recomp_ratio"])
+            cache_fuse_metadata["topk_num"] = topk_num
 
             # print(f"len of new value: {value.shape}")
             # print(f"len of old value: {value_old.shape}")
@@ -291,6 +295,7 @@ class XFormersImpl(AttentionImpl):
         else:
             num_prefill_tokens = attn_metadata.num_prefill_tokens
             num_decode_tokens = attn_metadata.num_decode_tokens
+            # print(f"num_prefill_tokens: {num_prefill_tokens}, num_decode_tokens: {num_decode_tokens}")
             assert key.shape[0] == num_prefill_tokens + num_decode_tokens
             assert value.shape[0] == num_prefill_tokens + num_decode_tokens
 
@@ -314,9 +319,27 @@ class XFormersImpl(AttentionImpl):
                 
                 out = self._run_memory_efficient_xformers_forward(
                     query, key, value, prefill_meta, status, cache_fuse_metadata)
-                
+
                 #assert out.shape == output[:num_prefill_tokens].shape
                 #output[:num_prefill_tokens] = out
+                # Store hack_q/hack_k per-layer so each layer keeps its own list.
+                if cache_fuse_metadata.get("hack_start", False):
+                    print("normal prefill")
+                    cache_fuse_metadata["h_dim"]=query.shape[-1]
+                    cache_fuse_metadata["num_tokens"]=query.shape[0]
+                    cache_fuse_metadata["num_kv_heads"]=self.num_kv_heads
+                    cache_fuse_metadata["num_queries_per_kv"]=self.num_queries_per_kv
+                    print(f"h_dim: {cache_fuse_metadata['h_dim']}, num_tokens: {cache_fuse_metadata['num_tokens']}, num_kv_heads: {cache_fuse_metadata['num_kv_heads']}, num_queries_per_kv: {cache_fuse_metadata['num_queries_per_kv']}")
+                    print(f"prefill query shape: {query.shape}, key shape: {key.shape}")
+                    layer = cache_fuse_metadata.get("layer_idx", 0)
+                    # ensure dict structure
+                    if not isinstance(cache_fuse_metadata.get("hack_q"), dict):
+                        cache_fuse_metadata["hack_q"] = {}
+                    if not isinstance(cache_fuse_metadata.get("hack_k"), dict):
+                        cache_fuse_metadata["hack_k"] = {}
+                    cache_fuse_metadata["hack_q"].setdefault(layer, []).extend(query)
+                    cache_fuse_metadata["hack_k"].setdefault(layer, []).extend(key)
+
                 output = out
             else:
                 # prefix-enabled attention
@@ -394,9 +417,12 @@ class XFormersImpl(AttentionImpl):
                           None, :].expand(value.shape[0], self.num_kv_heads,
                                           self.num_queries_per_kv,
                                           value.shape[-1])
+            # print(f"kv_heads: {self.num_kv_heads}, q_heads: {self.num_heads}")
+            # print(f"query shape after gqa view: {query.shape}, key shape after gqa view: {key.shape}")
         # Set attention bias if not provided. This typically happens at
         # the very attention layer of every iteration.
         # FIXME(woosuk): This is a hack.
+        # print(f"attn_bias: {attn_metadata.attn_bias}, alibi_slopes: {self.alibi_slopes}, status: {status}, scale: {self.scale}")
         if attn_metadata.attn_bias is None:
             if self.alibi_slopes is None:
                 # TODO(Jiayi): please pre-allocate mask for faster inference
@@ -418,6 +444,7 @@ class XFormersImpl(AttentionImpl):
                     self.alibi_slopes, self.num_kv_heads, query.dtype,
                     attn_metadata.prompt_lens)
 
+        # print(f"attn_bias: {attn_metadata.attn_bias}, alibi_slopes: {self.alibi_slopes}, status: {status}, scale: {self.scale}")
         # No alibi slopes.
         # TODO(woosuk): Too many view operations. Let's try to reduce
         # them in the future for code readability.

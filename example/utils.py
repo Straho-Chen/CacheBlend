@@ -3,6 +3,9 @@ import collections
 import string
 import re
 from rouge_score import rouge_scorer
+import os
+import torch
+import numpy as np
 
 def load_dataset(dataset_path):
     print("Loading dataset:", dataset_path)
@@ -162,3 +165,89 @@ def build_fewshot_prompt_normal(model, prefix, example):
     p_prompt = f"{start}{prefix}"
     q_prompt = f"{q}{end}"
     return p_prompt, doc_prompts, q_prompt
+
+def export_attention_matrices(cache_fuse_metadata, export_dir="./attn_exports", name_prefix=""):
+    os.makedirs(export_dir, exist_ok=True)
+    for layer_to_inspect in list(cache_fuse_metadata.get("hack_q", {}).keys()):
+        print(f"Inspecting layer {layer_to_inspect}:")
+        hq_list = cache_fuse_metadata["hack_q"].get(layer_to_inspect, [])
+        hk_list = cache_fuse_metadata["hack_k"].get(layer_to_inspect, [])
+        if len(hq_list) == 0 or len(hk_list) == 0:
+            print(f"  no data for layer {layer_to_inspect}, skipping")
+            continue
+
+        # Concatenate collected rows. Each element was appended as a per-token
+        # slice with shape [num_heads, head_size] (for query) or
+        # [num_kv_heads, head_size] (for key). After cat we expect:
+        #   hq_cat.shape == (num_tokens * num_heads, head_size)
+        #   hk_cat.shape == (num_tokens_kv * num_kv_heads, head_size)
+        hq_cat = torch.cat(hq_list, dim=0)
+        hk_cat = torch.cat(hk_list, dim=0)
+
+        # Read shape metadata written by xformers impl
+        h_dim = cache_fuse_metadata.get("h_dim")
+        meta_num_tokens = cache_fuse_metadata.get("num_tokens")
+        num_kv_heads = cache_fuse_metadata.get("num_kv_heads")
+        num_queries_per_kv = cache_fuse_metadata.get("num_queries_per_kv")
+        scaling = cache_fuse_metadata.get("scaling")
+        print(f"  metadata: h_dim={h_dim}, num_tokens={meta_num_tokens}, num_kv_heads={num_kv_heads}, num_queries_per_kv={num_queries_per_kv}, scaling={scaling}")
+
+        if None in (h_dim, meta_num_tokens, num_kv_heads, num_queries_per_kv, scaling):
+            print(f"  missing metadata for layer {layer_to_inspect}, skipping export")
+            continue
+
+        num_heads = int(num_kv_heads * num_queries_per_kv)
+
+        # Infer token counts if cat sizes don't match metadata exactly
+        # assume keys/queries correspond to same sequence length
+        expected_hq_rows = int(meta_num_tokens * num_heads)
+        expected_hk_rows = int(meta_num_tokens * num_kv_heads)
+        assert hq_cat.shape[0] == expected_hq_rows, f"hq_cat shape {hq_cat.shape[0]} != expected {expected_hq_rows}"
+        assert hk_cat.shape[0] == expected_hk_rows, f"hk_cat shape {hk_cat.shape[0]} != expected {expected_hk_rows}"
+
+        q = hq_cat.view(meta_num_tokens, num_kv_heads, num_queries_per_kv, h_dim)
+        k = hk_cat.view(meta_num_tokens, num_kv_heads, h_dim)
+
+        # Now compute attention logits per head. We align GQA to per-head layout by
+        # expanding k to match each query head when num_kv_heads != num_heads.
+        Mq = q.shape[0]
+        Mk = k.shape[0]
+
+        # Save to file (CPU tensors)
+        ts = np.datetime64("now").astype(str).replace(":", "-")
+        fname = f"{name_prefix}attn_layer{layer_to_inspect}_{Mq}x{Mk}_{ts}.pt"
+        out_path = os.path.join(export_dir, fname)
+        torch.save({
+            "meta": {
+                "h_dim": h_dim,
+                "num_tokens": meta_num_tokens,
+                "num_kv_heads": num_kv_heads,
+                "num_queries_per_kv": num_queries_per_kv,
+                "num_heads": num_heads,
+                "scaling": scaling,
+                "Mq": Mq,
+                "Mk": Mk,
+            },
+            "q": q,
+            "k": k,
+        }, out_path)
+        print(f"  exported attention for layer {layer_to_inspect} to {out_path}")
+
+
+def export_imp_indices(cache_fuse_metadata, export_dir="./imp_indices_exports", name_prefix=""):
+    os.makedirs(export_dir, exist_ok=True)
+    topk_num = cache_fuse_metadata.get("topk_num", None)
+    imp_indices = cache_fuse_metadata.get("imp_indices", None)
+    if imp_indices is None or topk_num is None:
+        print("No important indices found, skipping export")
+        return
+    ts = np.datetime64("now").astype(str).replace(":", "-")
+    fname = f"{name_prefix}imp_indices_{ts}.pt"
+    out_path = os.path.join(export_dir, fname)
+    print(f"topk_num: {topk_num}")
+    print(f"imp_indices: {imp_indices}")
+    torch.save({
+        "topk_num": topk_num,
+        "imp_indices": imp_indices,
+    }, out_path)
+    print(f"Exported important indices to {out_path}")

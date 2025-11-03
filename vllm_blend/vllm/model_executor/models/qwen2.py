@@ -152,7 +152,9 @@ class Qwen2Attention(nn.Module):
         old_kv,
     ) -> torch.Tensor:
         qkv, _ = self.qkv_proj(hidden_states)
+        # print(f"q_size: {self.q_size}, kv_size: {self.kv_size}")
         q, k, v = qkv.split([self.q_size, self.kv_size, self.kv_size], dim=-1)
+        # print(f"q shape after split: {q.shape}, k shape after split: {k.shape}")
 
         # HACK(Jiayi): Rotate the old K 
         # Need to modify the kernel to only take K as input 
@@ -167,6 +169,8 @@ class Qwen2Attention(nn.Module):
             self.hack_kv = [k.clone(), v.clone()]
 
         q, k = self.rotary_emb(positions, q, k)
+        # print(f"q shape after emd: {q.shape}, k shape after emd: {k.shape}")
+        cache_fuse_metadata["scaling"] = self.scaling
         attn_output = self.attn(q, k, v, kv_cache, attn_metadata, 
                                 status, cache_fuse_metadata, old_kv)
         output, _ = self.o_proj(attn_output)
@@ -309,6 +313,8 @@ class Qwen2Model(nn.Module):
 
         residual = None
         for i in range(len(self.layers)):
+            # add layer idx for cache tag
+            self.cache_fuse_metadata["layer_idx"] = i
 
             if self.cache_fuse_metadata["check"]:
                 if i in self.cache_fuse_metadata["check_layers"]:

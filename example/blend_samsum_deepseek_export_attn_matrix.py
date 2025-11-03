@@ -2,7 +2,7 @@ from vllm import LLM, SamplingParams
 import torch
 import numpy as np
 from transformers import AutoTokenizer
-from utils import load_dataset, build_fewshot_prompt_normal, compute_rl, extract_after_think
+from utils import load_dataset, build_fewshot_prompt_normal, compute_rl, extract_after_think, export_attention_matrices
 from itertools import chain
 import argparse
 
@@ -24,7 +24,7 @@ else:
     print("Using 14B model, think mode:", args.enable_think)
     test_model = test_model_14B
 
-llm = LLM(model=test_model, gpu_memory_utilization=0.95, dtype=torch.bfloat16, max_model_len=20000,
+llm = LLM(model=test_model, gpu_memory_utilization=0.85, dtype=torch.bfloat16, max_model_len=8192,
           #tokenizer=tokenizer,
           )
 tokenizer = AutoTokenizer.from_pretrained(test_model)
@@ -42,6 +42,8 @@ rl_full_prefill = []
 max_ctx_len = 3400
 #TODO (Jiayi): fix filler tokens at the begining or pass in tokenizer
 for sample_idx, ex in enumerate(eval_dataset):
+    if sample_idx == 1:
+        break
     answers = ex["answers"]
     if args.enable_think:
         p_prompt, doc_prompts, q_prompt = build_fewshot_prompt_normal("deepseek", prefix_prompt, ex)
@@ -77,37 +79,37 @@ for sample_idx, ex in enumerate(eval_dataset):
     doc_chunk_ids = [p_ids] + doc_chunk_ids
     doc_chunk_ids = doc_chunk_ids + [s_start+q_ids]
 
-    last_len = len(q_ids)
+    # last_len = len(q_ids)
 
-    cache_fuse_metadata['collect'] = True
-    cache_fuse_metadata["check"] = False
-    cache_fuse_metadata['attn_bias'] = None
-    chunk_past_key_values = []
-    shift = 0
-    # Concatenate old KVs
-    for i in range(len(doc_chunk_ids)):
-        doc_chunk_ids_full = s_start_prefix + doc_chunk_ids[i]
-        llm.generate(None, sampling_params, prompt_token_ids=[doc_chunk_ids_full])
-        shift += len(doc_chunk_ids[i])
-        llm_layers = llm.llm_engine.model_executor.driver_worker.model_runner.model.model.layers
-        num_layer = len(llm_layers)
-        for j in range(num_layer):
-            past_key_values = llm_layers[j].self_attn.hack_kv
-            if i == 0:
-                temp_k = past_key_values[0][:s_start_len].clone() # do not chage with s_start_1
-                temp_v = past_key_values[1][:s_start_len].clone()
-            else:
-                temp_k = past_key_values[0][s_start_1_len:len(doc_chunk_ids[i])+1].clone()
-                temp_v = past_key_values[1][s_start_1_len:len(doc_chunk_ids[i])+1].clone()    
+    # cache_fuse_metadata['collect'] = True
+    # cache_fuse_metadata["check"] = False
+    # cache_fuse_metadata['attn_bias'] = None
+    # chunk_past_key_values = []
+    # shift = 0
+    # # Concatenate old KVs
+    # for i in range(len(doc_chunk_ids)):
+    #     doc_chunk_ids_full = s_start_prefix + doc_chunk_ids[i]
+    #     llm.generate(None, sampling_params, prompt_token_ids=[doc_chunk_ids_full])
+    #     shift += len(doc_chunk_ids[i])
+    #     llm_layers = llm.llm_engine.model_executor.driver_worker.model_runner.model.model.layers
+    #     num_layer = len(llm_layers)
+    #     for j in range(num_layer):
+    #         past_key_values = llm_layers[j].self_attn.hack_kv
+    #         if i == 0:
+    #             temp_k = past_key_values[0][:s_start_len].clone() # do not chage with s_start_1
+    #             temp_v = past_key_values[1][:s_start_len].clone()
+    #         else:
+    #             temp_k = past_key_values[0][s_start_1_len:len(doc_chunk_ids[i])+1].clone()
+    #             temp_v = past_key_values[1][s_start_1_len:len(doc_chunk_ids[i])+1].clone()    
 
-            if i == 0:
-                chunk_past_key_values.append([temp_k, temp_v])
-            else:
-                #pdb.set_trace()
-                chunk_past_key_values[j][0] = torch.cat((chunk_past_key_values[j][0],temp_k), dim=0)
-                chunk_past_key_values[j][1] = torch.cat((chunk_past_key_values[j][1],temp_v), dim=0)
-            llm_layers[j].self_attn.hack_kv = None
-    llm.llm_engine.model_executor.driver_worker.model_runner.model.model.old_kvs = chunk_past_key_values
+    #         if i == 0:
+    #             chunk_past_key_values.append([temp_k, temp_v])
+    #         else:
+    #             #pdb.set_trace()
+    #             chunk_past_key_values[j][0] = torch.cat((chunk_past_key_values[j][0],temp_k), dim=0)
+    #             chunk_past_key_values[j][1] = torch.cat((chunk_past_key_values[j][1],temp_v), dim=0)
+    #         llm_layers[j].self_attn.hack_kv = None
+    # llm.llm_engine.model_executor.driver_worker.model_runner.model.model.old_kvs = chunk_past_key_values
 
     input_ids = []
 
@@ -120,53 +122,57 @@ for sample_idx, ex in enumerate(eval_dataset):
         
     input_prompt = tokenizer.decode(input_ids)
 
-    # for blend
-    sampling_params = SamplingParams(temperature=0, max_tokens=512)
-    cache_fuse_metadata["check"] = True
-    cache_fuse_metadata['collect'] = False
-    cache_fuse_metadata['recomp_ratio'] = 0.2
-    cache_fuse_metadata['fast_attention'] = True
-    cache_fuse_metadata['suffix_len'] = last_len
-    output = llm.generate(None, sampling_params, prompt_token_ids=[input_ids])
-    res = output[0].outputs[0].text
-    print("raw res:", res)
-    if args.enable_think:
-        res = extract_after_think(res)
-    # TODO(Jiayi): please move this to utils
-    res = res.lstrip('\n').split('\n')[0]
-    print(f"cache generation: {res}")
-    ttft = output[0].metrics.first_token_time-output[0].metrics.first_scheduled_time
-    print(f"sample: {sample_idx}, TTFT: {ttft}")
-    ttft_blend.append(ttft)
-    rl = max([compute_rl(res, answer) for answer in answers])
-    rl_blend.append(rl)
+    # # for blend
+    # sampling_params = SamplingParams(temperature=0, max_tokens=512)
+    # cache_fuse_metadata["check"] = True
+    # cache_fuse_metadata['collect'] = False
+    # cache_fuse_metadata['recomp_ratio'] = 0.2
+    # cache_fuse_metadata['fast_attention'] = True
+    # cache_fuse_metadata['suffix_len'] = last_len
+    # output = llm.generate(None, sampling_params, prompt_token_ids=[input_ids])
+    # res = output[0].outputs[0].text
+    # print("raw res:", res)
+    # if args.enable_think:
+    #     res = extract_after_think(res)
+    # # TODO(Jiayi): please move this to utils
+    # res = res.lstrip('\n').split('\n')[0]
+    # print(f"cache generation: {res}")
+    # ttft = output[0].metrics.first_token_time-output[0].metrics.first_scheduled_time
+    # print(f"sample: {sample_idx}, TTFT: {ttft}")
+    # ttft_blend.append(ttft)
+    # rl = max([compute_rl(res, answer) for answer in answers])
+    # rl_blend.append(rl)
 
-    # for full reuse
-    sampling_params = SamplingParams(temperature=0, max_tokens=512)
-    cache_fuse_metadata["check"] = True
-    cache_fuse_metadata['collect'] = False
-    cache_fuse_metadata['recomp_ratio'] = 0.0
-    cache_fuse_metadata['fast_attention'] = True
-    cache_fuse_metadata['suffix_len'] = last_len
-    output = llm.generate(None, sampling_params, prompt_token_ids=[input_ids])
-    res = output[0].outputs[0].text
-    print("raw res:", res)
-    if args.enable_think:
-        res = extract_after_think(res)
-    # TODO(Jiayi): please move this to utils
-    res = res.lstrip('\n').split('\n')[0]
-    print(f"full reuse generation: {res}")
-    ttft = output[0].metrics.first_token_time-output[0].metrics.first_scheduled_time
-    print(f"sample: {sample_idx}, TTFT: {ttft}")
-    ttft_full_reuse.append(ttft)
-    rl = max([compute_rl(res, answer) for answer in answers])
-    rl_full_reuse.append(rl)
+    # # for full reuse
+    # sampling_params = SamplingParams(temperature=0, max_tokens=512)
+    # cache_fuse_metadata["check"] = True
+    # cache_fuse_metadata['collect'] = False
+    # cache_fuse_metadata['recomp_ratio'] = 0.0
+    # cache_fuse_metadata['fast_attention'] = True
+    # cache_fuse_metadata['suffix_len'] = last_len
+    # output = llm.generate(None, sampling_params, prompt_token_ids=[input_ids])
+    # res = output[0].outputs[0].text
+    # print("raw res:", res)
+    # if args.enable_think:
+    #     res = extract_after_think(res)
+    # # TODO(Jiayi): please move this to utils
+    # res = res.lstrip('\n').split('\n')[0]
+    # print(f"full reuse generation: {res}")
+    # ttft = output[0].metrics.first_token_time-output[0].metrics.first_scheduled_time
+    # print(f"sample: {sample_idx}, TTFT: {ttft}")
+    # ttft_full_reuse.append(ttft)
+    # rl = max([compute_rl(res, answer) for answer in answers])
+    # rl_full_reuse.append(rl)
     
     # for full prefill
     sampling_params = SamplingParams(temperature=0, max_tokens=512)
     cache_fuse_metadata["check"] = False
     cache_fuse_metadata['collect'] = False
+    cache_fuse_metadata["hack_start"] = True
+    cache_fuse_metadata["hack_q"] = {}
+    cache_fuse_metadata["hack_k"] = {}
     output = llm.generate([input_prompt], sampling_params)
+    export_attention_matrices(cache_fuse_metadata, export_dir="./attn_exports", name_prefix=f"prefill_")
     res = output[0].outputs[0].text
     print("raw res:", res)
     if args.enable_think:

@@ -63,8 +63,6 @@ for ex in eval_dataset:
 
     # Create an tokenizer and LLM.
     cache_fuse_metadata = llm.llm_engine.model_executor.driver_worker.model_runner.model.model.cache_fuse_metadata
-    cache_fuse_metadata['collect'] = False
-    cache_fuse_metadata['check'] = False
 
     s_start_len = len(p_ids) + 1
 
@@ -107,7 +105,7 @@ for ex in eval_dataset:
                 chunk_past_key_values[j][1] = torch.cat((chunk_past_key_values[j][1],temp_v), dim=0)
 
     llm.llm_engine.model_executor.driver_worker.model_runner.model.model.old_kvs = chunk_past_key_values
-        
+
     input_ids = []
 
     for i in range(len(doc_chunk_ids)):
@@ -129,8 +127,9 @@ for ex in eval_dataset:
     cache_fuse_metadata['recomp_ratio'] = 0.2
     output = llm.generate(None, sampling_params, prompt_token_ids=[input_ids])
     res = output[0].outputs[0].text
-    # print(f"Raw generation: {res}")
-    # res = extract_after_think(res)
+    print("raw res:", res)
+    if args.enable_think:
+        res = extract_after_think(res)
     print(f"blend generation: {res}")
     ttft = output[0].metrics.first_token_time-output[0].metrics.first_scheduled_time
     print(f"sample: {sample}, TTFT: {ttft}")
@@ -146,8 +145,9 @@ for ex in eval_dataset:
     cache_fuse_metadata['recomp_ratio'] = 0.0
     output = llm.generate(None, sampling_params, prompt_token_ids=[input_ids])
     res = output[0].outputs[0].text
-    # print(f"Raw generation: {res}")
-    # res = extract_after_think(res)
+    print("raw res:", res)
+    if args.enable_think:
+        res = extract_after_think(res)
     print(f"full reuse generation: {res}")
     ttft = output[0].metrics.first_token_time-output[0].metrics.first_scheduled_time
     print(f"sample: {sample}, TTFT: {ttft}")
@@ -162,8 +162,9 @@ for ex in eval_dataset:
     cache_fuse_metadata['collect'] = False
     output = llm.generate(None, sampling_params, prompt_token_ids=[input_ids])
     res = output[0].outputs[0].text
-    # print(f"Raw generation: {res}")
-    # res = extract_after_think(res)
+    print("raw res:", res)
+    if args.enable_think:
+        res = extract_after_think(res)
     print(f"full prefill generation: {res}")
     ttft = output[0].metrics.first_token_time-output[0].metrics.first_scheduled_time
     print(f"sample: {sample}, TTFT: {ttft}")

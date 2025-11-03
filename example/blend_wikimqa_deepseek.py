@@ -127,8 +127,9 @@ for ex in eval_dataset:
     cache_fuse_metadata['suffix_len'] = last_len
     output = llm.generate(None, sampling_params, prompt_token_ids=[input_ids])
     res = output[0].outputs[0].text
-    # print(f"Raw generation: {res}")
-    # res = extract_after_think(res)
+    print("raw res:", res)
+    if args.enable_think:
+        res = extract_after_think(res)
     print(f"blend generation: {res}")
     ttft = output[0].metrics.first_token_time-output[0].metrics.first_scheduled_time
     print(f"sample: {sample}, TTFT: {ttft}")
@@ -145,8 +146,9 @@ for ex in eval_dataset:
     cache_fuse_metadata['suffix_len'] = last_len
     output = llm.generate(None, sampling_params, prompt_token_ids=[input_ids])
     res = output[0].outputs[0].text
-    # print(f"Raw generation: {res}")
-    # res = extract_after_think(res)
+    print("raw res:", res)
+    if args.enable_think:
+        res = extract_after_think(res)
     print(f"full reuse generation: {res}")
     ttft = output[0].metrics.first_token_time-output[0].metrics.first_scheduled_time
     print(f"sample: {sample}, TTFT: {ttft}")
@@ -161,8 +163,9 @@ for ex in eval_dataset:
     cache_fuse_metadata['collect'] = False
     output = llm.generate([input_prompt], sampling_params)
     res = output[0].outputs[0].text
-    # print(f"Raw generation: {res}")
-    # res = extract_after_think(res)
+    print("raw res:", res)
+    if args.enable_think:
+        res = extract_after_think(res)
     print(f"full prefill generation: {res}")
     ttft = output[0].metrics.first_token_time-output[0].metrics.first_scheduled_time
     print(f"sample: {sample}, TTFT: {ttft}")
