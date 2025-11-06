@@ -2,9 +2,9 @@ from vllm import LLM, SamplingParams
 import torch
 import numpy as np
 from transformers import AutoTokenizer
-from utils import load_dataset, build_qa_prompt_normal, compute_f1
+from tests.tools.utils import REPO_ROOT, load_dataset, build_qa_prompt_normal, compute_f1
 
-eval_dataset = load_dataset("inputs/wikimqa_s.json")
+eval_dataset = load_dataset(f"{REPO_ROOT}/inputs/musique_s.json")
 
 test_model="/mnt/nvme0n1/modelscope/Qwen/Qwen2.5-3B-Instruct"
 
@@ -14,8 +14,8 @@ llm = LLM(model=test_model, gpu_memory_utilization=0.95,
 tokenizer = AutoTokenizer.from_pretrained(test_model)
 llm.set_tokenizer(tokenizer)
 
-prefix_prompt = "Answer the question based on the given passages. Only give me the answer and do not output any other words.\n\nThe following are given passages.\n"
-query_prompt = f"\n\nAnswer the question based on the given passages. Answer the question within 5 words. Do NOT repeat the question or output any other words. Question: "
+prefix_prompt = "You will be asked a question after reading several passages. Please directly answer the question based on the given passages. Do NOT repeat the question. The answer should be within 5 words..\nPassages:\n"
+query_prompt = "\n\nAnswer the question directly based on the given passages. Do NOT repeat the question. The answer should be within 5 words. \nQuestion:"
 
 ttft_blend = []
 ttft_full_reuse = []
@@ -29,17 +29,11 @@ sample = 0
 for ex in eval_dataset:
     sample += 1
     answers = ex["answers"]
-    p_prompt, doc_prompts, q_prompt = build_qa_prompt_normal("qwen", prefix_prompt, ex, query_prompt)
+    p_promt, doc_prompts, q_prompt = build_qa_prompt_normal("qwen", prefix_prompt, ex, query_prompt)
+    p_ids = tokenizer.encode(p_promt)[1:]
     doc_chunk_ids = [tokenizer.encode(doc)[1:] for doc in doc_prompts]
     q_ids = tokenizer.encode(q_prompt)[1:]
-    p_ids = tokenizer.encode(p_prompt)[1:]
 
-    # drop last chunks
-    #while len(list(chain.from_iterable(doc_chunk_ids))) > max_ctx_len:
-    #    del_idx = len(doc_chunk_ids)-1
-    #    del doc_chunk_ids[del_idx]
-        
-    # Create a sampling params object.
     sampling_params = SamplingParams(temperature=0, max_tokens=1)
 
     # Create an tokenizer and LLM.
@@ -93,9 +87,11 @@ for ex in eval_dataset:
         else:
             temp_ids = doc_chunk_ids[i][s_start_1_len:]
         input_ids += temp_ids
+        
     # print(len(input_ids))
+        
     input_prompt = tokenizer.decode(input_ids)
-
+    
     # for blend
     sampling_params = SamplingParams(temperature=0, max_tokens=32)
     cache_fuse_metadata["check"] = True
@@ -108,7 +104,7 @@ for ex in eval_dataset:
     ttft = output[0].metrics.first_token_time-output[0].metrics.first_scheduled_time
     print(f"sample: {sample}, TTFT: {ttft}")
     ttft_blend.append(ttft)
-    f1 = max([compute_f1(res, answer[0], tokenizer) for answer in answers])
+    f1 = max([compute_f1(res, answer, tokenizer) for answer in answers])
     f1_blend.append(f1)
 
     # for full reuse
@@ -123,7 +119,7 @@ for ex in eval_dataset:
     ttft = output[0].metrics.first_token_time-output[0].metrics.first_scheduled_time
     print(f"sample: {sample}, TTFT: {ttft}")
     ttft_full_reuse.append(ttft)
-    f1 = max([compute_f1(res, answer[0], tokenizer) for answer in answers])
+    f1 = max([compute_f1(res, answer, tokenizer) for answer in answers])
     f1_full_reuse.append(f1)
 
     sampling_params = SamplingParams(temperature=0, max_tokens=32)
@@ -135,15 +131,15 @@ for ex in eval_dataset:
     ttft = output[0].metrics.first_token_time-output[0].metrics.first_scheduled_time
     print(f"sample: {sample}, TTFT: {ttft}")
     ttft_full_prefill.append(ttft)
-    f1 = max([compute_f1(res, answer[0], tokenizer) for answer in answers])
+    f1 = max([compute_f1(res, answer, tokenizer) for answer in answers])
     f1_full_prefill.append(f1)
     print("------------")
-    
+
 print("---------------Result Summary---------------------")
-# print(f"TTFT with cache: {np.mean(ttft_blend)}")
-# print(f"TTFT with full prefill: {np.mean(ttft_full)}")
-# print(f"F1 with cache: {np.mean(f1_blend)}")
-# print(f"F1 with full prefill: {np.mean(f1_full)}")
+# print(f"TTFT with cache avg: {np.mean(ttft_blend)}")
+# print(f"TTFT with full prefill avg: {np.mean(ttft_full)}")
+# print(f"F1 with cache avg: {np.mean(f1_blend)}")
+# print(f"F1 with full prefill avg: {np.mean(f1_full)}")
 
 print(f"Avg TTFT with cache: {np.mean(ttft_blend)}")
 print(f"Avg TTFT with full reuse: {np.mean(ttft_full_reuse)}")

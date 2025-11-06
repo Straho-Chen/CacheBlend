@@ -6,11 +6,46 @@ from rouge_score import rouge_scorer
 import os
 import torch
 import numpy as np
+from pathlib import Path
+from typing import Optional
+
 
 def load_dataset(dataset_path):
     print("Loading dataset:", dataset_path)
     with open(dataset_path) as f:
         return json.load(f)
+
+
+def get_repo_root(start_path: Optional[Path] = None) -> Path:
+    """Find repository root by searching upward for common project markers.
+
+    The function looks for these files/directories at or above the start_path:
+    - .git (directory)
+    - pyproject.toml
+    - setup.py
+    - requirements.txt
+
+    If none are found it falls back to the workspace root (two parents up from this file)
+    or the filesystem root.
+    """
+    if start_path is None:
+        start_path = Path(__file__).resolve()
+
+    cur = start_path if start_path.is_dir() else start_path.parent
+    markers = {".git", "pyproject.toml", "setup.py", "requirements.txt", "README.md"}
+    for p in [cur] + list(cur.parents):
+        for m in markers:
+            if (p / m).exists():
+                return p
+
+    # Fallback: choose repository top-level based on known layout (two parents up from tests/)
+    # If that doesn't exist, return current working directory's root.
+    probable_root = Path(__file__).resolve().parents[2]
+    return probable_root if probable_root.exists() else Path.cwd()
+
+
+# Export a module-level constant that other tests/tools can import.
+REPO_ROOT: Path = get_repo_root()
 
 def normalize_question(question):
     if not question.endswith("?"):

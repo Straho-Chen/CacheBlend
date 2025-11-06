@@ -2,7 +2,7 @@ from vllm import LLM, SamplingParams
 import torch
 import numpy as np
 from transformers import AutoTokenizer
-from utils import load_dataset, build_fewshot_prompt_normal, compute_rl, extract_after_think
+from tests.tools.utils import REPO_ROOT, load_dataset, build_fewshot_prompt_normal, compute_rl, extract_after_think, export_imp_indices
 from itertools import chain
 import argparse
 
@@ -12,7 +12,7 @@ parser.add_argument("--model-size", dest="model_size", type=str, default="7B")
 parser.add_argument("--enable-think", dest="enable_think", action="store_true", help="Whether to enable think marker in DeepSeek")
 args = parser.parse_args()
 
-eval_dataset = load_dataset("inputs/samsum.json")
+eval_dataset = load_dataset(f"{REPO_ROOT}/inputs/samsum.json")
 
 test_model_7B="/workspaces/modelscope-yrcache/modelscope/deepseek-ai/DeepSeek-R1-Distill-Qwen-7B"
 test_model_14B="/workspaces/modelscope-yrcache/modelscope/deepseek-ai/DeepSeek-R1-Distill-Qwen-14B"
@@ -24,7 +24,7 @@ else:
     print("Using 14B model, think mode:", args.enable_think)
     test_model = test_model_14B
 
-llm = LLM(model=test_model, gpu_memory_utilization=0.95, dtype=torch.bfloat16, max_model_len=20000,
+llm = LLM(model=test_model, gpu_memory_utilization=0.95, dtype=torch.bfloat16, max_model_len=8192,
           #tokenizer=tokenizer,
           )
 tokenizer = AutoTokenizer.from_pretrained(test_model)
@@ -42,6 +42,8 @@ rl_full_prefill = []
 max_ctx_len = 3400
 #TODO (Jiayi): fix filler tokens at the begining or pass in tokenizer
 for sample_idx, ex in enumerate(eval_dataset):
+    if sample_idx == 1:
+        break
     answers = ex["answers"]
     if args.enable_think:
         p_prompt, doc_prompts, q_prompt = build_fewshot_prompt_normal("deepseek", prefix_prompt, ex)
@@ -128,6 +130,7 @@ for sample_idx, ex in enumerate(eval_dataset):
     cache_fuse_metadata['fast_attention'] = True
     cache_fuse_metadata['suffix_len'] = last_len
     output = llm.generate(None, sampling_params, prompt_token_ids=[input_ids])
+    export_imp_indices(cache_fuse_metadata, export_dir="./imp_indices_exports", name_prefix=f"blend_")
     res = output[0].outputs[0].text
     print("raw res:", res)
     if args.enable_think:
@@ -149,6 +152,7 @@ for sample_idx, ex in enumerate(eval_dataset):
     cache_fuse_metadata['fast_attention'] = True
     cache_fuse_metadata['suffix_len'] = last_len
     output = llm.generate(None, sampling_params, prompt_token_ids=[input_ids])
+    export_imp_indices(cache_fuse_metadata, export_dir="./imp_indices_exports", name_prefix=f"full_reuse_")
     res = output[0].outputs[0].text
     print("raw res:", res)
     if args.enable_think:
@@ -162,22 +166,22 @@ for sample_idx, ex in enumerate(eval_dataset):
     rl = max([compute_rl(res, answer) for answer in answers])
     rl_full_reuse.append(rl)
     
-    # for full prefill
-    sampling_params = SamplingParams(temperature=0, max_tokens=512)
-    cache_fuse_metadata["check"] = False
-    cache_fuse_metadata['collect'] = False
-    output = llm.generate([input_prompt], sampling_params)
-    res = output[0].outputs[0].text
-    print("raw res:", res)
-    if args.enable_think:
-        res = extract_after_think(res)
-    res = res.lstrip('\n').split('\n')[0]
-    print(f"full prefill generation: {res}")
-    ttft = output[0].metrics.first_token_time-output[0].metrics.first_scheduled_time
-    print(f"sample: {sample_idx}, TTFT: {ttft}")
-    ttft_full_prefill.append(ttft)
-    rl = max([compute_rl(res, answer) for answer in answers])
-    rl_full_prefill.append(rl)
+    # # for full prefill
+    # sampling_params = SamplingParams(temperature=0, max_tokens=512)
+    # cache_fuse_metadata["check"] = False
+    # cache_fuse_metadata['collect'] = False
+    # output = llm.generate([input_prompt], sampling_params)
+    # res = output[0].outputs[0].text
+    # print("raw res:", res)
+    # if args.enable_think:
+    #     res = extract_after_think(res)
+    # res = res.lstrip('\n').split('\n')[0]
+    # print(f"full prefill generation: {res}")
+    # ttft = output[0].metrics.first_token_time-output[0].metrics.first_scheduled_time
+    # print(f"sample: {sample_idx}, TTFT: {ttft}")
+    # ttft_full_prefill.append(ttft)
+    # rl = max([compute_rl(res, answer) for answer in answers])
+    # rl_full_prefill.append(rl)
     print("------------")
     
 

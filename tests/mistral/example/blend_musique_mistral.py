@@ -2,7 +2,7 @@ from vllm import LLM, SamplingParams
 import torch
 import numpy as np
 from transformers import AutoTokenizer
-from utils import load_dataset, build_qa_prompt_normal, compute_f1
+from tests.tools.utils import REPO_ROOT, load_dataset, build_qa_prompt_normal, compute_f1
 import argparse
 
 # Parse command-line arguments
@@ -15,7 +15,7 @@ args = parser.parse_args()
 print("args.use_cache:", args.use_cache)
 print("args.recomp_ratio:", args.recomp_ratio)
 
-eval_dataset = load_dataset("inputs/musique_s.json")
+eval_dataset = load_dataset(f"{REPO_ROOT}/inputs/musique_s.json")
 
 test_model="/mnt/nvme0n1/modelscope/Mistral-7B-Instruct-v0.2"
 

@@ -2,16 +2,16 @@ from vllm import LLM, SamplingParams
 import torch
 import numpy as np
 from transformers import AutoTokenizer
-from utils import load_dataset, build_qa_prompt_normal, compute_f1, extract_after_think
+from tests.tools.utils import REPO_ROOT, load_dataset, build_qa_prompt_normal, compute_f1, extract_after_think
 import argparse
 
 # Parse command-line arguments
-parser = argparse.ArgumentParser(description="Run cache-fuse blending test for musique dataset")
+parser = argparse.ArgumentParser(description="Run cache-fuse blending test for wikimqa dataset")
 parser.add_argument("--model-size", dest="model_size", type=str, default="7B")
 parser.add_argument("--enable-think", dest="enable_think", action="store_true", help="Whether to enable think marker in DeepSeek")
 args = parser.parse_args()
 
-eval_dataset = load_dataset("inputs/musique_s.json")
+eval_dataset = load_dataset(f"{REPO_ROOT}/inputs/wikimqa_s.json")
 
 test_model_7B="/workspaces/modelscope-yrcache/modelscope/deepseek-ai/DeepSeek-R1-Distill-Qwen-7B"
 test_model_14B="/workspaces/modelscope-yrcache/modelscope/deepseek-ai/DeepSeek-R1-Distill-Qwen-14B"
@@ -29,8 +29,8 @@ llm = LLM(model=test_model, gpu_memory_utilization=0.95, dtype=torch.bfloat16, m
 tokenizer = AutoTokenizer.from_pretrained(test_model)
 llm.set_tokenizer(tokenizer)
 
-prefix_prompt = "You will be asked a question after reading several passages. Please directly answer the question based on the given passages. Do NOT repeat the question. The answer should be within 5 words..\nPassages:\n"
-query_prompt = "\n\nAnswer the question directly based on the given passages. Do NOT repeat the question. The answer should be within 5 words. \nQuestion:"
+prefix_prompt = "Answer the question based on the given passages. Only give me the answer and do not output any other words.\n\nThe following are given passages.\n"
+query_prompt = f"\n\nAnswer the question based on the given passages. Answer the question within 5 words. Do NOT repeat the question or output any other words. Question: "
 
 ttft_blend = []
 ttft_full_reuse = []
@@ -38,6 +38,8 @@ ttft_full_prefill = []
 f1_blend = []
 f1_full_reuse = []
 f1_full_prefill = []
+
+#max_ctx_len = 4096-196
 
 sample = 0
 
@@ -52,21 +54,21 @@ for ex in eval_dataset:
     q_ids = tokenizer.encode(q_prompt)[1:]
     p_ids = tokenizer.encode(p_promt)[1:]
 
-    #import pdb
-    #pdb.set_trace()
-    
+    # drop last chunks
     #while len(list(chain.from_iterable(doc_chunk_ids))) > max_ctx_len:
     #    del_idx = len(doc_chunk_ids)-1
     #    del doc_chunk_ids[del_idx]
+        
     # Create a sampling params object.
     sampling_params = SamplingParams(temperature=0, max_tokens=1)
 
     # Create an tokenizer and LLM.
     cache_fuse_metadata = llm.llm_engine.model_executor.driver_worker.model_runner.model.model.cache_fuse_metadata
+    cache_fuse_metadata['collect'] = False
+    cache_fuse_metadata['check'] = False
 
     s_start_len = len(p_ids) + 1
 
-    #s_start = [518, 25580, 29962]
     s_start = []
     s_start_1_len = len(s_start) + 1
 
@@ -103,28 +105,26 @@ for ex in eval_dataset:
             else:
                 chunk_past_key_values[j][0] = torch.cat((chunk_past_key_values[j][0],temp_k), dim=0)
                 chunk_past_key_values[j][1] = torch.cat((chunk_past_key_values[j][1],temp_v), dim=0)
-
     llm.llm_engine.model_executor.driver_worker.model_runner.model.model.old_kvs = chunk_past_key_values
-
+        
     input_ids = []
 
     for i in range(len(doc_chunk_ids)):
         if i == 0:
-            temp_ids = s_start_prefix+doc_chunk_ids[i]
+            temp_ids =s_start_prefix+ doc_chunk_ids[i]
         else:
             temp_ids = doc_chunk_ids[i][s_start_1_len-1:]
         input_ids += temp_ids
-        
     # print(len(input_ids))
-        
     input_prompt = tokenizer.decode(input_ids)
-
+    
     # for blend
     sampling_params = SamplingParams(temperature=0, max_tokens=512)
     cache_fuse_metadata["check"] = True
     cache_fuse_metadata['collect'] = False
-    cache_fuse_metadata['suffix_len'] = last_len
     cache_fuse_metadata['recomp_ratio'] = 0.2
+    cache_fuse_metadata['fast_attention'] = True
+    cache_fuse_metadata['suffix_len'] = last_len
     output = llm.generate(None, sampling_params, prompt_token_ids=[input_ids])
     res = output[0].outputs[0].text
     print("raw res:", res)
@@ -134,15 +134,16 @@ for ex in eval_dataset:
     ttft = output[0].metrics.first_token_time-output[0].metrics.first_scheduled_time
     print(f"sample: {sample}, TTFT: {ttft}")
     ttft_blend.append(ttft)
-    f1 = max([compute_f1(res, answer, tokenizer) for answer in answers])
+    f1 = max([compute_f1(res, answer[0], tokenizer) for answer in answers])
     f1_blend.append(f1)
 
     # for full reuse
     sampling_params = SamplingParams(temperature=0, max_tokens=512)
     cache_fuse_metadata["check"] = True
     cache_fuse_metadata['collect'] = False
-    cache_fuse_metadata['suffix_len'] = last_len
     cache_fuse_metadata['recomp_ratio'] = 0.0
+    cache_fuse_metadata['fast_attention'] = True
+    cache_fuse_metadata['suffix_len'] = last_len
     output = llm.generate(None, sampling_params, prompt_token_ids=[input_ids])
     res = output[0].outputs[0].text
     print("raw res:", res)
@@ -152,7 +153,7 @@ for ex in eval_dataset:
     ttft = output[0].metrics.first_token_time-output[0].metrics.first_scheduled_time
     print(f"sample: {sample}, TTFT: {ttft}")
     ttft_full_reuse.append(ttft)
-    f1 = max([compute_f1(res, answer, tokenizer) for answer in answers])
+    f1 = max([compute_f1(res, answer[0], tokenizer) for answer in answers])
     f1_full_reuse.append(f1)
 
     
@@ -160,7 +161,7 @@ for ex in eval_dataset:
     sampling_params = SamplingParams(temperature=0, max_tokens=512)
     cache_fuse_metadata["check"] = False
     cache_fuse_metadata['collect'] = False
-    output = llm.generate(None, sampling_params, prompt_token_ids=[input_ids])
+    output = llm.generate([input_prompt], sampling_params)
     res = output[0].outputs[0].text
     print("raw res:", res)
     if args.enable_think:
@@ -169,11 +170,16 @@ for ex in eval_dataset:
     ttft = output[0].metrics.first_token_time-output[0].metrics.first_scheduled_time
     print(f"sample: {sample}, TTFT: {ttft}")
     ttft_full_prefill.append(ttft)
-    f1 = max([compute_f1(res, answer, tokenizer) for answer in answers])
+    f1 = max([compute_f1(res, answer[0], tokenizer) for answer in answers])
     f1_full_prefill.append(f1)
     print("------------")
 
 print("---------------Result Summary---------------------")
+# print(f"TTFT with cache: {np.mean(ttft_blend)}")
+# print(f"TTFT with full prefill: {np.mean(ttft_full)}")
+# print(f"F1 with cache: {np.mean(f1_blend)}")
+# print(f"F1 with full prefill: {np.mean(f1_full)}")
+
 print(f"Avg TTFT with cache: {np.mean(ttft_blend)}")
 print(f"Avg TTFT with full reuse: {np.mean(ttft_full_reuse)}")
 print(f"Avg TTFT with full prefill: {np.mean(ttft_full_prefill)}")
