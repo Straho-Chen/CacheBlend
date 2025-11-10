@@ -2,7 +2,7 @@ from vllm import LLM, SamplingParams
 import torch
 import numpy as np
 from transformers import AutoTokenizer
-from tests.tools.utils import REPO_ROOT, load_dataset, build_qa_prompt_normal, compute_f1
+from utils.utils import REPO_ROOT, load_dataset, build_qa_prompt_normal, compute_f1
 
 eval_dataset = load_dataset(f"{REPO_ROOT}/inputs/musique_s.json")
 
@@ -104,8 +104,11 @@ for ex in eval_dataset:
     ttft = output[0].metrics.first_token_time-output[0].metrics.first_scheduled_time
     print(f"sample: {sample}, TTFT: {ttft}")
     ttft_blend.append(ttft)
-    f1 = max([compute_f1(res, answer, tokenizer) for answer in answers])
-    f1_blend.append(f1)
+    f1_max = 0
+    for answer in answers:
+        f1, _, _ = compute_f1(res, answer, tokenizer)
+        f1_max = max(f1_max, f1)
+    f1_blend.append(f1_max)
 
     # for full reuse
     sampling_params = SamplingParams(temperature=0, max_tokens=32)
@@ -119,8 +122,11 @@ for ex in eval_dataset:
     ttft = output[0].metrics.first_token_time-output[0].metrics.first_scheduled_time
     print(f"sample: {sample}, TTFT: {ttft}")
     ttft_full_reuse.append(ttft)
-    f1 = max([compute_f1(res, answer, tokenizer) for answer in answers])
-    f1_full_reuse.append(f1)
+    f1_max = 0
+    for answer in answers:
+        f1, _, _ = compute_f1(res, answer, tokenizer)
+        f1_max = max(f1_max, f1)
+    f1_full_reuse.append(f1_max)
 
     sampling_params = SamplingParams(temperature=0, max_tokens=32)
     cache_fuse_metadata["check"] = False
@@ -131,8 +137,11 @@ for ex in eval_dataset:
     ttft = output[0].metrics.first_token_time-output[0].metrics.first_scheduled_time
     print(f"sample: {sample}, TTFT: {ttft}")
     ttft_full_prefill.append(ttft)
-    f1 = max([compute_f1(res, answer, tokenizer) for answer in answers])
-    f1_full_prefill.append(f1)
+    f1_max = 0
+    for answer in answers:
+        f1, _, _ = compute_f1(res, answer, tokenizer)
+        f1_max = max(f1_max, f1)
+    f1_full_prefill.append(f1_max)
     print("------------")
 
 print("---------------Result Summary---------------------")

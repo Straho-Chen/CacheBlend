@@ -2,7 +2,7 @@ from vllm import LLM, SamplingParams
 import torch
 import numpy as np
 from transformers import AutoTokenizer
-from tests.tools.utils import REPO_ROOT, load_dataset, build_qa_prompt_normal, compute_f1
+from utils.utils import REPO_ROOT, load_dataset, build_qa_prompt_normal, compute_f1
 import argparse
 
 # Parse command-line arguments
@@ -127,8 +127,11 @@ for ex in eval_dataset:
     ttft = output[0].metrics.first_token_time-output[0].metrics.first_scheduled_time
     print(f"sample: {sample}, TTFT: {ttft}")
     ttft_v.append(ttft)
-    f1 = max([compute_f1(res, answer, tokenizer) for answer in answers])
-    f1_v.append(f1)
+    f1_max = 0
+    for answer in answers:
+        f1, _, _ = compute_f1(res, answer, tokenizer)
+        f1_max = max(f1_max, f1)
+    f1_v.append(f1_max)
 
     # sampling_params = SamplingParams(temperature=0, max_tokens=32)
     # cache_fuse_metadata["check"] = True
@@ -140,8 +143,11 @@ for ex in eval_dataset:
     # ttft = output[0].metrics.first_token_time-output[0].metrics.first_scheduled_time
     # print(f"TTFT with cache: {ttft}")
     # ttft_blend.append(ttft)
-    # f1 = max([compute_f1(res, answer, tokenizer) for answer in answers])
-    # f1_blend.append(f1)
+    # f1_max = 0
+    # for answer in answers:
+    #     f1, _, _ = compute_f1(res, answer, tokenizer)
+    #     f1_max = max(f1_max, f1)
+    # f1_blend.append(f1_max)
     
     # sampling_params = SamplingParams(temperature=0, max_tokens=32)
     # cache_fuse_metadata["check"] = False
@@ -152,8 +158,11 @@ for ex in eval_dataset:
     # ttft = output[0].metrics.first_token_time-output[0].metrics.first_scheduled_time
     # print(f"TTFT with full prefill: {ttft}")
     # ttft_full.append(ttft)
-    # f1 = max([compute_f1(res, answer, tokenizer) for answer in answers])
-    # f1_full.append(f1)
+    # f1_max = 0
+    # for answer in answers:
+    #     f1, _, _ = compute_f1(res, answer, tokenizer)
+    #     f1_max = max(f1_max, f1)
+    # f1_full.append(f1_max)
     print("------------")
 
 print("---------------Result Summary---------------------")

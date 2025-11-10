@@ -127,15 +127,19 @@ def compute_f1(a_pred, a_gold, tokenizer):
     #pdb.set_trace()
     common = collections.Counter(gold_toks) & collections.Counter(pred_toks)
     num_same = sum(common.values())
+    # if len(gold_toks) == 0 or len(pred_toks) == 0:
+    #     # If either is no-answer, then F1 is 1 if they agree, 0 otherwise
+    #     return int(gold_toks == pred_toks)
+    if len(gold_toks) == 0 and len(pred_toks) == 0:
+        return 1.0, 1.0, 1.0
     if len(gold_toks) == 0 or len(pred_toks) == 0:
-        # If either is no-answer, then F1 is 1 if they agree, 0 otherwise
-        return int(gold_toks == pred_toks)
+        return 0.0, 0.0, 0.0
     if num_same == 0:
-        return 0
+        return 0.0, 0.0, 0.0
     precision = 1.0 * num_same / len(pred_toks)
     recall = 1.0 * num_same / len(gold_toks)
     f1 = (2 * precision * recall) / (precision + recall)
-    return f1
+    return f1, precision, recall
 
 def compute_rl(pred, gold):
     scorer = rouge_scorer.RougeScorer(['rougeL'], use_stemmer=True)
@@ -201,7 +205,7 @@ def build_fewshot_prompt_normal(model, prefix, example):
     q_prompt = f"{q}{end}"
     return p_prompt, doc_prompts, q_prompt
 
-def export_attention_matrices(cache_fuse_metadata, export_dir="./attn_exports", name_prefix=""):
+def export_attention_matrices(cache_fuse_metadata, name_prefix, export_dir="./attn_exports"):
     os.makedirs(export_dir, exist_ok=True)
     for layer_to_inspect in list(cache_fuse_metadata.get("hack_q", {}).keys()):
         print(f"Inspecting layer {layer_to_inspect}:")
@@ -269,7 +273,7 @@ def export_attention_matrices(cache_fuse_metadata, export_dir="./attn_exports", 
         print(f"  exported attention for layer {layer_to_inspect} to {out_path}")
 
 
-def export_imp_indices(cache_fuse_metadata, export_dir="./imp_indices_exports", name_prefix=""):
+def export_imp_indices(cache_fuse_metadata,name_prefix, export_dir="./imp_indices_exports"):
     os.makedirs(export_dir, exist_ok=True)
     topk_num = cache_fuse_metadata.get("topk_num", None)
     imp_indices = cache_fuse_metadata.get("imp_indices", None)
@@ -286,3 +290,22 @@ def export_imp_indices(cache_fuse_metadata, export_dir="./imp_indices_exports", 
         "imp_indices": imp_indices,
     }, out_path)
     print(f"Exported important indices to {out_path}")
+
+def export_last_layer_hidden_states(cache_fuse_metadata, name_prefix, export_dir="./hidden_states_exports"):
+    os.makedirs(export_dir, exist_ok=True)
+    last_layer_hidden_states = cache_fuse_metadata.get("last_layer_hidden_states", None)
+    f1 = cache_fuse_metadata.get("f1", None)
+    precision = cache_fuse_metadata.get("precision", None)
+    recall = cache_fuse_metadata.get("recall", None)
+    if last_layer_hidden_states is None:
+        print("No last layer hidden states found, skipping export")
+        return
+    fname = f"{name_prefix}last_layer_hidden_states.pt"
+    out_path = os.path.join(export_dir, fname)
+    torch.save({
+        "last_layer_hidden_states": last_layer_hidden_states,
+        "f1": f1,
+        "precision": precision,
+        "recall": recall,
+    }, out_path)
+    print(f"Exported last layer hidden states to {out_path}")

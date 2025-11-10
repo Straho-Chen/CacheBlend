@@ -2,7 +2,7 @@ from vllm import LLM, SamplingParams
 import torch
 import numpy as np
 from transformers import AutoTokenizer
-from tests.tools.utils import REPO_ROOT, load_dataset, build_fewshot_prompt_normal, compute_rl, extract_after_think, export_imp_indices
+from utils.utils import REPO_ROOT, load_dataset, build_fewshot_prompt_normal, compute_rl, extract_after_think, export_imp_indices
 from itertools import chain
 import argparse
 
@@ -130,7 +130,7 @@ for sample_idx, ex in enumerate(eval_dataset):
     cache_fuse_metadata['fast_attention'] = True
     cache_fuse_metadata['suffix_len'] = last_len
     output = llm.generate(None, sampling_params, prompt_token_ids=[input_ids])
-    export_imp_indices(cache_fuse_metadata, export_dir="./imp_indices_exports", name_prefix=f"blend_")
+    export_imp_indices(cache_fuse_metadata, name_prefix=f"blend_")
     res = output[0].outputs[0].text
     print("raw res:", res)
     if args.enable_think:
@@ -152,7 +152,7 @@ for sample_idx, ex in enumerate(eval_dataset):
     cache_fuse_metadata['fast_attention'] = True
     cache_fuse_metadata['suffix_len'] = last_len
     output = llm.generate(None, sampling_params, prompt_token_ids=[input_ids])
-    export_imp_indices(cache_fuse_metadata, export_dir="./imp_indices_exports", name_prefix=f"full_reuse_")
+    export_imp_indices(cache_fuse_metadata, name_prefix=f"full_reuse_")
     res = output[0].outputs[0].text
     print("raw res:", res)
     if args.enable_think:

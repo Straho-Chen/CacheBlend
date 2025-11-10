@@ -2,7 +2,7 @@ from vllm import LLM, SamplingParams
 import torch
 import numpy as np
 from transformers import AutoTokenizer
-from tests.tools.utils import REPO_ROOT, load_dataset, build_fewshot_prompt_normal, compute_rl
+from utils.utils import REPO_ROOT, load_dataset, build_fewshot_prompt_normal, compute_rl
 from itertools import chain
 import argparse
 

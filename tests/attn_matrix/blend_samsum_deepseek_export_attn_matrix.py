@@ -2,7 +2,7 @@ from vllm import LLM, SamplingParams
 import torch
 import numpy as np
 from transformers import AutoTokenizer
-from utils import load_dataset, build_fewshot_prompt_normal, compute_rl, extract_after_think, export_attention_matrices
+from utils.utils import load_dataset, build_fewshot_prompt_normal, compute_rl, extract_after_think, export_attention_matrices
 from itertools import chain
 import argparse
 
@@ -172,7 +172,7 @@ for sample_idx, ex in enumerate(eval_dataset):
     cache_fuse_metadata["hack_q"] = {}
     cache_fuse_metadata["hack_k"] = {}
     output = llm.generate([input_prompt], sampling_params)
-    export_attention_matrices(cache_fuse_metadata, export_dir="./attn_exports", name_prefix=f"prefill_")
+    export_attention_matrices(cache_fuse_metadata, name_prefix=f"prefill_")
     res = output[0].outputs[0].text
     print("raw res:", res)
     if args.enable_think:
