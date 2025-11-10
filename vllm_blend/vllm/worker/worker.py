@@ -255,6 +255,8 @@ class Worker(WorkerBase):
         if num_seq_groups == 0:
             return []
 
+        # print(f"Worker {self.rank}: executing model with "
+        #       f"{num_seq_groups} sequence groups.")
         output = self.model_runner.execute_model(seq_group_metadata_list,
                                                  self.gpu_cache)
 

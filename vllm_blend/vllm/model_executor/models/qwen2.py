@@ -295,6 +295,8 @@ class Qwen2Model(nn.Module):
     ) -> torch.Tensor:
         hidden_states = self.embed_tokens(input_ids)
 
+        # print("prefill metadata:", attn_metadata.prefill_metadata)
+
         if attn_metadata.prefill_metadata:
             temp_status = 0 # full prefill
             if self.cache_fuse_metadata["check"]:
@@ -345,6 +347,9 @@ class Qwen2Model(nn.Module):
                 positions = positions[self.cache_fuse_metadata["imp_indices"]]
         
         hidden_states, _ = self.norm(hidden_states, residual)
+        # print(f"Final hidden states shape: {hidden_states.shape}")
+        if self.cache_fuse_metadata.get("export_last_layer_hidden_states", False):
+            self.cache_fuse_metadata["last_layer_hidden_states"] = hidden_states
         return hidden_states
 
 

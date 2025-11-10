@@ -195,6 +195,7 @@ class LLM:
             multi_modal_data.data = multi_modal_data.data.to(torch.float16)
 
         # Add requests to the engine.
+        # print(f"Adding {num_requests} requests to the engine.")
         for i in range(num_requests):
             prompt = prompts[i] if prompts is not None else None
             token_ids = None if prompt_token_ids is None else prompt_token_ids[
@@ -238,7 +239,10 @@ class LLM:
                         dynamic_ncols=True)
         # Run the engine.
         outputs: List[RequestOutput] = []
+        # cnt = 0
         while self.llm_engine.has_unfinished_requests():
+            # cnt += 1
+            # print(f"Running engine step {cnt}...")
             step_outputs = self.llm_engine.step()
             for output in step_outputs:
                 if output.finished:

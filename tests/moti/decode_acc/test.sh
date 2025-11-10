@@ -1,0 +1,63 @@
+#!/bin/bash
+
+set -ex
+
+source "../../tools/common.sh"
+
+ABS_PATH=$(where_is_script "$0")
+
+OUTPUT_DIR=$ABS_PATH/output
+
+TABLE_NAME="$ABS_PATH/performance-comparison-table"
+
+table_create "$TABLE_NAME" "model dataset name ttft f1"
+
+mkdir -p $OUTPUT_DIR
+
+# DATASET=("musique" "samsum" "wikimqa")
+# DATASET=("musique")
+# DATASET=("samsum" "wikimqa")
+DATASET=("wikimqa")
+
+# MODEL_SIZE=("14B" "7B")
+MODEL_SIZE=("14B")
+
+for size in ${MODEL_SIZE[@]}; do
+    for DATASET_NAME in ${DATASET[@]}; do
+        echo "Testing $DATASET_NAME mode size $size..."
+
+        # test for think model
+        log_file=$OUTPUT_DIR/blend_${DATASET_NAME}_${size}_deepseek.txt
+        python example/blend_${DATASET_NAME}_deepseek.py --model-size $size --enable-think > $log_file 2>&1
+
+        blend_ttft=$(grep "Avg TTFT with cache:" $log_file | awk '{print $NF}')
+        blend_f1=$(grep "Avg F1 with cache:" $log_file | awk '{print $NF}')
+        table_add_row "$TABLE_NAME" "deepseek-think $DATASET_NAME blend-$size $blend_ttft $blend_f1"
+
+        full_reuse_ttft=$(grep "Avg TTFT with full reuse:" $log_file | awk '{print $NF}')
+        full_reuse_f1=$(grep "Avg F1 with full reuse:" $log_file | awk '{print $NF}')
+        table_add_row "$TABLE_NAME" "deepseek-think $DATASET_NAME full_reuse-$size $full_reuse_ttft $full_reuse_f1"
+
+        full_prefill_ttft=$(grep "Avg TTFT with full prefill:" $log_file | awk '{print $NF}')
+        full_prefill_f1=$(grep "Avg F1 with full prefill:" $log_file | awk '{print $NF}')
+        table_add_row "$TABLE_NAME" "deepseek-think $DATASET_NAME full_prefill-$size $full_prefill_ttft $full_prefill_f1"
+
+        # # test for unthink model
+        # log_file=$OUTPUT_DIR/blend_${DATASET_NAME}_${size}_deepseek_nothink.txt
+        # python example/blend_${DATASET_NAME}_deepseek.py --model-size $size > $log_file 2>&1
+
+        # blend_ttft=$(grep "Avg TTFT with cache:" $log_file | awk '{print $NF}')
+        # blend_f1=$(grep "Avg F1 with cache:" $log_file | awk '{print $NF}')
+        # table_add_row "$TABLE_NAME" "deepseek-nothink $DATASET_NAME blend-$size $blend_ttft $blend_f1"
+
+        # full_reuse_ttft=$(grep "Avg TTFT with full reuse:" $log_file | awk '{print $NF}')
+        # full_reuse_f1=$(grep "Avg F1 with full reuse:" $log_file | awk '{print $NF}')
+        # table_add_row "$TABLE_NAME" "deepseek-nothink $DATASET_NAME full_reuse-$size $full_reuse_ttft $full_reuse_f1"
+
+        # full_prefill_ttft=$(grep "Avg TTFT with full prefill:" $log_file | awk '{print $NF}')
+        # full_prefill_f1=$(grep "Avg F1 with full prefill:" $log_file | awk '{print $NF}')
+        # table_add_row "$TABLE_NAME" "deepseek-nothink $DATASET_NAME full_prefill-$size $full_prefill_ttft $full_prefill_f1"
+    done
+done
+
+echo "All tests done. Outputs are saved in $OUTPUT_DIR"

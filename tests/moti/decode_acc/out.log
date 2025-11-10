@@ -1,0 +1,1203 @@
+Comparing a:hidden_states_exports/blend_1_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_1_last_layer_hidden_states.pt
+ha shape: torch.Size([1400, 5120]), hb shape: torch.Size([6784, 5120])
+Comparing a:hidden_states_exports/blend_2_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_2_last_layer_hidden_states.pt
+ha shape: torch.Size([1253, 5120]), hb shape: torch.Size([6043, 5120])
+Comparing a:hidden_states_exports/blend_3_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_3_last_layer_hidden_states.pt
+ha shape: torch.Size([1357, 5120]), hb shape: torch.Size([6573, 5120])
+Comparing a:hidden_states_exports/blend_4_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_4_last_layer_hidden_states.pt
+ha shape: torch.Size([1247, 5120]), hb shape: torch.Size([5985, 5120])
+Comparing a:hidden_states_exports/blend_5_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_5_last_layer_hidden_states.pt
+ha shape: torch.Size([1403, 5120]), hb shape: torch.Size([6757, 5120])
+Comparing a:hidden_states_exports/blend_6_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_6_last_layer_hidden_states.pt
+ha shape: torch.Size([1319, 5120]), hb shape: torch.Size([6378, 5120])
+Comparing a:hidden_states_exports/blend_7_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_7_last_layer_hidden_states.pt
+ha shape: torch.Size([1356, 5120]), hb shape: torch.Size([6526, 5120])
+Comparing a:hidden_states_exports/blend_8_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_8_last_layer_hidden_states.pt
+ha shape: torch.Size([1180, 5120]), hb shape: torch.Size([5695, 5120])
+Comparing a:hidden_states_exports/blend_9_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_9_last_layer_hidden_states.pt
+ha shape: torch.Size([1258, 5120]), hb shape: torch.Size([6095, 5120])
+Comparing a:hidden_states_exports/blend_10_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_10_last_layer_hidden_states.pt
+ha shape: torch.Size([1256, 5120]), hb shape: torch.Size([6067, 5120])
+Comparing a:hidden_states_exports/blend_11_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_11_last_layer_hidden_states.pt
+ha shape: torch.Size([1297, 5120]), hb shape: torch.Size([6235, 5120])
+Comparing a:hidden_states_exports/blend_12_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_12_last_layer_hidden_states.pt
+ha shape: torch.Size([1285, 5120]), hb shape: torch.Size([6203, 5120])
+Comparing a:hidden_states_exports/blend_13_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_13_last_layer_hidden_states.pt
+ha shape: torch.Size([1221, 5120]), hb shape: torch.Size([5882, 5120])
+Comparing a:hidden_states_exports/blend_14_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_14_last_layer_hidden_states.pt
+ha shape: torch.Size([1320, 5120]), hb shape: torch.Size([6389, 5120])
+Comparing a:hidden_states_exports/blend_15_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_15_last_layer_hidden_states.pt
+ha shape: torch.Size([1234, 5120]), hb shape: torch.Size([5960, 5120])
+Comparing a:hidden_states_exports/blend_16_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_16_last_layer_hidden_states.pt
+ha shape: torch.Size([1324, 5120]), hb shape: torch.Size([6407, 5120])
+Comparing a:hidden_states_exports/blend_17_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_17_last_layer_hidden_states.pt
+ha shape: torch.Size([1264, 5120]), hb shape: torch.Size([6083, 5120])
+Comparing a:hidden_states_exports/blend_18_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_18_last_layer_hidden_states.pt
+ha shape: torch.Size([1259, 5120]), hb shape: torch.Size([6023, 5120])
+Comparing a:hidden_states_exports/blend_19_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_19_last_layer_hidden_states.pt
+ha shape: torch.Size([1149, 5120]), hb shape: torch.Size([5492, 5120])
+Comparing a:hidden_states_exports/blend_20_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_20_last_layer_hidden_states.pt
+ha shape: torch.Size([1233, 5120]), hb shape: torch.Size([5947, 5120])
+Comparing a:hidden_states_exports/blend_21_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_21_last_layer_hidden_states.pt
+ha shape: torch.Size([1225, 5120]), hb shape: torch.Size([5906, 5120])
+Comparing a:hidden_states_exports/blend_22_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_22_last_layer_hidden_states.pt
+ha shape: torch.Size([1259, 5120]), hb shape: torch.Size([6074, 5120])
+Comparing a:hidden_states_exports/blend_23_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_23_last_layer_hidden_states.pt
+ha shape: torch.Size([1281, 5120]), hb shape: torch.Size([6166, 5120])
+Comparing a:hidden_states_exports/blend_24_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_24_last_layer_hidden_states.pt
+ha shape: torch.Size([1339, 5120]), hb shape: torch.Size([6464, 5120])
+Comparing a:hidden_states_exports/blend_25_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_25_last_layer_hidden_states.pt
+ha shape: torch.Size([1298, 5120]), hb shape: torch.Size([6244, 5120])
+Comparing a:hidden_states_exports/blend_26_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_26_last_layer_hidden_states.pt
+ha shape: torch.Size([1271, 5120]), hb shape: torch.Size([6105, 5120])
+Comparing a:hidden_states_exports/blend_27_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_27_last_layer_hidden_states.pt
+ha shape: torch.Size([1265, 5120]), hb shape: torch.Size([6095, 5120])
+Comparing a:hidden_states_exports/blend_28_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_28_last_layer_hidden_states.pt
+ha shape: torch.Size([1180, 5120]), hb shape: torch.Size([5679, 5120])
+Comparing a:hidden_states_exports/blend_29_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_29_last_layer_hidden_states.pt
+ha shape: torch.Size([1315, 5120]), hb shape: torch.Size([6362, 5120])
+Comparing a:hidden_states_exports/blend_30_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_30_last_layer_hidden_states.pt
+ha shape: torch.Size([1204, 5120]), hb shape: torch.Size([5800, 5120])
+Comparing a:hidden_states_exports/blend_31_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_31_last_layer_hidden_states.pt
+ha shape: torch.Size([1461, 5120]), hb shape: torch.Size([7064, 5120])
+Comparing a:hidden_states_exports/blend_32_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_32_last_layer_hidden_states.pt
+ha shape: torch.Size([1243, 5120]), hb shape: torch.Size([6015, 5120])
+Comparing a:hidden_states_exports/blend_33_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_33_last_layer_hidden_states.pt
+ha shape: torch.Size([1248, 5120]), hb shape: torch.Size([6023, 5120])
+Comparing a:hidden_states_exports/blend_34_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_34_last_layer_hidden_states.pt
+ha shape: torch.Size([1309, 5120]), hb shape: torch.Size([6263, 5120])
+Comparing a:hidden_states_exports/blend_35_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_35_last_layer_hidden_states.pt
+ha shape: torch.Size([1337, 5120]), hb shape: torch.Size([6455, 5120])
+Comparing a:hidden_states_exports/blend_36_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_36_last_layer_hidden_states.pt
+ha shape: torch.Size([1275, 5120]), hb shape: torch.Size([6156, 5120])
+Comparing a:hidden_states_exports/blend_37_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_37_last_layer_hidden_states.pt
+ha shape: torch.Size([1289, 5120]), hb shape: torch.Size([6192, 5120])
+Comparing a:hidden_states_exports/blend_38_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_38_last_layer_hidden_states.pt
+ha shape: torch.Size([1226, 5120]), hb shape: torch.Size([5908, 5120])
+Comparing a:hidden_states_exports/blend_39_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_39_last_layer_hidden_states.pt
+ha shape: torch.Size([1299, 5120]), hb shape: torch.Size([6242, 5120])
+Comparing a:hidden_states_exports/blend_40_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_40_last_layer_hidden_states.pt
+ha shape: torch.Size([1246, 5120]), hb shape: torch.Size([6010, 5120])
+Comparing a:hidden_states_exports/blend_41_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_41_last_layer_hidden_states.pt
+ha shape: torch.Size([1222, 5120]), hb shape: torch.Size([5877, 5120])
+Comparing a:hidden_states_exports/blend_42_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_42_last_layer_hidden_states.pt
+ha shape: torch.Size([1270, 5120]), hb shape: torch.Size([6104, 5120])
+Comparing a:hidden_states_exports/blend_43_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_43_last_layer_hidden_states.pt
+ha shape: torch.Size([1265, 5120]), hb shape: torch.Size([6100, 5120])
+Comparing a:hidden_states_exports/blend_44_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_44_last_layer_hidden_states.pt
+ha shape: torch.Size([1279, 5120]), hb shape: torch.Size([6154, 5120])
+Comparing a:hidden_states_exports/blend_45_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_45_last_layer_hidden_states.pt
+ha shape: torch.Size([1267, 5120]), hb shape: torch.Size([6069, 5120])
+Comparing a:hidden_states_exports/blend_46_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_46_last_layer_hidden_states.pt
+ha shape: torch.Size([1445, 5120]), hb shape: torch.Size([6995, 5120])
+Comparing a:hidden_states_exports/blend_47_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_47_last_layer_hidden_states.pt
+ha shape: torch.Size([1321, 5120]), hb shape: torch.Size([6374, 5120])
+Comparing a:hidden_states_exports/blend_48_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_48_last_layer_hidden_states.pt
+ha shape: torch.Size([1222, 5120]), hb shape: torch.Size([5900, 5120])
+Comparing a:hidden_states_exports/blend_49_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_49_last_layer_hidden_states.pt
+ha shape: torch.Size([1253, 5120]), hb shape: torch.Size([6028, 5120])
+Comparing a:hidden_states_exports/blend_50_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_50_last_layer_hidden_states.pt
+ha shape: torch.Size([1265, 5120]), hb shape: torch.Size([6089, 5120])
+Comparing a:hidden_states_exports/blend_51_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_51_last_layer_hidden_states.pt
+ha shape: torch.Size([1328, 5120]), hb shape: torch.Size([6422, 5120])
+Comparing a:hidden_states_exports/blend_52_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_52_last_layer_hidden_states.pt
+ha shape: torch.Size([1435, 5120]), hb shape: torch.Size([6942, 5120])
+Comparing a:hidden_states_exports/blend_53_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_53_last_layer_hidden_states.pt
+ha shape: torch.Size([1306, 5120]), hb shape: torch.Size([6280, 5120])
+Comparing a:hidden_states_exports/blend_54_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_54_last_layer_hidden_states.pt
+ha shape: torch.Size([1232, 5120]), hb shape: torch.Size([5915, 5120])
+Comparing a:hidden_states_exports/blend_55_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_55_last_layer_hidden_states.pt
+ha shape: torch.Size([1313, 5120]), hb shape: torch.Size([6324, 5120])
+Comparing a:hidden_states_exports/blend_56_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_56_last_layer_hidden_states.pt
+ha shape: torch.Size([1233, 5120]), hb shape: torch.Size([5928, 5120])
+Comparing a:hidden_states_exports/blend_57_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_57_last_layer_hidden_states.pt
+ha shape: torch.Size([1248, 5120]), hb shape: torch.Size([6006, 5120])
+Comparing a:hidden_states_exports/blend_58_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_58_last_layer_hidden_states.pt
+ha shape: torch.Size([1251, 5120]), hb shape: torch.Size([6021, 5120])
+Comparing a:hidden_states_exports/blend_59_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_59_last_layer_hidden_states.pt
+ha shape: torch.Size([1226, 5120]), hb shape: torch.Size([5916, 5120])
+Comparing a:hidden_states_exports/blend_60_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_60_last_layer_hidden_states.pt
+ha shape: torch.Size([1185, 5120]), hb shape: torch.Size([5712, 5120])
+Comparing a:hidden_states_exports/blend_61_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_61_last_layer_hidden_states.pt
+ha shape: torch.Size([1260, 5120]), hb shape: torch.Size([6070, 5120])
+Comparing a:hidden_states_exports/blend_62_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_62_last_layer_hidden_states.pt
+ha shape: torch.Size([1228, 5120]), hb shape: torch.Size([5906, 5120])
+Comparing a:hidden_states_exports/blend_63_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_63_last_layer_hidden_states.pt
+ha shape: torch.Size([1241, 5120]), hb shape: torch.Size([5988, 5120])
+Comparing a:hidden_states_exports/blend_64_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_64_last_layer_hidden_states.pt
+ha shape: torch.Size([1231, 5120]), hb shape: torch.Size([5952, 5120])
+Comparing a:hidden_states_exports/blend_65_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_65_last_layer_hidden_states.pt
+ha shape: torch.Size([1285, 5120]), hb shape: torch.Size([6209, 5120])
+Comparing a:hidden_states_exports/blend_66_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_66_last_layer_hidden_states.pt
+ha shape: torch.Size([1253, 5120]), hb shape: torch.Size([6026, 5120])
+Comparing a:hidden_states_exports/blend_67_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_67_last_layer_hidden_states.pt
+ha shape: torch.Size([1271, 5120]), hb shape: torch.Size([6126, 5120])
+Comparing a:hidden_states_exports/blend_68_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_68_last_layer_hidden_states.pt
+ha shape: torch.Size([1291, 5120]), hb shape: torch.Size([6234, 5120])
+Comparing a:hidden_states_exports/blend_69_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_69_last_layer_hidden_states.pt
+ha shape: torch.Size([1307, 5120]), hb shape: torch.Size([6289, 5120])
+Comparing a:hidden_states_exports/blend_70_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_70_last_layer_hidden_states.pt
+ha shape: torch.Size([1282, 5120]), hb shape: torch.Size([6185, 5120])
+Comparing a:hidden_states_exports/blend_71_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_71_last_layer_hidden_states.pt
+ha shape: torch.Size([1193, 5120]), hb shape: torch.Size([5738, 5120])
+Comparing a:hidden_states_exports/blend_72_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_72_last_layer_hidden_states.pt
+ha shape: torch.Size([1269, 5120]), hb shape: torch.Size([6123, 5120])
+Comparing a:hidden_states_exports/blend_73_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_73_last_layer_hidden_states.pt
+ha shape: torch.Size([1399, 5120]), hb shape: torch.Size([6758, 5120])
+Comparing a:hidden_states_exports/blend_74_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_74_last_layer_hidden_states.pt
+ha shape: torch.Size([1138, 5120]), hb shape: torch.Size([5447, 5120])
+Comparing a:hidden_states_exports/blend_75_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_75_last_layer_hidden_states.pt
+ha shape: torch.Size([1322, 5120]), hb shape: torch.Size([6390, 5120])
+Comparing a:hidden_states_exports/blend_76_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_76_last_layer_hidden_states.pt
+ha shape: torch.Size([1432, 5120]), hb shape: torch.Size([6934, 5120])
+Comparing a:hidden_states_exports/blend_77_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_77_last_layer_hidden_states.pt
+ha shape: torch.Size([1197, 5120]), hb shape: torch.Size([5770, 5120])
+Comparing a:hidden_states_exports/blend_78_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_78_last_layer_hidden_states.pt
+ha shape: torch.Size([1391, 5120]), hb shape: torch.Size([6748, 5120])
+Comparing a:hidden_states_exports/blend_79_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_79_last_layer_hidden_states.pt
+ha shape: torch.Size([1278, 5120]), hb shape: torch.Size([6164, 5120])
+Comparing a:hidden_states_exports/blend_80_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_80_last_layer_hidden_states.pt
+ha shape: torch.Size([1300, 5120]), hb shape: torch.Size([6266, 5120])
+Comparing a:hidden_states_exports/blend_81_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_81_last_layer_hidden_states.pt
+ha shape: torch.Size([1237, 5120]), hb shape: torch.Size([5950, 5120])
+Comparing a:hidden_states_exports/blend_82_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_82_last_layer_hidden_states.pt
+ha shape: torch.Size([1292, 5120]), hb shape: torch.Size([6217, 5120])
+Comparing a:hidden_states_exports/blend_83_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_83_last_layer_hidden_states.pt
+ha shape: torch.Size([1321, 5120]), hb shape: torch.Size([6376, 5120])
+Comparing a:hidden_states_exports/blend_84_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_84_last_layer_hidden_states.pt
+ha shape: torch.Size([1294, 5120]), hb shape: torch.Size([6229, 5120])
+Comparing a:hidden_states_exports/blend_85_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_85_last_layer_hidden_states.pt
+ha shape: torch.Size([1223, 5120]), hb shape: torch.Size([5866, 5120])
+Comparing a:hidden_states_exports/blend_86_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_86_last_layer_hidden_states.pt
+ha shape: torch.Size([1211, 5120]), hb shape: torch.Size([5811, 5120])
+Comparing a:hidden_states_exports/blend_87_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_87_last_layer_hidden_states.pt
+ha shape: torch.Size([1201, 5120]), hb shape: torch.Size([5774, 5120])
+Comparing a:hidden_states_exports/blend_88_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_88_last_layer_hidden_states.pt
+ha shape: torch.Size([1265, 5120]), hb shape: torch.Size([6098, 5120])
+Comparing a:hidden_states_exports/blend_89_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_89_last_layer_hidden_states.pt
+ha shape: torch.Size([1176, 5120]), hb shape: torch.Size([5665, 5120])
+Comparing a:hidden_states_exports/blend_90_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_90_last_layer_hidden_states.pt
+ha shape: torch.Size([1261, 5120]), hb shape: torch.Size([6067, 5120])
+Comparing a:hidden_states_exports/blend_91_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_91_last_layer_hidden_states.pt
+ha shape: torch.Size([1184, 5120]), hb shape: torch.Size([5680, 5120])
+Comparing a:hidden_states_exports/blend_92_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_92_last_layer_hidden_states.pt
+ha shape: torch.Size([1158, 5120]), hb shape: torch.Size([5575, 5120])
+Comparing a:hidden_states_exports/blend_93_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_93_last_layer_hidden_states.pt
+ha shape: torch.Size([1290, 5120]), hb shape: torch.Size([6245, 5120])
+Comparing a:hidden_states_exports/blend_94_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_94_last_layer_hidden_states.pt
+ha shape: torch.Size([1260, 5120]), hb shape: torch.Size([6078, 5120])
+Comparing a:hidden_states_exports/blend_95_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_95_last_layer_hidden_states.pt
+ha shape: torch.Size([1283, 5120]), hb shape: torch.Size([6184, 5120])
+Comparing a:hidden_states_exports/blend_96_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_96_last_layer_hidden_states.pt
+ha shape: torch.Size([1240, 5120]), hb shape: torch.Size([5956, 5120])
+Comparing a:hidden_states_exports/blend_97_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_97_last_layer_hidden_states.pt
+ha shape: torch.Size([1283, 5120]), hb shape: torch.Size([6194, 5120])
+Comparing a:hidden_states_exports/blend_98_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_98_last_layer_hidden_states.pt
+ha shape: torch.Size([1280, 5120]), hb shape: torch.Size([6177, 5120])
+Comparing a:hidden_states_exports/blend_99_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_99_last_layer_hidden_states.pt
+ha shape: torch.Size([1305, 5120]), hb shape: torch.Size([6295, 5120])
+Comparing a:hidden_states_exports/blend_100_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_100_last_layer_hidden_states.pt
+ha shape: torch.Size([1277, 5120]), hb shape: torch.Size([6168, 5120])
+Comparing a:hidden_states_exports/blend_101_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_101_last_layer_hidden_states.pt
+ha shape: torch.Size([1295, 5120]), hb shape: torch.Size([6250, 5120])
+Comparing a:hidden_states_exports/blend_102_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_102_last_layer_hidden_states.pt
+ha shape: torch.Size([1373, 5120]), hb shape: torch.Size([6638, 5120])
+Comparing a:hidden_states_exports/blend_103_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_103_last_layer_hidden_states.pt
+ha shape: torch.Size([1435, 5120]), hb shape: torch.Size([6931, 5120])
+Comparing a:hidden_states_exports/blend_104_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_104_last_layer_hidden_states.pt
+ha shape: torch.Size([1247, 5120]), hb shape: torch.Size([6004, 5120])
+Comparing a:hidden_states_exports/blend_105_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_105_last_layer_hidden_states.pt
+ha shape: torch.Size([1244, 5120]), hb shape: torch.Size([6017, 5120])
+Comparing a:hidden_states_exports/blend_106_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_106_last_layer_hidden_states.pt
+ha shape: torch.Size([1246, 5120]), hb shape: torch.Size([5995, 5120])
+Comparing a:hidden_states_exports/blend_107_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_107_last_layer_hidden_states.pt
+ha shape: torch.Size([1256, 5120]), hb shape: torch.Size([6043, 5120])
+Comparing a:hidden_states_exports/blend_108_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_108_last_layer_hidden_states.pt
+ha shape: torch.Size([1305, 5120]), hb shape: torch.Size([6301, 5120])
+Comparing a:hidden_states_exports/blend_109_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_109_last_layer_hidden_states.pt
+ha shape: torch.Size([1356, 5120]), hb shape: torch.Size([6544, 5120])
+Comparing a:hidden_states_exports/blend_110_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_110_last_layer_hidden_states.pt
+ha shape: torch.Size([1276, 5120]), hb shape: torch.Size([6142, 5120])
+Comparing a:hidden_states_exports/blend_111_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_111_last_layer_hidden_states.pt
+ha shape: torch.Size([1259, 5120]), hb shape: torch.Size([6062, 5120])
+Comparing a:hidden_states_exports/blend_112_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_112_last_layer_hidden_states.pt
+ha shape: torch.Size([1239, 5120]), hb shape: torch.Size([5981, 5120])
+Comparing a:hidden_states_exports/blend_113_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_113_last_layer_hidden_states.pt
+ha shape: torch.Size([1344, 5120]), hb shape: torch.Size([6482, 5120])
+Comparing a:hidden_states_exports/blend_114_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_114_last_layer_hidden_states.pt
+ha shape: torch.Size([1265, 5120]), hb shape: torch.Size([6071, 5120])
+Comparing a:hidden_states_exports/blend_115_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_115_last_layer_hidden_states.pt
+ha shape: torch.Size([1269, 5120]), hb shape: torch.Size([6121, 5120])
+Comparing a:hidden_states_exports/blend_116_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_116_last_layer_hidden_states.pt
+ha shape: torch.Size([1262, 5120]), hb shape: torch.Size([6068, 5120])
+Comparing a:hidden_states_exports/blend_117_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_117_last_layer_hidden_states.pt
+ha shape: torch.Size([1282, 5120]), hb shape: torch.Size([6172, 5120])
+Comparing a:hidden_states_exports/blend_118_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_118_last_layer_hidden_states.pt
+ha shape: torch.Size([1239, 5120]), hb shape: torch.Size([5965, 5120])
+Comparing a:hidden_states_exports/blend_119_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_119_last_layer_hidden_states.pt
+ha shape: torch.Size([1379, 5120]), hb shape: torch.Size([6659, 5120])
+Comparing a:hidden_states_exports/blend_120_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_120_last_layer_hidden_states.pt
+ha shape: torch.Size([1285, 5120]), hb shape: torch.Size([6163, 5120])
+Comparing a:hidden_states_exports/blend_121_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_121_last_layer_hidden_states.pt
+ha shape: torch.Size([1319, 5120]), hb shape: torch.Size([6358, 5120])
+Comparing a:hidden_states_exports/blend_122_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_122_last_layer_hidden_states.pt
+ha shape: torch.Size([1283, 5120]), hb shape: torch.Size([6173, 5120])
+Comparing a:hidden_states_exports/blend_123_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_123_last_layer_hidden_states.pt
+ha shape: torch.Size([1255, 5120]), hb shape: torch.Size([6049, 5120])
+Comparing a:hidden_states_exports/blend_124_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_124_last_layer_hidden_states.pt
+ha shape: torch.Size([1243, 5120]), hb shape: torch.Size([5983, 5120])
+Comparing a:hidden_states_exports/blend_125_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_125_last_layer_hidden_states.pt
+ha shape: torch.Size([1245, 5120]), hb shape: torch.Size([5979, 5120])
+Comparing a:hidden_states_exports/blend_126_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_126_last_layer_hidden_states.pt
+ha shape: torch.Size([1282, 5120]), hb shape: torch.Size([6164, 5120])
+Comparing a:hidden_states_exports/blend_127_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_127_last_layer_hidden_states.pt
+ha shape: torch.Size([1248, 5120]), hb shape: torch.Size([5974, 5120])
+Comparing a:hidden_states_exports/blend_128_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_128_last_layer_hidden_states.pt
+ha shape: torch.Size([1316, 5120]), hb shape: torch.Size([6345, 5120])
+Comparing a:hidden_states_exports/blend_129_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_129_last_layer_hidden_states.pt
+ha shape: torch.Size([1335, 5120]), hb shape: torch.Size([6457, 5120])
+Comparing a:hidden_states_exports/blend_130_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_130_last_layer_hidden_states.pt
+ha shape: torch.Size([1337, 5120]), hb shape: torch.Size([6443, 5120])
+Comparing a:hidden_states_exports/blend_131_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_131_last_layer_hidden_states.pt
+ha shape: torch.Size([1332, 5120]), hb shape: torch.Size([6434, 5120])
+Comparing a:hidden_states_exports/blend_132_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_132_last_layer_hidden_states.pt
+ha shape: torch.Size([1270, 5120]), hb shape: torch.Size([6119, 5120])
+Comparing a:hidden_states_exports/blend_133_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_133_last_layer_hidden_states.pt
+ha shape: torch.Size([1238, 5120]), hb shape: torch.Size([5954, 5120])
+Comparing a:hidden_states_exports/blend_134_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_134_last_layer_hidden_states.pt
+ha shape: torch.Size([1342, 5120]), hb shape: torch.Size([6495, 5120])
+Comparing a:hidden_states_exports/blend_135_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_135_last_layer_hidden_states.pt
+ha shape: torch.Size([1291, 5120]), hb shape: torch.Size([6215, 5120])
+Comparing a:hidden_states_exports/blend_136_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_136_last_layer_hidden_states.pt
+ha shape: torch.Size([1382, 5120]), hb shape: torch.Size([6625, 5120])
+Comparing a:hidden_states_exports/blend_137_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_137_last_layer_hidden_states.pt
+ha shape: torch.Size([1243, 5120]), hb shape: torch.Size([6001, 5120])
+Comparing a:hidden_states_exports/blend_138_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_138_last_layer_hidden_states.pt
+ha shape: torch.Size([1151, 5120]), hb shape: torch.Size([5537, 5120])
+Comparing a:hidden_states_exports/blend_139_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_139_last_layer_hidden_states.pt
+ha shape: torch.Size([1221, 5120]), hb shape: torch.Size([5868, 5120])
+Comparing a:hidden_states_exports/blend_140_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_140_last_layer_hidden_states.pt
+ha shape: torch.Size([1263, 5120]), hb shape: torch.Size([6077, 5120])
+Comparing a:hidden_states_exports/blend_141_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_141_last_layer_hidden_states.pt
+ha shape: torch.Size([1242, 5120]), hb shape: torch.Size([6002, 5120])
+Comparing a:hidden_states_exports/blend_142_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_142_last_layer_hidden_states.pt
+ha shape: torch.Size([1287, 5120]), hb shape: torch.Size([6219, 5120])
+Comparing a:hidden_states_exports/blend_143_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_143_last_layer_hidden_states.pt
+ha shape: torch.Size([1243, 5120]), hb shape: torch.Size([5967, 5120])
+Comparing a:hidden_states_exports/blend_144_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_144_last_layer_hidden_states.pt
+ha shape: torch.Size([1265, 5120]), hb shape: torch.Size([6087, 5120])
+Comparing a:hidden_states_exports/blend_145_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_145_last_layer_hidden_states.pt
+ha shape: torch.Size([1292, 5120]), hb shape: torch.Size([6246, 5120])
+Comparing a:hidden_states_exports/blend_146_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_146_last_layer_hidden_states.pt
+ha shape: torch.Size([1225, 5120]), hb shape: torch.Size([5855, 5120])
+Comparing a:hidden_states_exports/blend_147_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_147_last_layer_hidden_states.pt
+ha shape: torch.Size([1318, 5120]), hb shape: torch.Size([6352, 5120])
+Comparing a:hidden_states_exports/blend_148_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_148_last_layer_hidden_states.pt
+ha shape: torch.Size([1266, 5120]), hb shape: torch.Size([6034, 5120])
+Comparing a:hidden_states_exports/blend_149_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_149_last_layer_hidden_states.pt
+ha shape: torch.Size([1345, 5120]), hb shape: torch.Size([6484, 5120])
+Comparing a:hidden_states_exports/blend_150_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_150_last_layer_hidden_states.pt
+ha shape: torch.Size([1256, 5120]), hb shape: torch.Size([6063, 5120])
+Comparing a:hidden_states_exports/blend_151_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_151_last_layer_hidden_states.pt
+ha shape: torch.Size([1441, 5120]), hb shape: torch.Size([6952, 5120])
+Comparing a:hidden_states_exports/blend_152_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_152_last_layer_hidden_states.pt
+ha shape: torch.Size([1293, 5120]), hb shape: torch.Size([6204, 5120])
+Comparing a:hidden_states_exports/blend_153_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_153_last_layer_hidden_states.pt
+ha shape: torch.Size([1276, 5120]), hb shape: torch.Size([6158, 5120])
+Comparing a:hidden_states_exports/blend_154_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_154_last_layer_hidden_states.pt
+ha shape: torch.Size([1266, 5120]), hb shape: torch.Size([6109, 5120])
+Comparing a:hidden_states_exports/blend_155_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_155_last_layer_hidden_states.pt
+ha shape: torch.Size([1244, 5120]), hb shape: torch.Size([5985, 5120])
+Comparing a:hidden_states_exports/blend_156_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_156_last_layer_hidden_states.pt
+ha shape: torch.Size([1300, 5120]), hb shape: torch.Size([6263, 5120])
+Comparing a:hidden_states_exports/blend_157_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_157_last_layer_hidden_states.pt
+ha shape: torch.Size([1243, 5120]), hb shape: torch.Size([5997, 5120])
+Comparing a:hidden_states_exports/blend_158_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_158_last_layer_hidden_states.pt
+ha shape: torch.Size([1239, 5120]), hb shape: torch.Size([5985, 5120])
+Comparing a:hidden_states_exports/blend_159_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_159_last_layer_hidden_states.pt
+ha shape: torch.Size([1209, 5120]), hb shape: torch.Size([5838, 5120])
+Comparing a:hidden_states_exports/blend_160_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_160_last_layer_hidden_states.pt
+ha shape: torch.Size([1310, 5120]), hb shape: torch.Size([6287, 5120])
+Comparing a:hidden_states_exports/blend_161_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_161_last_layer_hidden_states.pt
+ha shape: torch.Size([1358, 5120]), hb shape: torch.Size([6573, 5120])
+Comparing a:hidden_states_exports/blend_162_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_162_last_layer_hidden_states.pt
+ha shape: torch.Size([1322, 5120]), hb shape: torch.Size([6378, 5120])
+Comparing a:hidden_states_exports/blend_163_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_163_last_layer_hidden_states.pt
+ha shape: torch.Size([1310, 5120]), hb shape: torch.Size([6294, 5120])
+Comparing a:hidden_states_exports/blend_164_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_164_last_layer_hidden_states.pt
+ha shape: torch.Size([1219, 5120]), hb shape: torch.Size([5866, 5120])
+Comparing a:hidden_states_exports/blend_165_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_165_last_layer_hidden_states.pt
+ha shape: torch.Size([1247, 5120]), hb shape: torch.Size([6012, 5120])
+Comparing a:hidden_states_exports/blend_166_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_166_last_layer_hidden_states.pt
+ha shape: torch.Size([1292, 5120]), hb shape: torch.Size([6242, 5120])
+Comparing a:hidden_states_exports/blend_167_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_167_last_layer_hidden_states.pt
+ha shape: torch.Size([1398, 5120]), hb shape: torch.Size([6742, 5120])
+Comparing a:hidden_states_exports/blend_168_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_168_last_layer_hidden_states.pt
+ha shape: torch.Size([1300, 5120]), hb shape: torch.Size([6252, 5120])
+Comparing a:hidden_states_exports/blend_169_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_169_last_layer_hidden_states.pt
+ha shape: torch.Size([1321, 5120]), hb shape: torch.Size([6371, 5120])
+Comparing a:hidden_states_exports/blend_170_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_170_last_layer_hidden_states.pt
+ha shape: torch.Size([1258, 5120]), hb shape: torch.Size([6061, 5120])
+Comparing a:hidden_states_exports/blend_171_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_171_last_layer_hidden_states.pt
+ha shape: torch.Size([1264, 5120]), hb shape: torch.Size([6108, 5120])
+Comparing a:hidden_states_exports/blend_172_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_172_last_layer_hidden_states.pt
+ha shape: torch.Size([1293, 5120]), hb shape: torch.Size([6244, 5120])
+Comparing a:hidden_states_exports/blend_173_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_173_last_layer_hidden_states.pt
+ha shape: torch.Size([1273, 5120]), hb shape: torch.Size([6131, 5120])
+Comparing a:hidden_states_exports/blend_174_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_174_last_layer_hidden_states.pt
+ha shape: torch.Size([1214, 5120]), hb shape: torch.Size([5845, 5120])
+Comparing a:hidden_states_exports/blend_175_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_175_last_layer_hidden_states.pt
+ha shape: torch.Size([1259, 5120]), hb shape: torch.Size([6067, 5120])
+Comparing a:hidden_states_exports/blend_176_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_176_last_layer_hidden_states.pt
+ha shape: torch.Size([1453, 5120]), hb shape: torch.Size([7032, 5120])
+Comparing a:hidden_states_exports/blend_177_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_177_last_layer_hidden_states.pt
+ha shape: torch.Size([1351, 5120]), hb shape: torch.Size([6497, 5120])
+Comparing a:hidden_states_exports/blend_178_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_178_last_layer_hidden_states.pt
+ha shape: torch.Size([1250, 5120]), hb shape: torch.Size([6037, 5120])
+Comparing a:hidden_states_exports/blend_179_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_179_last_layer_hidden_states.pt
+ha shape: torch.Size([1258, 5120]), hb shape: torch.Size([6051, 5120])
+Comparing a:hidden_states_exports/blend_180_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_180_last_layer_hidden_states.pt
+ha shape: torch.Size([1416, 5120]), hb shape: torch.Size([6860, 5120])
+Comparing a:hidden_states_exports/blend_181_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_181_last_layer_hidden_states.pt
+ha shape: torch.Size([1340, 5120]), hb shape: torch.Size([6484, 5120])
+Comparing a:hidden_states_exports/blend_182_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_182_last_layer_hidden_states.pt
+ha shape: torch.Size([1241, 5120]), hb shape: torch.Size([5979, 5120])
+Comparing a:hidden_states_exports/blend_183_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_183_last_layer_hidden_states.pt
+ha shape: torch.Size([1328, 5120]), hb shape: torch.Size([6435, 5120])
+Comparing a:hidden_states_exports/blend_184_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_184_last_layer_hidden_states.pt
+ha shape: torch.Size([1241, 5120]), hb shape: torch.Size([5984, 5120])
+Comparing a:hidden_states_exports/blend_185_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_185_last_layer_hidden_states.pt
+ha shape: torch.Size([1315, 5120]), hb shape: torch.Size([6349, 5120])
+Comparing a:hidden_states_exports/blend_186_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_186_last_layer_hidden_states.pt
+ha shape: torch.Size([1302, 5120]), hb shape: torch.Size([6271, 5120])
+Comparing a:hidden_states_exports/blend_187_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_187_last_layer_hidden_states.pt
+ha shape: torch.Size([1317, 5120]), hb shape: torch.Size([6354, 5120])
+Comparing a:hidden_states_exports/blend_188_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_188_last_layer_hidden_states.pt
+ha shape: torch.Size([1246, 5120]), hb shape: torch.Size([5984, 5120])
+Comparing a:hidden_states_exports/blend_189_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_189_last_layer_hidden_states.pt
+ha shape: torch.Size([1309, 5120]), hb shape: torch.Size([6291, 5120])
+Comparing a:hidden_states_exports/blend_190_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_190_last_layer_hidden_states.pt
+ha shape: torch.Size([1270, 5120]), hb shape: torch.Size([6115, 5120])
+Comparing a:hidden_states_exports/blend_191_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_191_last_layer_hidden_states.pt
+ha shape: torch.Size([1313, 5120]), hb shape: torch.Size([6341, 5120])
+Comparing a:hidden_states_exports/blend_192_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_192_last_layer_hidden_states.pt
+ha shape: torch.Size([1138, 5120]), hb shape: torch.Size([5414, 5120])
+Comparing a:hidden_states_exports/blend_193_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_193_last_layer_hidden_states.pt
+ha shape: torch.Size([1260, 5120]), hb shape: torch.Size([6093, 5120])
+Comparing a:hidden_states_exports/blend_194_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_194_last_layer_hidden_states.pt
+ha shape: torch.Size([1220, 5120]), hb shape: torch.Size([5861, 5120])
+Comparing a:hidden_states_exports/blend_195_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_195_last_layer_hidden_states.pt
+ha shape: torch.Size([1424, 5120]), hb shape: torch.Size([6895, 5120])
+Comparing a:hidden_states_exports/blend_196_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_196_last_layer_hidden_states.pt
+ha shape: torch.Size([1265, 5120]), hb shape: torch.Size([6107, 5120])
+Comparing a:hidden_states_exports/blend_197_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_197_last_layer_hidden_states.pt
+ha shape: torch.Size([1303, 5120]), hb shape: torch.Size([6295, 5120])
+Comparing a:hidden_states_exports/blend_198_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_198_last_layer_hidden_states.pt
+ha shape: torch.Size([1273, 5120]), hb shape: torch.Size([6123, 5120])
+Comparing a:hidden_states_exports/blend_199_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_199_last_layer_hidden_states.pt
+ha shape: torch.Size([1317, 5120]), hb shape: torch.Size([6345, 5120])
+Comparing a:hidden_states_exports/blend_200_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_200_last_layer_hidden_states.pt
+ha shape: torch.Size([1309, 5120]), hb shape: torch.Size([6315, 5120])
+Wrote 200 rows to hidden_states_compares/blend_vs_full_prefill.csv
+Comparing a:hidden_states_exports/full_reuse_1_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_1_last_layer_hidden_states.pt
+ha shape: torch.Size([52, 5120]), hb shape: torch.Size([6784, 5120])
+Comparing a:hidden_states_exports/full_reuse_2_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_2_last_layer_hidden_states.pt
+ha shape: torch.Size([54, 5120]), hb shape: torch.Size([6043, 5120])
+Comparing a:hidden_states_exports/full_reuse_3_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_3_last_layer_hidden_states.pt
+ha shape: torch.Size([51, 5120]), hb shape: torch.Size([6573, 5120])
+Comparing a:hidden_states_exports/full_reuse_4_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_4_last_layer_hidden_states.pt
+ha shape: torch.Size([61, 5120]), hb shape: torch.Size([5985, 5120])
+Comparing a:hidden_states_exports/full_reuse_5_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_5_last_layer_hidden_states.pt
+ha shape: torch.Size([62, 5120]), hb shape: torch.Size([6757, 5120])
+Comparing a:hidden_states_exports/full_reuse_6_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_6_last_layer_hidden_states.pt
+ha shape: torch.Size([53, 5120]), hb shape: torch.Size([6378, 5120])
+Comparing a:hidden_states_exports/full_reuse_7_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_7_last_layer_hidden_states.pt
+ha shape: torch.Size([62, 5120]), hb shape: torch.Size([6526, 5120])
+Comparing a:hidden_states_exports/full_reuse_8_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_8_last_layer_hidden_states.pt
+ha shape: torch.Size([49, 5120]), hb shape: torch.Size([5695, 5120])
+Comparing a:hidden_states_exports/full_reuse_9_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_9_last_layer_hidden_states.pt
+ha shape: torch.Size([47, 5120]), hb shape: torch.Size([6095, 5120])
+Comparing a:hidden_states_exports/full_reuse_10_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_10_last_layer_hidden_states.pt
+ha shape: torch.Size([51, 5120]), hb shape: torch.Size([6067, 5120])
+Comparing a:hidden_states_exports/full_reuse_11_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_11_last_layer_hidden_states.pt
+ha shape: torch.Size([60, 5120]), hb shape: torch.Size([6235, 5120])
+Comparing a:hidden_states_exports/full_reuse_12_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_12_last_layer_hidden_states.pt
+ha shape: torch.Size([54, 5120]), hb shape: torch.Size([6203, 5120])
+Comparing a:hidden_states_exports/full_reuse_13_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_13_last_layer_hidden_states.pt
+ha shape: torch.Size([54, 5120]), hb shape: torch.Size([5882, 5120])
+Comparing a:hidden_states_exports/full_reuse_14_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_14_last_layer_hidden_states.pt
+ha shape: torch.Size([51, 5120]), hb shape: torch.Size([6389, 5120])
+Comparing a:hidden_states_exports/full_reuse_15_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_15_last_layer_hidden_states.pt
+ha shape: torch.Size([51, 5120]), hb shape: torch.Size([5960, 5120])
+Comparing a:hidden_states_exports/full_reuse_16_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_16_last_layer_hidden_states.pt
+ha shape: torch.Size([51, 5120]), hb shape: torch.Size([6407, 5120])
+Comparing a:hidden_states_exports/full_reuse_17_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_17_last_layer_hidden_states.pt
+ha shape: torch.Size([58, 5120]), hb shape: torch.Size([6083, 5120])
+Comparing a:hidden_states_exports/full_reuse_18_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_18_last_layer_hidden_states.pt
+ha shape: torch.Size([66, 5120]), hb shape: torch.Size([6023, 5120])
+Comparing a:hidden_states_exports/full_reuse_19_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_19_last_layer_hidden_states.pt
+ha shape: torch.Size([62, 5120]), hb shape: torch.Size([5492, 5120])
+Comparing a:hidden_states_exports/full_reuse_20_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_20_last_layer_hidden_states.pt
+ha shape: torch.Size([53, 5120]), hb shape: torch.Size([5947, 5120])
+Comparing a:hidden_states_exports/full_reuse_21_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_21_last_layer_hidden_states.pt
+ha shape: torch.Size([53, 5120]), hb shape: torch.Size([5906, 5120])
+Comparing a:hidden_states_exports/full_reuse_22_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_22_last_layer_hidden_states.pt
+ha shape: torch.Size([53, 5120]), hb shape: torch.Size([6074, 5120])
+Comparing a:hidden_states_exports/full_reuse_23_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_23_last_layer_hidden_states.pt
+ha shape: torch.Size([58, 5120]), hb shape: torch.Size([6166, 5120])
+Comparing a:hidden_states_exports/full_reuse_24_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_24_last_layer_hidden_states.pt
+ha shape: torch.Size([56, 5120]), hb shape: torch.Size([6464, 5120])
+Comparing a:hidden_states_exports/full_reuse_25_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_25_last_layer_hidden_states.pt
+ha shape: torch.Size([59, 5120]), hb shape: torch.Size([6244, 5120])
+Comparing a:hidden_states_exports/full_reuse_26_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_26_last_layer_hidden_states.pt
+ha shape: torch.Size([60, 5120]), hb shape: torch.Size([6105, 5120])
+Comparing a:hidden_states_exports/full_reuse_27_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_27_last_layer_hidden_states.pt
+ha shape: torch.Size([55, 5120]), hb shape: torch.Size([6095, 5120])
+Comparing a:hidden_states_exports/full_reuse_28_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_28_last_layer_hidden_states.pt
+ha shape: torch.Size([53, 5120]), hb shape: torch.Size([5679, 5120])
+Comparing a:hidden_states_exports/full_reuse_29_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_29_last_layer_hidden_states.pt
+ha shape: torch.Size([51, 5120]), hb shape: torch.Size([6362, 5120])
+Comparing a:hidden_states_exports/full_reuse_30_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_30_last_layer_hidden_states.pt
+ha shape: torch.Size([53, 5120]), hb shape: torch.Size([5800, 5120])
+Comparing a:hidden_states_exports/full_reuse_31_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_31_last_layer_hidden_states.pt
+ha shape: torch.Size([59, 5120]), hb shape: torch.Size([7064, 5120])
+Comparing a:hidden_states_exports/full_reuse_32_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_32_last_layer_hidden_states.pt
+ha shape: torch.Size([48, 5120]), hb shape: torch.Size([6015, 5120])
+Comparing a:hidden_states_exports/full_reuse_33_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_33_last_layer_hidden_states.pt
+ha shape: torch.Size([53, 5120]), hb shape: torch.Size([6023, 5120])
+Comparing a:hidden_states_exports/full_reuse_34_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_34_last_layer_hidden_states.pt
+ha shape: torch.Size([68, 5120]), hb shape: torch.Size([6263, 5120])
+Comparing a:hidden_states_exports/full_reuse_35_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_35_last_layer_hidden_states.pt
+ha shape: torch.Size([56, 5120]), hb shape: torch.Size([6455, 5120])
+Comparing a:hidden_states_exports/full_reuse_36_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_36_last_layer_hidden_states.pt
+ha shape: torch.Size([53, 5120]), hb shape: torch.Size([6156, 5120])
+Comparing a:hidden_states_exports/full_reuse_37_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_37_last_layer_hidden_states.pt
+ha shape: torch.Size([61, 5120]), hb shape: torch.Size([6192, 5120])
+Comparing a:hidden_states_exports/full_reuse_38_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_38_last_layer_hidden_states.pt
+ha shape: torch.Size([54, 5120]), hb shape: torch.Size([5908, 5120])
+Comparing a:hidden_states_exports/full_reuse_39_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_39_last_layer_hidden_states.pt
+ha shape: torch.Size([61, 5120]), hb shape: torch.Size([6242, 5120])
+Comparing a:hidden_states_exports/full_reuse_40_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_40_last_layer_hidden_states.pt
+ha shape: torch.Size([53, 5120]), hb shape: torch.Size([6010, 5120])
+Comparing a:hidden_states_exports/full_reuse_41_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_41_last_layer_hidden_states.pt
+ha shape: torch.Size([57, 5120]), hb shape: torch.Size([5877, 5120])
+Comparing a:hidden_states_exports/full_reuse_42_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_42_last_layer_hidden_states.pt
+ha shape: torch.Size([60, 5120]), hb shape: torch.Size([6104, 5120])
+Comparing a:hidden_states_exports/full_reuse_43_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_43_last_layer_hidden_states.pt
+ha shape: torch.Size([54, 5120]), hb shape: torch.Size([6100, 5120])
+Comparing a:hidden_states_exports/full_reuse_44_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_44_last_layer_hidden_states.pt
+ha shape: torch.Size([58, 5120]), hb shape: torch.Size([6154, 5120])
+Comparing a:hidden_states_exports/full_reuse_45_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_45_last_layer_hidden_states.pt
+ha shape: torch.Size([64, 5120]), hb shape: torch.Size([6069, 5120])
+Comparing a:hidden_states_exports/full_reuse_46_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_46_last_layer_hidden_states.pt
+ha shape: torch.Size([56, 5120]), hb shape: torch.Size([6995, 5120])
+Comparing a:hidden_states_exports/full_reuse_47_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_47_last_layer_hidden_states.pt
+ha shape: torch.Size([56, 5120]), hb shape: torch.Size([6374, 5120])
+Comparing a:hidden_states_exports/full_reuse_48_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_48_last_layer_hidden_states.pt
+ha shape: torch.Size([50, 5120]), hb shape: torch.Size([5900, 5120])
+Comparing a:hidden_states_exports/full_reuse_49_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_49_last_layer_hidden_states.pt
+ha shape: torch.Size([57, 5120]), hb shape: torch.Size([6028, 5120])
+Comparing a:hidden_states_exports/full_reuse_50_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_50_last_layer_hidden_states.pt
+ha shape: torch.Size([57, 5120]), hb shape: torch.Size([6089, 5120])
+Comparing a:hidden_states_exports/full_reuse_51_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_51_last_layer_hidden_states.pt
+ha shape: torch.Size([52, 5120]), hb shape: torch.Size([6422, 5120])
+Comparing a:hidden_states_exports/full_reuse_52_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_52_last_layer_hidden_states.pt
+ha shape: torch.Size([56, 5120]), hb shape: torch.Size([6942, 5120])
+Comparing a:hidden_states_exports/full_reuse_53_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_53_last_layer_hidden_states.pt
+ha shape: torch.Size([61, 5120]), hb shape: torch.Size([6280, 5120])
+Comparing a:hidden_states_exports/full_reuse_54_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_54_last_layer_hidden_states.pt
+ha shape: torch.Size([59, 5120]), hb shape: torch.Size([5915, 5120])
+Comparing a:hidden_states_exports/full_reuse_55_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_55_last_layer_hidden_states.pt
+ha shape: torch.Size([58, 5120]), hb shape: torch.Size([6324, 5120])
+Comparing a:hidden_states_exports/full_reuse_56_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_56_last_layer_hidden_states.pt
+ha shape: torch.Size([57, 5120]), hb shape: torch.Size([5928, 5120])
+Comparing a:hidden_states_exports/full_reuse_57_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_57_last_layer_hidden_states.pt
+ha shape: torch.Size([56, 5120]), hb shape: torch.Size([6006, 5120])
+Comparing a:hidden_states_exports/full_reuse_58_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_58_last_layer_hidden_states.pt
+ha shape: torch.Size([56, 5120]), hb shape: torch.Size([6021, 5120])
+Comparing a:hidden_states_exports/full_reuse_59_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_59_last_layer_hidden_states.pt
+ha shape: torch.Size([52, 5120]), hb shape: torch.Size([5916, 5120])
+Comparing a:hidden_states_exports/full_reuse_60_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_60_last_layer_hidden_states.pt
+ha shape: torch.Size([51, 5120]), hb shape: torch.Size([5712, 5120])
+Comparing a:hidden_states_exports/full_reuse_61_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_61_last_layer_hidden_states.pt
+ha shape: torch.Size([56, 5120]), hb shape: torch.Size([6070, 5120])
+Comparing a:hidden_states_exports/full_reuse_62_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_62_last_layer_hidden_states.pt
+ha shape: torch.Size([56, 5120]), hb shape: torch.Size([5906, 5120])
+Comparing a:hidden_states_exports/full_reuse_63_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_63_last_layer_hidden_states.pt
+ha shape: torch.Size([53, 5120]), hb shape: torch.Size([5988, 5120])
+Comparing a:hidden_states_exports/full_reuse_64_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_64_last_layer_hidden_states.pt
+ha shape: torch.Size([49, 5120]), hb shape: torch.Size([5952, 5120])
+Comparing a:hidden_states_exports/full_reuse_65_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_65_last_layer_hidden_states.pt
+ha shape: torch.Size([52, 5120]), hb shape: torch.Size([6209, 5120])
+Comparing a:hidden_states_exports/full_reuse_66_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_66_last_layer_hidden_states.pt
+ha shape: torch.Size([58, 5120]), hb shape: torch.Size([6026, 5120])
+Comparing a:hidden_states_exports/full_reuse_67_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_67_last_layer_hidden_states.pt
+ha shape: torch.Size([55, 5120]), hb shape: torch.Size([6126, 5120])
+Comparing a:hidden_states_exports/full_reuse_68_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_68_last_layer_hidden_states.pt
+ha shape: torch.Size([53, 5120]), hb shape: torch.Size([6234, 5120])
+Comparing a:hidden_states_exports/full_reuse_69_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_69_last_layer_hidden_states.pt
+ha shape: torch.Size([60, 5120]), hb shape: torch.Size([6289, 5120])
+Comparing a:hidden_states_exports/full_reuse_70_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_70_last_layer_hidden_states.pt
+ha shape: torch.Size([55, 5120]), hb shape: torch.Size([6185, 5120])
+Comparing a:hidden_states_exports/full_reuse_71_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_71_last_layer_hidden_states.pt
+ha shape: torch.Size([55, 5120]), hb shape: torch.Size([5738, 5120])
+Comparing a:hidden_states_exports/full_reuse_72_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_72_last_layer_hidden_states.pt
+ha shape: torch.Size([53, 5120]), hb shape: torch.Size([6123, 5120])
+Comparing a:hidden_states_exports/full_reuse_73_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_73_last_layer_hidden_states.pt
+ha shape: torch.Size([58, 5120]), hb shape: torch.Size([6758, 5120])
+Comparing a:hidden_states_exports/full_reuse_74_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_74_last_layer_hidden_states.pt
+ha shape: torch.Size([59, 5120]), hb shape: torch.Size([5447, 5120])
+Comparing a:hidden_states_exports/full_reuse_75_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_75_last_layer_hidden_states.pt
+ha shape: torch.Size([53, 5120]), hb shape: torch.Size([6390, 5120])
+Comparing a:hidden_states_exports/full_reuse_76_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_76_last_layer_hidden_states.pt
+ha shape: torch.Size([55, 5120]), hb shape: torch.Size([6934, 5120])
+Comparing a:hidden_states_exports/full_reuse_77_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_77_last_layer_hidden_states.pt
+ha shape: torch.Size([52, 5120]), hb shape: torch.Size([5770, 5120])
+Comparing a:hidden_states_exports/full_reuse_78_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_78_last_layer_hidden_states.pt
+ha shape: torch.Size([50, 5120]), hb shape: torch.Size([6748, 5120])
+Comparing a:hidden_states_exports/full_reuse_79_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_79_last_layer_hidden_states.pt
+ha shape: torch.Size([54, 5120]), hb shape: torch.Size([6164, 5120])
+Comparing a:hidden_states_exports/full_reuse_80_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_80_last_layer_hidden_states.pt
+ha shape: torch.Size([57, 5120]), hb shape: torch.Size([6266, 5120])
+Comparing a:hidden_states_exports/full_reuse_81_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_81_last_layer_hidden_states.pt
+ha shape: torch.Size([57, 5120]), hb shape: torch.Size([5950, 5120])
+Comparing a:hidden_states_exports/full_reuse_82_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_82_last_layer_hidden_states.pt
+ha shape: torch.Size([59, 5120]), hb shape: torch.Size([6217, 5120])
+Comparing a:hidden_states_exports/full_reuse_83_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_83_last_layer_hidden_states.pt
+ha shape: torch.Size([56, 5120]), hb shape: torch.Size([6376, 5120])
+Comparing a:hidden_states_exports/full_reuse_84_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_84_last_layer_hidden_states.pt
+ha shape: torch.Size([59, 5120]), hb shape: torch.Size([6229, 5120])
+Comparing a:hidden_states_exports/full_reuse_85_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_85_last_layer_hidden_states.pt
+ha shape: torch.Size([60, 5120]), hb shape: torch.Size([5866, 5120])
+Comparing a:hidden_states_exports/full_reuse_86_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_86_last_layer_hidden_states.pt
+ha shape: torch.Size([59, 5120]), hb shape: torch.Size([5811, 5120])
+Comparing a:hidden_states_exports/full_reuse_87_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_87_last_layer_hidden_states.pt
+ha shape: torch.Size([56, 5120]), hb shape: torch.Size([5774, 5120])
+Comparing a:hidden_states_exports/full_reuse_88_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_88_last_layer_hidden_states.pt
+ha shape: torch.Size([56, 5120]), hb shape: torch.Size([6098, 5120])
+Comparing a:hidden_states_exports/full_reuse_89_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_89_last_layer_hidden_states.pt
+ha shape: torch.Size([52, 5120]), hb shape: torch.Size([5665, 5120])
+Comparing a:hidden_states_exports/full_reuse_90_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_90_last_layer_hidden_states.pt
+ha shape: torch.Size([58, 5120]), hb shape: torch.Size([6067, 5120])
+Comparing a:hidden_states_exports/full_reuse_91_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_91_last_layer_hidden_states.pt
+ha shape: torch.Size([58, 5120]), hb shape: torch.Size([5680, 5120])
+Comparing a:hidden_states_exports/full_reuse_92_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_92_last_layer_hidden_states.pt
+ha shape: torch.Size([52, 5120]), hb shape: torch.Size([5575, 5120])
+Comparing a:hidden_states_exports/full_reuse_93_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_93_last_layer_hidden_states.pt
+ha shape: torch.Size([49, 5120]), hb shape: torch.Size([6245, 5120])
+Comparing a:hidden_states_exports/full_reuse_94_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_94_last_layer_hidden_states.pt
+ha shape: torch.Size([53, 5120]), hb shape: torch.Size([6078, 5120])
+Comparing a:hidden_states_exports/full_reuse_95_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_95_last_layer_hidden_states.pt
+ha shape: torch.Size([56, 5120]), hb shape: torch.Size([6184, 5120])
+Comparing a:hidden_states_exports/full_reuse_96_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_96_last_layer_hidden_states.pt
+ha shape: torch.Size([60, 5120]), hb shape: torch.Size([5956, 5120])
+Comparing a:hidden_states_exports/full_reuse_97_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_97_last_layer_hidden_states.pt
+ha shape: torch.Size([54, 5120]), hb shape: torch.Size([6194, 5120])
+Comparing a:hidden_states_exports/full_reuse_98_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_98_last_layer_hidden_states.pt
+ha shape: torch.Size([54, 5120]), hb shape: torch.Size([6177, 5120])
+Comparing a:hidden_states_exports/full_reuse_99_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_99_last_layer_hidden_states.pt
+ha shape: torch.Size([55, 5120]), hb shape: torch.Size([6295, 5120])
+Comparing a:hidden_states_exports/full_reuse_100_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_100_last_layer_hidden_states.pt
+ha shape: torch.Size([53, 5120]), hb shape: torch.Size([6168, 5120])
+Comparing a:hidden_states_exports/full_reuse_101_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_101_last_layer_hidden_states.pt
+ha shape: torch.Size([54, 5120]), hb shape: torch.Size([6250, 5120])
+Comparing a:hidden_states_exports/full_reuse_102_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_102_last_layer_hidden_states.pt
+ha shape: torch.Size([55, 5120]), hb shape: torch.Size([6638, 5120])
+Comparing a:hidden_states_exports/full_reuse_103_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_103_last_layer_hidden_states.pt
+ha shape: torch.Size([59, 5120]), hb shape: torch.Size([6931, 5120])
+Comparing a:hidden_states_exports/full_reuse_104_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_104_last_layer_hidden_states.pt
+ha shape: torch.Size([56, 5120]), hb shape: torch.Size([6004, 5120])
+Comparing a:hidden_states_exports/full_reuse_105_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_105_last_layer_hidden_states.pt
+ha shape: torch.Size([49, 5120]), hb shape: torch.Size([6017, 5120])
+Comparing a:hidden_states_exports/full_reuse_106_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_106_last_layer_hidden_states.pt
+ha shape: torch.Size([57, 5120]), hb shape: torch.Size([5995, 5120])
+Comparing a:hidden_states_exports/full_reuse_107_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_107_last_layer_hidden_states.pt
+ha shape: torch.Size([58, 5120]), hb shape: torch.Size([6043, 5120])
+Comparing a:hidden_states_exports/full_reuse_108_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_108_last_layer_hidden_states.pt
+ha shape: torch.Size([54, 5120]), hb shape: torch.Size([6301, 5120])
+Comparing a:hidden_states_exports/full_reuse_109_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_109_last_layer_hidden_states.pt
+ha shape: torch.Size([57, 5120]), hb shape: torch.Size([6544, 5120])
+Comparing a:hidden_states_exports/full_reuse_110_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_110_last_layer_hidden_states.pt
+ha shape: torch.Size([58, 5120]), hb shape: torch.Size([6142, 5120])
+Comparing a:hidden_states_exports/full_reuse_111_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_111_last_layer_hidden_states.pt
+ha shape: torch.Size([56, 5120]), hb shape: torch.Size([6062, 5120])
+Comparing a:hidden_states_exports/full_reuse_112_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_112_last_layer_hidden_states.pt
+ha shape: torch.Size([52, 5120]), hb shape: torch.Size([5981, 5120])
+Comparing a:hidden_states_exports/full_reuse_113_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_113_last_layer_hidden_states.pt
+ha shape: torch.Size([58, 5120]), hb shape: torch.Size([6482, 5120])
+Comparing a:hidden_states_exports/full_reuse_114_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_114_last_layer_hidden_states.pt
+ha shape: torch.Size([61, 5120]), hb shape: torch.Size([6071, 5120])
+Comparing a:hidden_states_exports/full_reuse_115_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_115_last_layer_hidden_states.pt
+ha shape: torch.Size([54, 5120]), hb shape: torch.Size([6121, 5120])
+Comparing a:hidden_states_exports/full_reuse_116_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_116_last_layer_hidden_states.pt
+ha shape: torch.Size([59, 5120]), hb shape: torch.Size([6068, 5120])
+Comparing a:hidden_states_exports/full_reuse_117_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_117_last_layer_hidden_states.pt
+ha shape: torch.Size([58, 5120]), hb shape: torch.Size([6172, 5120])
+Comparing a:hidden_states_exports/full_reuse_118_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_118_last_layer_hidden_states.pt
+ha shape: torch.Size([55, 5120]), hb shape: torch.Size([5965, 5120])
+Comparing a:hidden_states_exports/full_reuse_119_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_119_last_layer_hidden_states.pt
+ha shape: torch.Size([57, 5120]), hb shape: torch.Size([6659, 5120])
+Comparing a:hidden_states_exports/full_reuse_120_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_120_last_layer_hidden_states.pt
+ha shape: torch.Size([63, 5120]), hb shape: torch.Size([6163, 5120])
+Comparing a:hidden_states_exports/full_reuse_121_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_121_last_layer_hidden_states.pt
+ha shape: torch.Size([57, 5120]), hb shape: torch.Size([6358, 5120])
+Comparing a:hidden_states_exports/full_reuse_122_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_122_last_layer_hidden_states.pt
+ha shape: torch.Size([58, 5120]), hb shape: torch.Size([6173, 5120])
+Comparing a:hidden_states_exports/full_reuse_123_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_123_last_layer_hidden_states.pt
+ha shape: torch.Size([54, 5120]), hb shape: torch.Size([6049, 5120])
+Comparing a:hidden_states_exports/full_reuse_124_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_124_last_layer_hidden_states.pt
+ha shape: torch.Size([56, 5120]), hb shape: torch.Size([5983, 5120])
+Comparing a:hidden_states_exports/full_reuse_125_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_125_last_layer_hidden_states.pt
+ha shape: torch.Size([60, 5120]), hb shape: torch.Size([5979, 5120])
+Comparing a:hidden_states_exports/full_reuse_126_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_126_last_layer_hidden_states.pt
+ha shape: torch.Size([60, 5120]), hb shape: torch.Size([6164, 5120])
+Comparing a:hidden_states_exports/full_reuse_127_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_127_last_layer_hidden_states.pt
+ha shape: torch.Size([65, 5120]), hb shape: torch.Size([5974, 5120])
+Comparing a:hidden_states_exports/full_reuse_128_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_128_last_layer_hidden_states.pt
+ha shape: torch.Size([57, 5120]), hb shape: torch.Size([6345, 5120])
+Comparing a:hidden_states_exports/full_reuse_129_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_129_last_layer_hidden_states.pt
+ha shape: torch.Size([52, 5120]), hb shape: torch.Size([6457, 5120])
+Comparing a:hidden_states_exports/full_reuse_130_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_130_last_layer_hidden_states.pt
+ha shape: torch.Size([59, 5120]), hb shape: torch.Size([6443, 5120])
+Comparing a:hidden_states_exports/full_reuse_131_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_131_last_layer_hidden_states.pt
+ha shape: torch.Size([55, 5120]), hb shape: torch.Size([6434, 5120])
+Comparing a:hidden_states_exports/full_reuse_132_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_132_last_layer_hidden_states.pt
+ha shape: torch.Size([56, 5120]), hb shape: torch.Size([6119, 5120])
+Comparing a:hidden_states_exports/full_reuse_133_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_133_last_layer_hidden_states.pt
+ha shape: torch.Size([57, 5120]), hb shape: torch.Size([5954, 5120])
+Comparing a:hidden_states_exports/full_reuse_134_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_134_last_layer_hidden_states.pt
+ha shape: torch.Size([52, 5120]), hb shape: torch.Size([6495, 5120])
+Comparing a:hidden_states_exports/full_reuse_135_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_135_last_layer_hidden_states.pt
+ha shape: torch.Size([58, 5120]), hb shape: torch.Size([6215, 5120])
+Comparing a:hidden_states_exports/full_reuse_136_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_136_last_layer_hidden_states.pt
+ha shape: torch.Size([70, 5120]), hb shape: torch.Size([6625, 5120])
+Comparing a:hidden_states_exports/full_reuse_137_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_137_last_layer_hidden_states.pt
+ha shape: torch.Size([51, 5120]), hb shape: torch.Size([6001, 5120])
+Comparing a:hidden_states_exports/full_reuse_138_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_138_last_layer_hidden_states.pt
+ha shape: torch.Size([52, 5120]), hb shape: torch.Size([5537, 5120])
+Comparing a:hidden_states_exports/full_reuse_139_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_139_last_layer_hidden_states.pt
+ha shape: torch.Size([57, 5120]), hb shape: torch.Size([5868, 5120])
+Comparing a:hidden_states_exports/full_reuse_140_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_140_last_layer_hidden_states.pt
+ha shape: torch.Size([57, 5120]), hb shape: torch.Size([6077, 5120])
+Comparing a:hidden_states_exports/full_reuse_141_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_141_last_layer_hidden_states.pt
+ha shape: torch.Size([50, 5120]), hb shape: torch.Size([6002, 5120])
+Comparing a:hidden_states_exports/full_reuse_142_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_142_last_layer_hidden_states.pt
+ha shape: torch.Size([52, 5120]), hb shape: torch.Size([6219, 5120])
+Comparing a:hidden_states_exports/full_reuse_143_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_143_last_layer_hidden_states.pt
+ha shape: torch.Size([60, 5120]), hb shape: torch.Size([5967, 5120])
+Comparing a:hidden_states_exports/full_reuse_144_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_144_last_layer_hidden_states.pt
+ha shape: torch.Size([57, 5120]), hb shape: torch.Size([6087, 5120])
+Comparing a:hidden_states_exports/full_reuse_145_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_145_last_layer_hidden_states.pt
+ha shape: torch.Size([51, 5120]), hb shape: torch.Size([6246, 5120])
+Comparing a:hidden_states_exports/full_reuse_146_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_146_last_layer_hidden_states.pt
+ha shape: torch.Size([66, 5120]), hb shape: torch.Size([5855, 5120])
+Comparing a:hidden_states_exports/full_reuse_147_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_147_last_layer_hidden_states.pt
+ha shape: torch.Size([58, 5120]), hb shape: torch.Size([6352, 5120])
+Comparing a:hidden_states_exports/full_reuse_148_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_148_last_layer_hidden_states.pt
+ha shape: torch.Size([72, 5120]), hb shape: torch.Size([6034, 5120])
+Comparing a:hidden_states_exports/full_reuse_149_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_149_last_layer_hidden_states.pt
+ha shape: torch.Size([58, 5120]), hb shape: torch.Size([6484, 5120])
+Comparing a:hidden_states_exports/full_reuse_150_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_150_last_layer_hidden_states.pt
+ha shape: torch.Size([52, 5120]), hb shape: torch.Size([6063, 5120])
+Comparing a:hidden_states_exports/full_reuse_151_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_151_last_layer_hidden_states.pt
+ha shape: torch.Size([61, 5120]), hb shape: torch.Size([6952, 5120])
+Comparing a:hidden_states_exports/full_reuse_152_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_152_last_layer_hidden_states.pt
+ha shape: torch.Size([63, 5120]), hb shape: torch.Size([6204, 5120])
+Comparing a:hidden_states_exports/full_reuse_153_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_153_last_layer_hidden_states.pt
+ha shape: torch.Size([54, 5120]), hb shape: torch.Size([6158, 5120])
+Comparing a:hidden_states_exports/full_reuse_154_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_154_last_layer_hidden_states.pt
+ha shape: torch.Size([53, 5120]), hb shape: torch.Size([6109, 5120])
+Comparing a:hidden_states_exports/full_reuse_155_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_155_last_layer_hidden_states.pt
+ha shape: torch.Size([57, 5120]), hb shape: torch.Size([5985, 5120])
+Comparing a:hidden_states_exports/full_reuse_156_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_156_last_layer_hidden_states.pt
+ha shape: torch.Size([57, 5120]), hb shape: torch.Size([6263, 5120])
+Comparing a:hidden_states_exports/full_reuse_157_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_157_last_layer_hidden_states.pt
+ha shape: torch.Size([53, 5120]), hb shape: torch.Size([5997, 5120])
+Comparing a:hidden_states_exports/full_reuse_158_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_158_last_layer_hidden_states.pt
+ha shape: torch.Size([51, 5120]), hb shape: torch.Size([5985, 5120])
+Comparing a:hidden_states_exports/full_reuse_159_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_159_last_layer_hidden_states.pt
+ha shape: torch.Size([50, 5120]), hb shape: torch.Size([5838, 5120])
+Comparing a:hidden_states_exports/full_reuse_160_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_160_last_layer_hidden_states.pt
+ha shape: torch.Size([64, 5120]), hb shape: torch.Size([6287, 5120])
+Comparing a:hidden_states_exports/full_reuse_161_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_161_last_layer_hidden_states.pt
+ha shape: torch.Size([52, 5120]), hb shape: torch.Size([6573, 5120])
+Comparing a:hidden_states_exports/full_reuse_162_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_162_last_layer_hidden_states.pt
+ha shape: torch.Size([56, 5120]), hb shape: torch.Size([6378, 5120])
+Comparing a:hidden_states_exports/full_reuse_163_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_163_last_layer_hidden_states.pt
+ha shape: torch.Size([62, 5120]), hb shape: torch.Size([6294, 5120])
+Comparing a:hidden_states_exports/full_reuse_164_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_164_last_layer_hidden_states.pt
+ha shape: torch.Size([55, 5120]), hb shape: torch.Size([5866, 5120])
+Comparing a:hidden_states_exports/full_reuse_165_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_165_last_layer_hidden_states.pt
+ha shape: torch.Size([54, 5120]), hb shape: torch.Size([6012, 5120])
+Comparing a:hidden_states_exports/full_reuse_166_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_166_last_layer_hidden_states.pt
+ha shape: torch.Size([52, 5120]), hb shape: torch.Size([6242, 5120])
+Comparing a:hidden_states_exports/full_reuse_167_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_167_last_layer_hidden_states.pt
+ha shape: torch.Size([60, 5120]), hb shape: torch.Size([6742, 5120])
+Comparing a:hidden_states_exports/full_reuse_168_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_168_last_layer_hidden_states.pt
+ha shape: torch.Size([60, 5120]), hb shape: torch.Size([6252, 5120])
+Comparing a:hidden_states_exports/full_reuse_169_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_169_last_layer_hidden_states.pt
+ha shape: torch.Size([57, 5120]), hb shape: torch.Size([6371, 5120])
+Comparing a:hidden_states_exports/full_reuse_170_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_170_last_layer_hidden_states.pt
+ha shape: torch.Size([55, 5120]), hb shape: torch.Size([6061, 5120])
+Comparing a:hidden_states_exports/full_reuse_171_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_171_last_layer_hidden_states.pt
+ha shape: torch.Size([52, 5120]), hb shape: torch.Size([6108, 5120])
+Comparing a:hidden_states_exports/full_reuse_172_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_172_last_layer_hidden_states.pt
+ha shape: torch.Size([54, 5120]), hb shape: torch.Size([6244, 5120])
+Comparing a:hidden_states_exports/full_reuse_173_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_173_last_layer_hidden_states.pt
+ha shape: torch.Size([57, 5120]), hb shape: torch.Size([6131, 5120])
+Comparing a:hidden_states_exports/full_reuse_174_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_174_last_layer_hidden_states.pt
+ha shape: torch.Size([54, 5120]), hb shape: torch.Size([5845, 5120])
+Comparing a:hidden_states_exports/full_reuse_175_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_175_last_layer_hidden_states.pt
+ha shape: torch.Size([55, 5120]), hb shape: torch.Size([6067, 5120])
+Comparing a:hidden_states_exports/full_reuse_176_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_176_last_layer_hidden_states.pt
+ha shape: torch.Size([56, 5120]), hb shape: torch.Size([7032, 5120])
+Comparing a:hidden_states_exports/full_reuse_177_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_177_last_layer_hidden_states.pt
+ha shape: torch.Size([62, 5120]), hb shape: torch.Size([6497, 5120])
+Comparing a:hidden_states_exports/full_reuse_178_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_178_last_layer_hidden_states.pt
+ha shape: torch.Size([51, 5120]), hb shape: torch.Size([6037, 5120])
+Comparing a:hidden_states_exports/full_reuse_179_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_179_last_layer_hidden_states.pt
+ha shape: torch.Size([58, 5120]), hb shape: torch.Size([6051, 5120])
+Comparing a:hidden_states_exports/full_reuse_180_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_180_last_layer_hidden_states.pt
+ha shape: torch.Size([53, 5120]), hb shape: torch.Size([6860, 5120])
+Comparing a:hidden_states_exports/full_reuse_181_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_181_last_layer_hidden_states.pt
+ha shape: torch.Size([52, 5120]), hb shape: torch.Size([6484, 5120])
+Comparing a:hidden_states_exports/full_reuse_182_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_182_last_layer_hidden_states.pt
+ha shape: torch.Size([55, 5120]), hb shape: torch.Size([5979, 5120])
+Comparing a:hidden_states_exports/full_reuse_183_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_183_last_layer_hidden_states.pt
+ha shape: torch.Size([49, 5120]), hb shape: torch.Size([6435, 5120])
+Comparing a:hidden_states_exports/full_reuse_184_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_184_last_layer_hidden_states.pt
+ha shape: torch.Size([53, 5120]), hb shape: torch.Size([5984, 5120])
+Comparing a:hidden_states_exports/full_reuse_185_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_185_last_layer_hidden_states.pt
+ha shape: torch.Size([54, 5120]), hb shape: torch.Size([6349, 5120])
+Comparing a:hidden_states_exports/full_reuse_186_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_186_last_layer_hidden_states.pt
+ha shape: torch.Size([58, 5120]), hb shape: torch.Size([6271, 5120])
+Comparing a:hidden_states_exports/full_reuse_187_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_187_last_layer_hidden_states.pt
+ha shape: torch.Size([56, 5120]), hb shape: torch.Size([6354, 5120])
+Comparing a:hidden_states_exports/full_reuse_188_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_188_last_layer_hidden_states.pt
+ha shape: torch.Size([59, 5120]), hb shape: torch.Size([5984, 5120])
+Comparing a:hidden_states_exports/full_reuse_189_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_189_last_layer_hidden_states.pt
+ha shape: torch.Size([61, 5120]), hb shape: torch.Size([6291, 5120])
+Comparing a:hidden_states_exports/full_reuse_190_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_190_last_layer_hidden_states.pt
+ha shape: torch.Size([57, 5120]), hb shape: torch.Size([6115, 5120])
+Comparing a:hidden_states_exports/full_reuse_191_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_191_last_layer_hidden_states.pt
+ha shape: torch.Size([54, 5120]), hb shape: torch.Size([6341, 5120])
+Comparing a:hidden_states_exports/full_reuse_192_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_192_last_layer_hidden_states.pt
+ha shape: torch.Size([67, 5120]), hb shape: torch.Size([5414, 5120])
+Comparing a:hidden_states_exports/full_reuse_193_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_193_last_layer_hidden_states.pt
+ha shape: torch.Size([50, 5120]), hb shape: torch.Size([6093, 5120])
+Comparing a:hidden_states_exports/full_reuse_194_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_194_last_layer_hidden_states.pt
+ha shape: torch.Size([58, 5120]), hb shape: torch.Size([5861, 5120])
+Comparing a:hidden_states_exports/full_reuse_195_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_195_last_layer_hidden_states.pt
+ha shape: torch.Size([54, 5120]), hb shape: torch.Size([6895, 5120])
+Comparing a:hidden_states_exports/full_reuse_196_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_196_last_layer_hidden_states.pt
+ha shape: torch.Size([52, 5120]), hb shape: torch.Size([6107, 5120])
+Comparing a:hidden_states_exports/full_reuse_197_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_197_last_layer_hidden_states.pt
+ha shape: torch.Size([53, 5120]), hb shape: torch.Size([6295, 5120])
+Comparing a:hidden_states_exports/full_reuse_198_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_198_last_layer_hidden_states.pt
+ha shape: torch.Size([59, 5120]), hb shape: torch.Size([6123, 5120])
+Comparing a:hidden_states_exports/full_reuse_199_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_199_last_layer_hidden_states.pt
+ha shape: torch.Size([58, 5120]), hb shape: torch.Size([6345, 5120])
+Comparing a:hidden_states_exports/full_reuse_200_last_layer_hidden_states.pt and b:hidden_states_exports/full_prefill_200_last_layer_hidden_states.pt
+ha shape: torch.Size([56, 5120]), hb shape: torch.Size([6315, 5120])
+Wrote 200 rows to hidden_states_compares/full_reuse_vs_full_prefill.csv
+Comparing a:hidden_states_exports/blend_1_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_1_last_layer_hidden_states.pt
+ha shape: torch.Size([1400, 5120]), hb shape: torch.Size([52, 5120])
+Comparing a:hidden_states_exports/blend_2_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_2_last_layer_hidden_states.pt
+ha shape: torch.Size([1253, 5120]), hb shape: torch.Size([54, 5120])
+Comparing a:hidden_states_exports/blend_3_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_3_last_layer_hidden_states.pt
+ha shape: torch.Size([1357, 5120]), hb shape: torch.Size([51, 5120])
+Comparing a:hidden_states_exports/blend_4_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_4_last_layer_hidden_states.pt
+ha shape: torch.Size([1247, 5120]), hb shape: torch.Size([61, 5120])
+Comparing a:hidden_states_exports/blend_5_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_5_last_layer_hidden_states.pt
+ha shape: torch.Size([1403, 5120]), hb shape: torch.Size([62, 5120])
+Comparing a:hidden_states_exports/blend_6_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_6_last_layer_hidden_states.pt
+ha shape: torch.Size([1319, 5120]), hb shape: torch.Size([53, 5120])
+Comparing a:hidden_states_exports/blend_7_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_7_last_layer_hidden_states.pt
+ha shape: torch.Size([1356, 5120]), hb shape: torch.Size([62, 5120])
+Comparing a:hidden_states_exports/blend_8_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_8_last_layer_hidden_states.pt
+ha shape: torch.Size([1180, 5120]), hb shape: torch.Size([49, 5120])
+Comparing a:hidden_states_exports/blend_9_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_9_last_layer_hidden_states.pt
+ha shape: torch.Size([1258, 5120]), hb shape: torch.Size([47, 5120])
+Comparing a:hidden_states_exports/blend_10_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_10_last_layer_hidden_states.pt
+ha shape: torch.Size([1256, 5120]), hb shape: torch.Size([51, 5120])
+Comparing a:hidden_states_exports/blend_11_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_11_last_layer_hidden_states.pt
+ha shape: torch.Size([1297, 5120]), hb shape: torch.Size([60, 5120])
+Comparing a:hidden_states_exports/blend_12_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_12_last_layer_hidden_states.pt
+ha shape: torch.Size([1285, 5120]), hb shape: torch.Size([54, 5120])
+Comparing a:hidden_states_exports/blend_13_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_13_last_layer_hidden_states.pt
+ha shape: torch.Size([1221, 5120]), hb shape: torch.Size([54, 5120])
+Comparing a:hidden_states_exports/blend_14_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_14_last_layer_hidden_states.pt
+ha shape: torch.Size([1320, 5120]), hb shape: torch.Size([51, 5120])
+Comparing a:hidden_states_exports/blend_15_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_15_last_layer_hidden_states.pt
+ha shape: torch.Size([1234, 5120]), hb shape: torch.Size([51, 5120])
+Comparing a:hidden_states_exports/blend_16_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_16_last_layer_hidden_states.pt
+ha shape: torch.Size([1324, 5120]), hb shape: torch.Size([51, 5120])
+Comparing a:hidden_states_exports/blend_17_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_17_last_layer_hidden_states.pt
+ha shape: torch.Size([1264, 5120]), hb shape: torch.Size([58, 5120])
+Comparing a:hidden_states_exports/blend_18_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_18_last_layer_hidden_states.pt
+ha shape: torch.Size([1259, 5120]), hb shape: torch.Size([66, 5120])
+Comparing a:hidden_states_exports/blend_19_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_19_last_layer_hidden_states.pt
+ha shape: torch.Size([1149, 5120]), hb shape: torch.Size([62, 5120])
+Comparing a:hidden_states_exports/blend_20_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_20_last_layer_hidden_states.pt
+ha shape: torch.Size([1233, 5120]), hb shape: torch.Size([53, 5120])
+Comparing a:hidden_states_exports/blend_21_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_21_last_layer_hidden_states.pt
+ha shape: torch.Size([1225, 5120]), hb shape: torch.Size([53, 5120])
+Comparing a:hidden_states_exports/blend_22_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_22_last_layer_hidden_states.pt
+ha shape: torch.Size([1259, 5120]), hb shape: torch.Size([53, 5120])
+Comparing a:hidden_states_exports/blend_23_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_23_last_layer_hidden_states.pt
+ha shape: torch.Size([1281, 5120]), hb shape: torch.Size([58, 5120])
+Comparing a:hidden_states_exports/blend_24_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_24_last_layer_hidden_states.pt
+ha shape: torch.Size([1339, 5120]), hb shape: torch.Size([56, 5120])
+Comparing a:hidden_states_exports/blend_25_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_25_last_layer_hidden_states.pt
+ha shape: torch.Size([1298, 5120]), hb shape: torch.Size([59, 5120])
+Comparing a:hidden_states_exports/blend_26_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_26_last_layer_hidden_states.pt
+ha shape: torch.Size([1271, 5120]), hb shape: torch.Size([60, 5120])
+Comparing a:hidden_states_exports/blend_27_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_27_last_layer_hidden_states.pt
+ha shape: torch.Size([1265, 5120]), hb shape: torch.Size([55, 5120])
+Comparing a:hidden_states_exports/blend_28_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_28_last_layer_hidden_states.pt
+ha shape: torch.Size([1180, 5120]), hb shape: torch.Size([53, 5120])
+Comparing a:hidden_states_exports/blend_29_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_29_last_layer_hidden_states.pt
+ha shape: torch.Size([1315, 5120]), hb shape: torch.Size([51, 5120])
+Comparing a:hidden_states_exports/blend_30_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_30_last_layer_hidden_states.pt
+ha shape: torch.Size([1204, 5120]), hb shape: torch.Size([53, 5120])
+Comparing a:hidden_states_exports/blend_31_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_31_last_layer_hidden_states.pt
+ha shape: torch.Size([1461, 5120]), hb shape: torch.Size([59, 5120])
+Comparing a:hidden_states_exports/blend_32_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_32_last_layer_hidden_states.pt
+ha shape: torch.Size([1243, 5120]), hb shape: torch.Size([48, 5120])
+Comparing a:hidden_states_exports/blend_33_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_33_last_layer_hidden_states.pt
+ha shape: torch.Size([1248, 5120]), hb shape: torch.Size([53, 5120])
+Comparing a:hidden_states_exports/blend_34_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_34_last_layer_hidden_states.pt
+ha shape: torch.Size([1309, 5120]), hb shape: torch.Size([68, 5120])
+Comparing a:hidden_states_exports/blend_35_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_35_last_layer_hidden_states.pt
+ha shape: torch.Size([1337, 5120]), hb shape: torch.Size([56, 5120])
+Comparing a:hidden_states_exports/blend_36_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_36_last_layer_hidden_states.pt
+ha shape: torch.Size([1275, 5120]), hb shape: torch.Size([53, 5120])
+Comparing a:hidden_states_exports/blend_37_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_37_last_layer_hidden_states.pt
+ha shape: torch.Size([1289, 5120]), hb shape: torch.Size([61, 5120])
+Comparing a:hidden_states_exports/blend_38_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_38_last_layer_hidden_states.pt
+ha shape: torch.Size([1226, 5120]), hb shape: torch.Size([54, 5120])
+Comparing a:hidden_states_exports/blend_39_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_39_last_layer_hidden_states.pt
+ha shape: torch.Size([1299, 5120]), hb shape: torch.Size([61, 5120])
+Comparing a:hidden_states_exports/blend_40_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_40_last_layer_hidden_states.pt
+ha shape: torch.Size([1246, 5120]), hb shape: torch.Size([53, 5120])
+Comparing a:hidden_states_exports/blend_41_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_41_last_layer_hidden_states.pt
+ha shape: torch.Size([1222, 5120]), hb shape: torch.Size([57, 5120])
+Comparing a:hidden_states_exports/blend_42_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_42_last_layer_hidden_states.pt
+ha shape: torch.Size([1270, 5120]), hb shape: torch.Size([60, 5120])
+Comparing a:hidden_states_exports/blend_43_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_43_last_layer_hidden_states.pt
+ha shape: torch.Size([1265, 5120]), hb shape: torch.Size([54, 5120])
+Comparing a:hidden_states_exports/blend_44_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_44_last_layer_hidden_states.pt
+ha shape: torch.Size([1279, 5120]), hb shape: torch.Size([58, 5120])
+Comparing a:hidden_states_exports/blend_45_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_45_last_layer_hidden_states.pt
+ha shape: torch.Size([1267, 5120]), hb shape: torch.Size([64, 5120])
+Comparing a:hidden_states_exports/blend_46_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_46_last_layer_hidden_states.pt
+ha shape: torch.Size([1445, 5120]), hb shape: torch.Size([56, 5120])
+Comparing a:hidden_states_exports/blend_47_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_47_last_layer_hidden_states.pt
+ha shape: torch.Size([1321, 5120]), hb shape: torch.Size([56, 5120])
+Comparing a:hidden_states_exports/blend_48_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_48_last_layer_hidden_states.pt
+ha shape: torch.Size([1222, 5120]), hb shape: torch.Size([50, 5120])
+Comparing a:hidden_states_exports/blend_49_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_49_last_layer_hidden_states.pt
+ha shape: torch.Size([1253, 5120]), hb shape: torch.Size([57, 5120])
+Comparing a:hidden_states_exports/blend_50_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_50_last_layer_hidden_states.pt
+ha shape: torch.Size([1265, 5120]), hb shape: torch.Size([57, 5120])
+Comparing a:hidden_states_exports/blend_51_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_51_last_layer_hidden_states.pt
+ha shape: torch.Size([1328, 5120]), hb shape: torch.Size([52, 5120])
+Comparing a:hidden_states_exports/blend_52_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_52_last_layer_hidden_states.pt
+ha shape: torch.Size([1435, 5120]), hb shape: torch.Size([56, 5120])
+Comparing a:hidden_states_exports/blend_53_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_53_last_layer_hidden_states.pt
+ha shape: torch.Size([1306, 5120]), hb shape: torch.Size([61, 5120])
+Comparing a:hidden_states_exports/blend_54_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_54_last_layer_hidden_states.pt
+ha shape: torch.Size([1232, 5120]), hb shape: torch.Size([59, 5120])
+Comparing a:hidden_states_exports/blend_55_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_55_last_layer_hidden_states.pt
+ha shape: torch.Size([1313, 5120]), hb shape: torch.Size([58, 5120])
+Comparing a:hidden_states_exports/blend_56_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_56_last_layer_hidden_states.pt
+ha shape: torch.Size([1233, 5120]), hb shape: torch.Size([57, 5120])
+Comparing a:hidden_states_exports/blend_57_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_57_last_layer_hidden_states.pt
+ha shape: torch.Size([1248, 5120]), hb shape: torch.Size([56, 5120])
+Comparing a:hidden_states_exports/blend_58_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_58_last_layer_hidden_states.pt
+ha shape: torch.Size([1251, 5120]), hb shape: torch.Size([56, 5120])
+Comparing a:hidden_states_exports/blend_59_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_59_last_layer_hidden_states.pt
+ha shape: torch.Size([1226, 5120]), hb shape: torch.Size([52, 5120])
+Comparing a:hidden_states_exports/blend_60_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_60_last_layer_hidden_states.pt
+ha shape: torch.Size([1185, 5120]), hb shape: torch.Size([51, 5120])
+Comparing a:hidden_states_exports/blend_61_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_61_last_layer_hidden_states.pt
+ha shape: torch.Size([1260, 5120]), hb shape: torch.Size([56, 5120])
+Comparing a:hidden_states_exports/blend_62_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_62_last_layer_hidden_states.pt
+ha shape: torch.Size([1228, 5120]), hb shape: torch.Size([56, 5120])
+Comparing a:hidden_states_exports/blend_63_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_63_last_layer_hidden_states.pt
+ha shape: torch.Size([1241, 5120]), hb shape: torch.Size([53, 5120])
+Comparing a:hidden_states_exports/blend_64_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_64_last_layer_hidden_states.pt
+ha shape: torch.Size([1231, 5120]), hb shape: torch.Size([49, 5120])
+Comparing a:hidden_states_exports/blend_65_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_65_last_layer_hidden_states.pt
+ha shape: torch.Size([1285, 5120]), hb shape: torch.Size([52, 5120])
+Comparing a:hidden_states_exports/blend_66_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_66_last_layer_hidden_states.pt
+ha shape: torch.Size([1253, 5120]), hb shape: torch.Size([58, 5120])
+Comparing a:hidden_states_exports/blend_67_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_67_last_layer_hidden_states.pt
+ha shape: torch.Size([1271, 5120]), hb shape: torch.Size([55, 5120])
+Comparing a:hidden_states_exports/blend_68_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_68_last_layer_hidden_states.pt
+ha shape: torch.Size([1291, 5120]), hb shape: torch.Size([53, 5120])
+Comparing a:hidden_states_exports/blend_69_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_69_last_layer_hidden_states.pt
+ha shape: torch.Size([1307, 5120]), hb shape: torch.Size([60, 5120])
+Comparing a:hidden_states_exports/blend_70_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_70_last_layer_hidden_states.pt
+ha shape: torch.Size([1282, 5120]), hb shape: torch.Size([55, 5120])
+Comparing a:hidden_states_exports/blend_71_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_71_last_layer_hidden_states.pt
+ha shape: torch.Size([1193, 5120]), hb shape: torch.Size([55, 5120])
+Comparing a:hidden_states_exports/blend_72_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_72_last_layer_hidden_states.pt
+ha shape: torch.Size([1269, 5120]), hb shape: torch.Size([53, 5120])
+Comparing a:hidden_states_exports/blend_73_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_73_last_layer_hidden_states.pt
+ha shape: torch.Size([1399, 5120]), hb shape: torch.Size([58, 5120])
+Comparing a:hidden_states_exports/blend_74_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_74_last_layer_hidden_states.pt
+ha shape: torch.Size([1138, 5120]), hb shape: torch.Size([59, 5120])
+Comparing a:hidden_states_exports/blend_75_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_75_last_layer_hidden_states.pt
+ha shape: torch.Size([1322, 5120]), hb shape: torch.Size([53, 5120])
+Comparing a:hidden_states_exports/blend_76_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_76_last_layer_hidden_states.pt
+ha shape: torch.Size([1432, 5120]), hb shape: torch.Size([55, 5120])
+Comparing a:hidden_states_exports/blend_77_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_77_last_layer_hidden_states.pt
+ha shape: torch.Size([1197, 5120]), hb shape: torch.Size([52, 5120])
+Comparing a:hidden_states_exports/blend_78_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_78_last_layer_hidden_states.pt
+ha shape: torch.Size([1391, 5120]), hb shape: torch.Size([50, 5120])
+Comparing a:hidden_states_exports/blend_79_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_79_last_layer_hidden_states.pt
+ha shape: torch.Size([1278, 5120]), hb shape: torch.Size([54, 5120])
+Comparing a:hidden_states_exports/blend_80_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_80_last_layer_hidden_states.pt
+ha shape: torch.Size([1300, 5120]), hb shape: torch.Size([57, 5120])
+Comparing a:hidden_states_exports/blend_81_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_81_last_layer_hidden_states.pt
+ha shape: torch.Size([1237, 5120]), hb shape: torch.Size([57, 5120])
+Comparing a:hidden_states_exports/blend_82_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_82_last_layer_hidden_states.pt
+ha shape: torch.Size([1292, 5120]), hb shape: torch.Size([59, 5120])
+Comparing a:hidden_states_exports/blend_83_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_83_last_layer_hidden_states.pt
+ha shape: torch.Size([1321, 5120]), hb shape: torch.Size([56, 5120])
+Comparing a:hidden_states_exports/blend_84_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_84_last_layer_hidden_states.pt
+ha shape: torch.Size([1294, 5120]), hb shape: torch.Size([59, 5120])
+Comparing a:hidden_states_exports/blend_85_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_85_last_layer_hidden_states.pt
+ha shape: torch.Size([1223, 5120]), hb shape: torch.Size([60, 5120])
+Comparing a:hidden_states_exports/blend_86_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_86_last_layer_hidden_states.pt
+ha shape: torch.Size([1211, 5120]), hb shape: torch.Size([59, 5120])
+Comparing a:hidden_states_exports/blend_87_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_87_last_layer_hidden_states.pt
+ha shape: torch.Size([1201, 5120]), hb shape: torch.Size([56, 5120])
+Comparing a:hidden_states_exports/blend_88_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_88_last_layer_hidden_states.pt
+ha shape: torch.Size([1265, 5120]), hb shape: torch.Size([56, 5120])
+Comparing a:hidden_states_exports/blend_89_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_89_last_layer_hidden_states.pt
+ha shape: torch.Size([1176, 5120]), hb shape: torch.Size([52, 5120])
+Comparing a:hidden_states_exports/blend_90_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_90_last_layer_hidden_states.pt
+ha shape: torch.Size([1261, 5120]), hb shape: torch.Size([58, 5120])
+Comparing a:hidden_states_exports/blend_91_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_91_last_layer_hidden_states.pt
+ha shape: torch.Size([1184, 5120]), hb shape: torch.Size([58, 5120])
+Comparing a:hidden_states_exports/blend_92_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_92_last_layer_hidden_states.pt
+ha shape: torch.Size([1158, 5120]), hb shape: torch.Size([52, 5120])
+Comparing a:hidden_states_exports/blend_93_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_93_last_layer_hidden_states.pt
+ha shape: torch.Size([1290, 5120]), hb shape: torch.Size([49, 5120])
+Comparing a:hidden_states_exports/blend_94_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_94_last_layer_hidden_states.pt
+ha shape: torch.Size([1260, 5120]), hb shape: torch.Size([53, 5120])
+Comparing a:hidden_states_exports/blend_95_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_95_last_layer_hidden_states.pt
+ha shape: torch.Size([1283, 5120]), hb shape: torch.Size([56, 5120])
+Comparing a:hidden_states_exports/blend_96_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_96_last_layer_hidden_states.pt
+ha shape: torch.Size([1240, 5120]), hb shape: torch.Size([60, 5120])
+Comparing a:hidden_states_exports/blend_97_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_97_last_layer_hidden_states.pt
+ha shape: torch.Size([1283, 5120]), hb shape: torch.Size([54, 5120])
+Comparing a:hidden_states_exports/blend_98_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_98_last_layer_hidden_states.pt
+ha shape: torch.Size([1280, 5120]), hb shape: torch.Size([54, 5120])
+Comparing a:hidden_states_exports/blend_99_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_99_last_layer_hidden_states.pt
+ha shape: torch.Size([1305, 5120]), hb shape: torch.Size([55, 5120])
+Comparing a:hidden_states_exports/blend_100_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_100_last_layer_hidden_states.pt
+ha shape: torch.Size([1277, 5120]), hb shape: torch.Size([53, 5120])
+Comparing a:hidden_states_exports/blend_101_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_101_last_layer_hidden_states.pt
+ha shape: torch.Size([1295, 5120]), hb shape: torch.Size([54, 5120])
+Comparing a:hidden_states_exports/blend_102_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_102_last_layer_hidden_states.pt
+ha shape: torch.Size([1373, 5120]), hb shape: torch.Size([55, 5120])
+Comparing a:hidden_states_exports/blend_103_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_103_last_layer_hidden_states.pt
+ha shape: torch.Size([1435, 5120]), hb shape: torch.Size([59, 5120])
+Comparing a:hidden_states_exports/blend_104_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_104_last_layer_hidden_states.pt
+ha shape: torch.Size([1247, 5120]), hb shape: torch.Size([56, 5120])
+Comparing a:hidden_states_exports/blend_105_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_105_last_layer_hidden_states.pt
+ha shape: torch.Size([1244, 5120]), hb shape: torch.Size([49, 5120])
+Comparing a:hidden_states_exports/blend_106_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_106_last_layer_hidden_states.pt
+ha shape: torch.Size([1246, 5120]), hb shape: torch.Size([57, 5120])
+Comparing a:hidden_states_exports/blend_107_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_107_last_layer_hidden_states.pt
+ha shape: torch.Size([1256, 5120]), hb shape: torch.Size([58, 5120])
+Comparing a:hidden_states_exports/blend_108_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_108_last_layer_hidden_states.pt
+ha shape: torch.Size([1305, 5120]), hb shape: torch.Size([54, 5120])
+Comparing a:hidden_states_exports/blend_109_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_109_last_layer_hidden_states.pt
+ha shape: torch.Size([1356, 5120]), hb shape: torch.Size([57, 5120])
+Comparing a:hidden_states_exports/blend_110_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_110_last_layer_hidden_states.pt
+ha shape: torch.Size([1276, 5120]), hb shape: torch.Size([58, 5120])
+Comparing a:hidden_states_exports/blend_111_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_111_last_layer_hidden_states.pt
+ha shape: torch.Size([1259, 5120]), hb shape: torch.Size([56, 5120])
+Comparing a:hidden_states_exports/blend_112_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_112_last_layer_hidden_states.pt
+ha shape: torch.Size([1239, 5120]), hb shape: torch.Size([52, 5120])
+Comparing a:hidden_states_exports/blend_113_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_113_last_layer_hidden_states.pt
+ha shape: torch.Size([1344, 5120]), hb shape: torch.Size([58, 5120])
+Comparing a:hidden_states_exports/blend_114_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_114_last_layer_hidden_states.pt
+ha shape: torch.Size([1265, 5120]), hb shape: torch.Size([61, 5120])
+Comparing a:hidden_states_exports/blend_115_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_115_last_layer_hidden_states.pt
+ha shape: torch.Size([1269, 5120]), hb shape: torch.Size([54, 5120])
+Comparing a:hidden_states_exports/blend_116_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_116_last_layer_hidden_states.pt
+ha shape: torch.Size([1262, 5120]), hb shape: torch.Size([59, 5120])
+Comparing a:hidden_states_exports/blend_117_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_117_last_layer_hidden_states.pt
+ha shape: torch.Size([1282, 5120]), hb shape: torch.Size([58, 5120])
+Comparing a:hidden_states_exports/blend_118_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_118_last_layer_hidden_states.pt
+ha shape: torch.Size([1239, 5120]), hb shape: torch.Size([55, 5120])
+Comparing a:hidden_states_exports/blend_119_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_119_last_layer_hidden_states.pt
+ha shape: torch.Size([1379, 5120]), hb shape: torch.Size([57, 5120])
+Comparing a:hidden_states_exports/blend_120_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_120_last_layer_hidden_states.pt
+ha shape: torch.Size([1285, 5120]), hb shape: torch.Size([63, 5120])
+Comparing a:hidden_states_exports/blend_121_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_121_last_layer_hidden_states.pt
+ha shape: torch.Size([1319, 5120]), hb shape: torch.Size([57, 5120])
+Comparing a:hidden_states_exports/blend_122_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_122_last_layer_hidden_states.pt
+ha shape: torch.Size([1283, 5120]), hb shape: torch.Size([58, 5120])
+Comparing a:hidden_states_exports/blend_123_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_123_last_layer_hidden_states.pt
+ha shape: torch.Size([1255, 5120]), hb shape: torch.Size([54, 5120])
+Comparing a:hidden_states_exports/blend_124_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_124_last_layer_hidden_states.pt
+ha shape: torch.Size([1243, 5120]), hb shape: torch.Size([56, 5120])
+Comparing a:hidden_states_exports/blend_125_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_125_last_layer_hidden_states.pt
+ha shape: torch.Size([1245, 5120]), hb shape: torch.Size([60, 5120])
+Comparing a:hidden_states_exports/blend_126_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_126_last_layer_hidden_states.pt
+ha shape: torch.Size([1282, 5120]), hb shape: torch.Size([60, 5120])
+Comparing a:hidden_states_exports/blend_127_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_127_last_layer_hidden_states.pt
+ha shape: torch.Size([1248, 5120]), hb shape: torch.Size([65, 5120])
+Comparing a:hidden_states_exports/blend_128_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_128_last_layer_hidden_states.pt
+ha shape: torch.Size([1316, 5120]), hb shape: torch.Size([57, 5120])
+Comparing a:hidden_states_exports/blend_129_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_129_last_layer_hidden_states.pt
+ha shape: torch.Size([1335, 5120]), hb shape: torch.Size([52, 5120])
+Comparing a:hidden_states_exports/blend_130_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_130_last_layer_hidden_states.pt
+ha shape: torch.Size([1337, 5120]), hb shape: torch.Size([59, 5120])
+Comparing a:hidden_states_exports/blend_131_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_131_last_layer_hidden_states.pt
+ha shape: torch.Size([1332, 5120]), hb shape: torch.Size([55, 5120])
+Comparing a:hidden_states_exports/blend_132_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_132_last_layer_hidden_states.pt
+ha shape: torch.Size([1270, 5120]), hb shape: torch.Size([56, 5120])
+Comparing a:hidden_states_exports/blend_133_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_133_last_layer_hidden_states.pt
+ha shape: torch.Size([1238, 5120]), hb shape: torch.Size([57, 5120])
+Comparing a:hidden_states_exports/blend_134_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_134_last_layer_hidden_states.pt
+ha shape: torch.Size([1342, 5120]), hb shape: torch.Size([52, 5120])
+Comparing a:hidden_states_exports/blend_135_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_135_last_layer_hidden_states.pt
+ha shape: torch.Size([1291, 5120]), hb shape: torch.Size([58, 5120])
+Comparing a:hidden_states_exports/blend_136_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_136_last_layer_hidden_states.pt
+ha shape: torch.Size([1382, 5120]), hb shape: torch.Size([70, 5120])
+Comparing a:hidden_states_exports/blend_137_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_137_last_layer_hidden_states.pt
+ha shape: torch.Size([1243, 5120]), hb shape: torch.Size([51, 5120])
+Comparing a:hidden_states_exports/blend_138_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_138_last_layer_hidden_states.pt
+ha shape: torch.Size([1151, 5120]), hb shape: torch.Size([52, 5120])
+Comparing a:hidden_states_exports/blend_139_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_139_last_layer_hidden_states.pt
+ha shape: torch.Size([1221, 5120]), hb shape: torch.Size([57, 5120])
+Comparing a:hidden_states_exports/blend_140_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_140_last_layer_hidden_states.pt
+ha shape: torch.Size([1263, 5120]), hb shape: torch.Size([57, 5120])
+Comparing a:hidden_states_exports/blend_141_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_141_last_layer_hidden_states.pt
+ha shape: torch.Size([1242, 5120]), hb shape: torch.Size([50, 5120])
+Comparing a:hidden_states_exports/blend_142_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_142_last_layer_hidden_states.pt
+ha shape: torch.Size([1287, 5120]), hb shape: torch.Size([52, 5120])
+Comparing a:hidden_states_exports/blend_143_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_143_last_layer_hidden_states.pt
+ha shape: torch.Size([1243, 5120]), hb shape: torch.Size([60, 5120])
+Comparing a:hidden_states_exports/blend_144_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_144_last_layer_hidden_states.pt
+ha shape: torch.Size([1265, 5120]), hb shape: torch.Size([57, 5120])
+Comparing a:hidden_states_exports/blend_145_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_145_last_layer_hidden_states.pt
+ha shape: torch.Size([1292, 5120]), hb shape: torch.Size([51, 5120])
+Comparing a:hidden_states_exports/blend_146_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_146_last_layer_hidden_states.pt
+ha shape: torch.Size([1225, 5120]), hb shape: torch.Size([66, 5120])
+Comparing a:hidden_states_exports/blend_147_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_147_last_layer_hidden_states.pt
+ha shape: torch.Size([1318, 5120]), hb shape: torch.Size([58, 5120])
+Comparing a:hidden_states_exports/blend_148_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_148_last_layer_hidden_states.pt
+ha shape: torch.Size([1266, 5120]), hb shape: torch.Size([72, 5120])
+Comparing a:hidden_states_exports/blend_149_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_149_last_layer_hidden_states.pt
+ha shape: torch.Size([1345, 5120]), hb shape: torch.Size([58, 5120])
+Comparing a:hidden_states_exports/blend_150_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_150_last_layer_hidden_states.pt
+ha shape: torch.Size([1256, 5120]), hb shape: torch.Size([52, 5120])
+Comparing a:hidden_states_exports/blend_151_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_151_last_layer_hidden_states.pt
+ha shape: torch.Size([1441, 5120]), hb shape: torch.Size([61, 5120])
+Comparing a:hidden_states_exports/blend_152_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_152_last_layer_hidden_states.pt
+ha shape: torch.Size([1293, 5120]), hb shape: torch.Size([63, 5120])
+Comparing a:hidden_states_exports/blend_153_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_153_last_layer_hidden_states.pt
+ha shape: torch.Size([1276, 5120]), hb shape: torch.Size([54, 5120])
+Comparing a:hidden_states_exports/blend_154_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_154_last_layer_hidden_states.pt
+ha shape: torch.Size([1266, 5120]), hb shape: torch.Size([53, 5120])
+Comparing a:hidden_states_exports/blend_155_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_155_last_layer_hidden_states.pt
+ha shape: torch.Size([1244, 5120]), hb shape: torch.Size([57, 5120])
+Comparing a:hidden_states_exports/blend_156_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_156_last_layer_hidden_states.pt
+ha shape: torch.Size([1300, 5120]), hb shape: torch.Size([57, 5120])
+Comparing a:hidden_states_exports/blend_157_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_157_last_layer_hidden_states.pt
+ha shape: torch.Size([1243, 5120]), hb shape: torch.Size([53, 5120])
+Comparing a:hidden_states_exports/blend_158_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_158_last_layer_hidden_states.pt
+ha shape: torch.Size([1239, 5120]), hb shape: torch.Size([51, 5120])
+Comparing a:hidden_states_exports/blend_159_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_159_last_layer_hidden_states.pt
+ha shape: torch.Size([1209, 5120]), hb shape: torch.Size([50, 5120])
+Comparing a:hidden_states_exports/blend_160_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_160_last_layer_hidden_states.pt
+ha shape: torch.Size([1310, 5120]), hb shape: torch.Size([64, 5120])
+Comparing a:hidden_states_exports/blend_161_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_161_last_layer_hidden_states.pt
+ha shape: torch.Size([1358, 5120]), hb shape: torch.Size([52, 5120])
+Comparing a:hidden_states_exports/blend_162_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_162_last_layer_hidden_states.pt
+ha shape: torch.Size([1322, 5120]), hb shape: torch.Size([56, 5120])
+Comparing a:hidden_states_exports/blend_163_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_163_last_layer_hidden_states.pt
+ha shape: torch.Size([1310, 5120]), hb shape: torch.Size([62, 5120])
+Comparing a:hidden_states_exports/blend_164_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_164_last_layer_hidden_states.pt
+ha shape: torch.Size([1219, 5120]), hb shape: torch.Size([55, 5120])
+Comparing a:hidden_states_exports/blend_165_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_165_last_layer_hidden_states.pt
+ha shape: torch.Size([1247, 5120]), hb shape: torch.Size([54, 5120])
+Comparing a:hidden_states_exports/blend_166_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_166_last_layer_hidden_states.pt
+ha shape: torch.Size([1292, 5120]), hb shape: torch.Size([52, 5120])
+Comparing a:hidden_states_exports/blend_167_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_167_last_layer_hidden_states.pt
+ha shape: torch.Size([1398, 5120]), hb shape: torch.Size([60, 5120])
+Comparing a:hidden_states_exports/blend_168_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_168_last_layer_hidden_states.pt
+ha shape: torch.Size([1300, 5120]), hb shape: torch.Size([60, 5120])
+Comparing a:hidden_states_exports/blend_169_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_169_last_layer_hidden_states.pt
+ha shape: torch.Size([1321, 5120]), hb shape: torch.Size([57, 5120])
+Comparing a:hidden_states_exports/blend_170_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_170_last_layer_hidden_states.pt
+ha shape: torch.Size([1258, 5120]), hb shape: torch.Size([55, 5120])
+Comparing a:hidden_states_exports/blend_171_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_171_last_layer_hidden_states.pt
+ha shape: torch.Size([1264, 5120]), hb shape: torch.Size([52, 5120])
+Comparing a:hidden_states_exports/blend_172_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_172_last_layer_hidden_states.pt
+ha shape: torch.Size([1293, 5120]), hb shape: torch.Size([54, 5120])
+Comparing a:hidden_states_exports/blend_173_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_173_last_layer_hidden_states.pt
+ha shape: torch.Size([1273, 5120]), hb shape: torch.Size([57, 5120])
+Comparing a:hidden_states_exports/blend_174_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_174_last_layer_hidden_states.pt
+ha shape: torch.Size([1214, 5120]), hb shape: torch.Size([54, 5120])
+Comparing a:hidden_states_exports/blend_175_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_175_last_layer_hidden_states.pt
+ha shape: torch.Size([1259, 5120]), hb shape: torch.Size([55, 5120])
+Comparing a:hidden_states_exports/blend_176_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_176_last_layer_hidden_states.pt
+ha shape: torch.Size([1453, 5120]), hb shape: torch.Size([56, 5120])
+Comparing a:hidden_states_exports/blend_177_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_177_last_layer_hidden_states.pt
+ha shape: torch.Size([1351, 5120]), hb shape: torch.Size([62, 5120])
+Comparing a:hidden_states_exports/blend_178_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_178_last_layer_hidden_states.pt
+ha shape: torch.Size([1250, 5120]), hb shape: torch.Size([51, 5120])
+Comparing a:hidden_states_exports/blend_179_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_179_last_layer_hidden_states.pt
+ha shape: torch.Size([1258, 5120]), hb shape: torch.Size([58, 5120])
+Comparing a:hidden_states_exports/blend_180_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_180_last_layer_hidden_states.pt
+ha shape: torch.Size([1416, 5120]), hb shape: torch.Size([53, 5120])
+Comparing a:hidden_states_exports/blend_181_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_181_last_layer_hidden_states.pt
+ha shape: torch.Size([1340, 5120]), hb shape: torch.Size([52, 5120])
+Comparing a:hidden_states_exports/blend_182_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_182_last_layer_hidden_states.pt
+ha shape: torch.Size([1241, 5120]), hb shape: torch.Size([55, 5120])
+Comparing a:hidden_states_exports/blend_183_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_183_last_layer_hidden_states.pt
+ha shape: torch.Size([1328, 5120]), hb shape: torch.Size([49, 5120])
+Comparing a:hidden_states_exports/blend_184_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_184_last_layer_hidden_states.pt
+ha shape: torch.Size([1241, 5120]), hb shape: torch.Size([53, 5120])
+Comparing a:hidden_states_exports/blend_185_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_185_last_layer_hidden_states.pt
+ha shape: torch.Size([1315, 5120]), hb shape: torch.Size([54, 5120])
+Comparing a:hidden_states_exports/blend_186_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_186_last_layer_hidden_states.pt
+ha shape: torch.Size([1302, 5120]), hb shape: torch.Size([58, 5120])
+Comparing a:hidden_states_exports/blend_187_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_187_last_layer_hidden_states.pt
+ha shape: torch.Size([1317, 5120]), hb shape: torch.Size([56, 5120])
+Comparing a:hidden_states_exports/blend_188_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_188_last_layer_hidden_states.pt
+ha shape: torch.Size([1246, 5120]), hb shape: torch.Size([59, 5120])
+Comparing a:hidden_states_exports/blend_189_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_189_last_layer_hidden_states.pt
+ha shape: torch.Size([1309, 5120]), hb shape: torch.Size([61, 5120])
+Comparing a:hidden_states_exports/blend_190_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_190_last_layer_hidden_states.pt
+ha shape: torch.Size([1270, 5120]), hb shape: torch.Size([57, 5120])
+Comparing a:hidden_states_exports/blend_191_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_191_last_layer_hidden_states.pt
+ha shape: torch.Size([1313, 5120]), hb shape: torch.Size([54, 5120])
+Comparing a:hidden_states_exports/blend_192_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_192_last_layer_hidden_states.pt
+ha shape: torch.Size([1138, 5120]), hb shape: torch.Size([67, 5120])
+Comparing a:hidden_states_exports/blend_193_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_193_last_layer_hidden_states.pt
+ha shape: torch.Size([1260, 5120]), hb shape: torch.Size([50, 5120])
+Comparing a:hidden_states_exports/blend_194_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_194_last_layer_hidden_states.pt
+ha shape: torch.Size([1220, 5120]), hb shape: torch.Size([58, 5120])
+Comparing a:hidden_states_exports/blend_195_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_195_last_layer_hidden_states.pt
+ha shape: torch.Size([1424, 5120]), hb shape: torch.Size([54, 5120])
+Comparing a:hidden_states_exports/blend_196_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_196_last_layer_hidden_states.pt
+ha shape: torch.Size([1265, 5120]), hb shape: torch.Size([52, 5120])
+Comparing a:hidden_states_exports/blend_197_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_197_last_layer_hidden_states.pt
+ha shape: torch.Size([1303, 5120]), hb shape: torch.Size([53, 5120])
+Comparing a:hidden_states_exports/blend_198_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_198_last_layer_hidden_states.pt
+ha shape: torch.Size([1273, 5120]), hb shape: torch.Size([59, 5120])
+Comparing a:hidden_states_exports/blend_199_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_199_last_layer_hidden_states.pt
+ha shape: torch.Size([1317, 5120]), hb shape: torch.Size([58, 5120])
+Comparing a:hidden_states_exports/blend_200_last_layer_hidden_states.pt and b:hidden_states_exports/full_reuse_200_last_layer_hidden_states.pt
+ha shape: torch.Size([1309, 5120]), hb shape: torch.Size([56, 5120])
+Wrote 200 rows to hidden_states_compares/blend_vs_full_reuse.csv

@@ -129,6 +129,8 @@ class GPUExecutor(ExecutorBase):
         blocks_to_copy: Dict[int, List[int]],
         num_lookahead_slots: int,
     ) -> List[SamplerOutput]:
+        # print(f"GPUExecutor: executing model with "
+        #       f"{len(seq_group_metadata_list)} sequence groups.")
         output = self.driver_worker.execute_model(
             seq_group_metadata_list=seq_group_metadata_list,
             blocks_to_swap_in=blocks_to_swap_in,

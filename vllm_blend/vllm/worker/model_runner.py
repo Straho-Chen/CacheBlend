@@ -872,9 +872,11 @@ class ModelRunner:
         # Currently cuda graph is only supported by the decode phase.
         prefill_meta = attn_metadata.prefill_metadata
         decode_meta = attn_metadata.decode_metadata
+        # print(f"prefill_meta: {prefill_meta}, decode_meta: {decode_meta}")
         if prefill_meta is None and decode_meta.use_cuda_graph:
             graph_batch_size = input_tokens.shape[0]
             model_executable = self.graph_runners[graph_batch_size]
+            # print(f"decode model_executable {model_executable}")
         else:
             model_executable = self.model
         execute_model_kwargs = {
@@ -886,6 +888,7 @@ class ModelRunner:
         if self.vision_language_config:
             execute_model_kwargs.update({"image_input": multi_modal_input})
         hidden_states = model_executable(**execute_model_kwargs)
+        # print(f"hidden_states shape: {hidden_states.shape}")
 
         # HACK(Jiayi): only use cpu local store
         # Cache engine: gather the kv cache and store it to cache engine
