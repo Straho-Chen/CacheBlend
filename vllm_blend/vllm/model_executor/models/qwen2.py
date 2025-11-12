@@ -341,7 +341,7 @@ class Qwen2Model(nn.Module):
                 old_kv=old_kv
             )
 
-        if temp_status==1:
+            if temp_status==1:
                 #import pdb
                 #pdb.set_trace()
                 positions = positions[self.cache_fuse_metadata["imp_indices"]]
