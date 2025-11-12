@@ -457,6 +457,7 @@ class XFormersImpl(AttentionImpl):
             if status in [1,2]:
                 #import pdb
                 #pdb.set_trace()
+                # print(f"status: {status}, bias used in xformers attention: {cache_fuse_metadata['attn_bias']}")
                 out = xops.memory_efficient_attention_forward(
                         query,
                         key,
@@ -466,6 +467,7 @@ class XFormersImpl(AttentionImpl):
                         scale=self.scale,
                     )
             else:
+                # print(f"bias used in xformers attention: {attn_metadata.attn_bias}")
                 out = xops.memory_efficient_attention_forward(
                 query,
                 key,

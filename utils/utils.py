@@ -241,6 +241,7 @@ def export_attention_matrices(cache_fuse_metadata, name_prefix, export_dir="./at
         # assume keys/queries correspond to same sequence length
         expected_hq_rows = int(meta_num_tokens * num_heads)
         expected_hk_rows = int(meta_num_tokens * num_kv_heads)
+        print(f"hq_cat.shape: {hq_cat.shape}, hk_cat.shape: {hk_cat.shape}")
         assert hq_cat.shape[0] == expected_hq_rows, f"hq_cat shape {hq_cat.shape[0]} != expected {expected_hq_rows}"
         assert hk_cat.shape[0] == expected_hk_rows, f"hk_cat shape {hk_cat.shape[0]} != expected {expected_hk_rows}"
 
@@ -253,8 +254,7 @@ def export_attention_matrices(cache_fuse_metadata, name_prefix, export_dir="./at
         Mk = k.shape[0]
 
         # Save to file (CPU tensors)
-        ts = np.datetime64("now").astype(str).replace(":", "-")
-        fname = f"{name_prefix}attn_layer{layer_to_inspect}_{Mq}x{Mk}_{ts}.pt"
+        fname = f"{name_prefix}attn_layer{layer_to_inspect}_{Mq}x{Mk}.pt"
         out_path = os.path.join(export_dir, fname)
         torch.save({
             "meta": {

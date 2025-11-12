@@ -181,6 +181,7 @@ class LlamaAttention(nn.Module):
         if cache_fuse_metadata['collect']:
             self.hack_kv = [k.clone(), v.clone()]
         q, k = self.rotary_emb(positions, q, k)
+        cache_fuse_metadata["scaling"] = self.scaling
         attn_output = self.attn(q, k, v, kv_cache, attn_metadata,
                                 status, cache_fuse_metadata, old_kv,
                                 self.kv_scale)
@@ -346,6 +347,8 @@ class LlamaModel(nn.Module):
         
         
         for i in range(len(self.layers)):
+            # add layer idx for cache tag
+            self.cache_fuse_metadata["layer_idx"] = i
             
             if self.cache_fuse_metadata["check"]:
                 if i in self.cache_fuse_metadata["check_layers"]:

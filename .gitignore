@@ -1,7 +1,7 @@
 **/__pycache__
 outputs/
-attn_exports/
-attn_pic/
-imp_indices_exports/
+attn_exports*/
+attn_pic*/
+imp_indices_exports*/
 hidden_states_exports/
 *.egg-info/
