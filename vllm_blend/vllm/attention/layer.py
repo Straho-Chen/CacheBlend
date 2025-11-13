@@ -8,6 +8,8 @@ from vllm.attention.backends.abstract import (AttentionMetadata,
                                               AttentionMetadataPerStage)
 from vllm.attention.selector import get_attn_backend
 
+from vllm.logger import logger
+
 
 class Attention(nn.Module):
     """Attention layer.
@@ -50,7 +52,7 @@ class Attention(nn.Module):
         
         kv_scale: float = 1.0,
     ) -> torch.Tensor:
-        # print(f"query shape: {query.shape}, key shape: {key.shape}")
+        logger.debug(f"query shape: {query.shape}, key shape: {key.shape}")
         return self.impl.forward(query, key, value, kv_cache, attn_metadata,
                                  kv_scale,
                                  status, cache_fuse_metadata, old_kv,

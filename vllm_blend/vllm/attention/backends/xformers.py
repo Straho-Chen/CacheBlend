@@ -191,12 +191,12 @@ class XFormersImpl(AttentionImpl):
             shape = [num_tokens, num_heads * head_size]
         """
         num_tokens, hidden_size = query.shape
-        # print(f"num_tokens: {num_tokens}, hidden_size: {hidden_size}")
+        logger.debug(f"num_tokens: {num_tokens}, hidden_size: {hidden_size}")
         query = query.view(-1, self.num_heads, self.head_size)
         key = key.view(-1, self.num_kv_heads, self.head_size)
         value = value.view(-1, self.num_kv_heads, self.head_size)
 
-        # print(f"query shape after view: {query.shape}, key shape after view: {key.shape}")
+        logger.debug(f"query shape after view: {query.shape}, key shape after view: {key.shape}")
 
         # Jiayi modified start
         # TODO(Jiayi): The following `view`s can be saved
@@ -212,8 +212,8 @@ class XFormersImpl(AttentionImpl):
             topk_num = int((total_len-last_len)*cache_fuse_metadata["recomp_ratio"])
             cache_fuse_metadata["topk_num"] = topk_num
 
-            # print(f"len of new value: {value.shape}")
-            # print(f"len of old value: {value_old.shape}")
+            logger.debug(f"len of new value: {value.shape}")
+            logger.debug(f"len of old value: {value_old.shape}")
 
             temp_diff = torch.sum((value[:-last_len,:,:]-value_old[:-last_len,:,:])**2, dim=[1,2])
             top_indices = torch.topk(temp_diff, k=topk_num).indices
@@ -295,7 +295,7 @@ class XFormersImpl(AttentionImpl):
         else:
             num_prefill_tokens = attn_metadata.num_prefill_tokens
             num_decode_tokens = attn_metadata.num_decode_tokens
-            # print(f"num_prefill_tokens: {num_prefill_tokens}, num_decode_tokens: {num_decode_tokens}")
+            logger.debug(f"num_prefill_tokens: {num_prefill_tokens}, num_decode_tokens: {num_decode_tokens}")
             assert key.shape[0] == num_prefill_tokens + num_decode_tokens
             assert value.shape[0] == num_prefill_tokens + num_decode_tokens
 
@@ -324,13 +324,13 @@ class XFormersImpl(AttentionImpl):
                 #output[:num_prefill_tokens] = out
                 # Store hack_q/hack_k per-layer so each layer keeps its own list.
                 if cache_fuse_metadata.get("hack_start", False):
-                    print("normal prefill")
+                    logger.info("normal prefill")
                     cache_fuse_metadata["h_dim"]=query.shape[-1]
                     cache_fuse_metadata["num_tokens"]=query.shape[0]
                     cache_fuse_metadata["num_kv_heads"]=self.num_kv_heads
                     cache_fuse_metadata["num_queries_per_kv"]=self.num_queries_per_kv
-                    print(f"h_dim: {cache_fuse_metadata['h_dim']}, num_tokens: {cache_fuse_metadata['num_tokens']}, num_kv_heads: {cache_fuse_metadata['num_kv_heads']}, num_queries_per_kv: {cache_fuse_metadata['num_queries_per_kv']}")
-                    print(f"prefill query shape: {query.shape}, key shape: {key.shape}")
+                    logger.info(f"h_dim: {cache_fuse_metadata['h_dim']}, num_tokens: {cache_fuse_metadata['num_tokens']}, num_kv_heads: {cache_fuse_metadata['num_kv_heads']}, num_queries_per_kv: {cache_fuse_metadata['num_queries_per_kv']}")
+                    logger.info(f"prefill query shape: {query.shape}, key shape: {key.shape}")
                     layer = cache_fuse_metadata.get("layer_idx", 0)
                     # ensure dict structure
                     if not isinstance(cache_fuse_metadata.get("hack_q"), dict):
@@ -404,6 +404,7 @@ class XFormersImpl(AttentionImpl):
         """
         assert attn_metadata.prompt_lens is not None
         original_query = query
+        logger.debug(f"status: {status}, scale: {self.scale}")
         if self.num_kv_heads != self.num_heads:
             # GQA/MQA requires the shape [B, M, G, H, K].
             # Note that the output also has the same shape (which is different
@@ -417,14 +418,15 @@ class XFormersImpl(AttentionImpl):
                           None, :].expand(value.shape[0], self.num_kv_heads,
                                           self.num_queries_per_kv,
                                           value.shape[-1])
-            # print(f"kv_heads: {self.num_kv_heads}, q_heads: {self.num_heads}")
-            # print(f"query shape after gqa view: {query.shape}, key shape after gqa view: {key.shape}")
+            logger.debug(f"kv_heads: {self.num_kv_heads}, q_heads: {self.num_heads}")
+            logger.debug(f"query shape after gqa view: {query.shape}, key shape after gqa view: {key.shape}")
         # Set attention bias if not provided. This typically happens at
         # the very attention layer of every iteration.
         # FIXME(woosuk): This is a hack.
-        # print(f"attn_bias: {attn_metadata.attn_bias}, alibi_slopes: {self.alibi_slopes}, status: {status}, scale: {self.scale}")
         if attn_metadata.attn_bias is None:
+            logger.debug("need to make attn_bias")
             if self.alibi_slopes is None:
+                logger.debug("no alibi slopes, use causal mask")
                 # TODO(Jiayi): please pre-allocate mask for faster inference
                 #if cache_fuse_metadata["check"]:
                 #    attn_metadata.attn_bias = _fetch_maetrailized_mask_gqa(query.shape[0], self.num_kv_heads, self.num_queries_per_kv, query.device,query.dtype)
@@ -440,11 +442,11 @@ class XFormersImpl(AttentionImpl):
                 attn_metadata.attn_bias = [attn_bias]
                 '''
             else:
+                logger.debug("with alibi slopes")
                 attn_metadata.attn_bias = _make_alibi_bias(
                     self.alibi_slopes, self.num_kv_heads, query.dtype,
                     attn_metadata.prompt_lens)
 
-        # print(f"attn_bias: {attn_metadata.attn_bias}, alibi_slopes: {self.alibi_slopes}, status: {status}, scale: {self.scale}")
         # No alibi slopes.
         # TODO(woosuk): Too many view operations. Let's try to reduce
         # them in the future for code readability.
@@ -457,7 +459,7 @@ class XFormersImpl(AttentionImpl):
             if status in [1,2]:
                 #import pdb
                 #pdb.set_trace()
-                # print(f"status: {status}, bias used in xformers attention: {cache_fuse_metadata['attn_bias']}")
+                logger.debug(f"use cached attn_bias")
                 out = xops.memory_efficient_attention_forward(
                         query,
                         key,
@@ -467,7 +469,7 @@ class XFormersImpl(AttentionImpl):
                         scale=self.scale,
                     )
             else:
-                # print(f"bias used in xformers attention: {attn_metadata.attn_bias}")
+                logger.debug(f"normal attn_bias")
                 out = xops.memory_efficient_attention_forward(
                 query,
                 key,

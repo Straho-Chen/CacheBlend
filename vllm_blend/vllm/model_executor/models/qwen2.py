@@ -46,6 +46,8 @@ from vllm.model_executor.model_loader.weight_utils import default_weight_loader
 from vllm.model_executor.sampling_metadata import SamplingMetadata
 from vllm.sequence import SamplerOutput
 
+from vllm.logger import logger
+
 
 class Qwen2MLP(nn.Module):
 
@@ -152,9 +154,9 @@ class Qwen2Attention(nn.Module):
         old_kv,
     ) -> torch.Tensor:
         qkv, _ = self.qkv_proj(hidden_states)
-        # print(f"q_size: {self.q_size}, kv_size: {self.kv_size}")
+        logger.debug(f"q_size: {self.q_size}, kv_size: {self.kv_size}")
         q, k, v = qkv.split([self.q_size, self.kv_size, self.kv_size], dim=-1)
-        # print(f"q shape after split: {q.shape}, k shape after split: {k.shape}")
+        logger.debug(f"q shape after split: {q.shape}, k shape after split: {k.shape}")
 
         # HACK(Jiayi): Rotate the old K 
         # Need to modify the kernel to only take K as input 
@@ -169,7 +171,7 @@ class Qwen2Attention(nn.Module):
             self.hack_kv = [k.clone(), v.clone()]
 
         q, k = self.rotary_emb(positions, q, k)
-        # print(f"q shape after emd: {q.shape}, k shape after emd: {k.shape}")
+        logger.debug(f"q shape after emd: {q.shape}, k shape after emd: {k.shape}")
         cache_fuse_metadata["scaling"] = self.scaling
         attn_output = self.attn(q, k, v, kv_cache, attn_metadata, 
                                 status, cache_fuse_metadata, old_kv)
@@ -295,8 +297,6 @@ class Qwen2Model(nn.Module):
     ) -> torch.Tensor:
         hidden_states = self.embed_tokens(input_ids)
 
-        # print("prefill metadata:", attn_metadata.prefill_metadata)
-
         if attn_metadata.prefill_metadata:
             temp_status = 0 # full prefill
             if self.cache_fuse_metadata["check"]:
@@ -347,7 +347,7 @@ class Qwen2Model(nn.Module):
                 positions = positions[self.cache_fuse_metadata["imp_indices"]]
         
         hidden_states, _ = self.norm(hidden_states, residual)
-        # print(f"Final hidden states shape: {hidden_states.shape}")
+        logger.debug(f"Final hidden states shape: {hidden_states.shape}")
         if self.cache_fuse_metadata.get("export_last_layer_hidden_states", False):
             self.cache_fuse_metadata["last_layer_hidden_states"] = hidden_states
         return hidden_states
