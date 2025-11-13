@@ -14,12 +14,14 @@ table_create "$TABLE_NAME" "model dataset name ttft f1"
 
 mkdir -p $OUTPUT_DIR
 
-# DATASET=("musique" "samsum" "wikimqa")
+DATASET=("musique" "wikimqa" "samsum")
 # DATASET=("musique")
-DATASET=("samsum" "wikimqa")
+# DATASET=("samsum" "wikimqa")
+# DATASET=("samsum")
 # DATASET=("wikimqa")
 
 MODEL_SIZE=("14B" "7B")
+# MODEL_SIZE=("14B")
 
 for size in ${MODEL_SIZE[@]}; do
     for DATASET_NAME in ${DATASET[@]}; do

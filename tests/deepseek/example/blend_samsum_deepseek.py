@@ -24,7 +24,7 @@ else:
     print("Using 14B model, think mode:", args.enable_think)
     test_model = test_model_14B
 
-llm = LLM(model=test_model, gpu_memory_utilization=0.95, dtype=torch.bfloat16, max_model_len=20000,
+llm = LLM(model=test_model, gpu_memory_utilization=0.85, dtype=torch.bfloat16, max_model_len=16384,
           #tokenizer=tokenizer,
           )
 tokenizer = AutoTokenizer.from_pretrained(test_model)
@@ -39,7 +39,7 @@ rl_blend = []
 rl_full_reuse = []
 rl_full_prefill = []
 
-max_ctx_len = 3400
+max_ctx_len = 16000
 #TODO (Jiayi): fix filler tokens at the begining or pass in tokenizer
 for sample_idx, ex in enumerate(eval_dataset):
     answers = ex["answers"]

@@ -3,8 +3,12 @@ import matplotlib.pyplot as plt
 import os
 
 # ======= Config =======
-INPUT_FILE = "performance-comparison-table-bak"  # Input data file
+INPUT_FILE = "performance-comparison-table"  # Input data file
 OUTPUT_FORMAT = "pdf"                            # Output format
+OUT_DIR = "pic"                               # Output directory
+
+if not os.path.exists(OUT_DIR):
+    os.makedirs(OUT_DIR)
 
 # ======= Read Data =======
 df = pd.read_csv(INPUT_FILE, delim_whitespace=True)
@@ -75,14 +79,14 @@ def draw_scatter(data, title, output_file):
 # ======= 1️⃣ Original: Draw for each dataset (all models together) =======
 for dataset in df["dataset"].unique():
     data = df[df["dataset"] == dataset]
-    draw_scatter(data, f"Dataset: {dataset}", f"{dataset}_scatter.{OUTPUT_FORMAT}")
+    draw_scatter(data, f"Dataset: {dataset}", f"{OUT_DIR}/{dataset}_scatter.{OUTPUT_FORMAT}")
 
 # ======= 2️⃣ Per-model plots =======
 for model in df["model"].unique():
     model_data = df[df["model"] == model]
     for dataset in model_data["dataset"].unique():
         data = model_data[model_data["dataset"] == dataset]
-        draw_scatter(data, f"{model} — {dataset}", f"{model}_{dataset}_scatter.{OUTPUT_FORMAT}")
+        draw_scatter(data, f"{model} — {dataset}", f"{OUT_DIR}/{model}_{dataset}_scatter.{OUTPUT_FORMAT}")
 
 # ======= 3️⃣ Full prefill comparison =======
 full_keywords = {"full_prefill"}
@@ -119,7 +123,7 @@ for dataset in full_df["dataset"].unique():
         plt.grid(True, linestyle="--", alpha=0.6)
         plt.legend(title="Model", loc="lower right", fontsize=9, title_fontsize=10)
         plt.tight_layout()
-        output_file = f"{dataset}_fullprefill_compare_size{size}.{OUTPUT_FORMAT}"
+        output_file = f"{OUT_DIR}/{dataset}_fullprefill_compare_size{size}.{OUTPUT_FORMAT}"
         plt.savefig(output_file, format=OUTPUT_FORMAT)
         plt.close()
         print(f"✅ Saved: {output_file}")
