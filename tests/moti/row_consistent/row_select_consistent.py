@@ -807,9 +807,14 @@ def row_attention_select_filter(output_dir, topk, prefill_file: Path, chunks: Li
     k = int(topk * query_len)
     top_indices = torch.topk(per_query_sum, k).indices
     top_indices, _ = torch.sort(top_indices)
+    # Filter out indices where per_query_sum is below threshold
+    threshold = num_kv_heads * num_queries_per_kv * 0.2
+    mask = per_query_sum[top_indices] >= threshold
+    top_indices = top_indices[mask]
+    
     topk_sum = per_query_sum[top_indices].sum()
     print(f"Layer {layer_num}: Sum of top-{topk} per_query_sum: {topk_sum.item()}")
-    print(f"Layer {layer_num}: selected top {k} based on attention mass out of {query_len} total queries.")
+    print(f"Layer {layer_num}: selected top {top_indices.size(0)} based on attention mass out of {query_len} total queries (after filtering with threshold={threshold}).")
     torch.set_printoptions(profile="full")
     print(f"Top-{topk} Indices based on attention mass: \n{top_indices}")
     torch.set_printoptions(profile="default")
