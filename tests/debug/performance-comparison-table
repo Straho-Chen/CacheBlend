@@ -1,0 +1,4 @@
+model dataset name ttft f1
+deepseek-think musique blend-14B  
+deepseek-think musique full_reuse-14B  
+deepseek-think musique full_prefill-14B  
