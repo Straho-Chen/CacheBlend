@@ -367,12 +367,15 @@ def col_attention_select(output_dir, topk, prefill_file: Path, chunks: List[Tupl
         per_query_sum = per_query_sum.view(-1)
 
     # !!! use topk selection based on attention mass !!!
-    k = int(topk * query_len)
-    top_indices = torch.topk(per_query_sum, k).indices
-    top_indices, _ = torch.sort(top_indices)
+    k = max(1, int(topk * query_len))
+    top_values, top_indices = torch.topk(per_query_sum, k, largest=True)
+    topk_sum = top_values.sum()
+    print(f"Layer {layer_num}: Sum of top-{topk} per_query_sum: {topk_sum.item()}")
     print(f"Layer {layer_num}: selected top {k} based on attention mass out of {query_len} total queries.")
     torch.set_printoptions(profile="full")
-    print(f"Top-{topk} Indices based on attention mass: \n{top_indices}")
+    print(f"Top-{topk} Indices and per_query_sum (desc):")
+    for idx, val in zip(top_indices.tolist(), top_values.tolist()):
+        print(f"{int(idx)}: {float(val):.6f}")
     torch.set_printoptions(profile="default")
 
     fname = f"row_selection_indices_layer{layer_num}.pt"
@@ -473,14 +476,15 @@ def row_attention_select_no_mask(output_dir, topk, prefill_file: Path, chunks: L
         per_query_sum = per_query_sum.view(-1)
 
     # !!! use topk selection based on attention mass !!!
-    k = int(topk * query_len)
-    top_indices = torch.topk(per_query_sum, k).indices
-    top_indices, _ = torch.sort(top_indices)
-    topk_sum = per_query_sum[top_indices].sum()
+    k = max(1, int(topk * query_len))
+    top_values, top_indices = torch.topk(per_query_sum, k, largest=True)
+    topk_sum = top_values.sum()
     print(f"Layer {layer_num}: Sum of top-{topk} per_query_sum: {topk_sum.item()}")
     print(f"Layer {layer_num}: selected top {k} based on attention mass out of {query_len} total queries.")
     torch.set_printoptions(profile="full")
-    print(f"Top-{topk} Indices based on attention mass: \n{top_indices}")
+    print(f"Top-{topk} Indices and per_query_sum (desc):")
+    for idx, val in zip(top_indices.tolist(), top_values.tolist()):
+        print(f"{int(idx)}: {float(val):.6f}")
     torch.set_printoptions(profile="default")
 
     fname = f"row_selection_indices_layer{layer_num}.pt"
@@ -639,14 +643,15 @@ def row_attention_select_new(output_dir, topk, prefill_file: Path, chunks: List[
         per_query_sum = per_query_sum.view(-1)
 
     # !!! use topk selection based on attention mass !!!
-    k = int(topk * query_len)
-    top_indices = torch.topk(per_query_sum, k).indices
-    top_indices, _ = torch.sort(top_indices)
-    topk_sum = per_query_sum[top_indices].sum()
+    k = max(1, int(topk * query_len))
+    top_values, top_indices = torch.topk(per_query_sum, k, largest=True)
+    topk_sum = top_values.sum()
     print(f"Layer {layer_num}: Sum of top-{topk} per_query_sum: {topk_sum.item()}")
     print(f"Layer {layer_num}: selected top {k} based on attention mass out of {query_len} total queries.")
     torch.set_printoptions(profile="full")
-    print(f"Top-{topk} Indices based on attention mass: \n{top_indices}")
+    print(f"Top-{topk} Indices and per_query_sum (desc):")
+    for idx, val in zip(top_indices.tolist(), top_values.tolist()):
+        print(f"{int(idx)}: {float(val):.6f}")
     torch.set_printoptions(profile="default")
 
     fname = f"row_selection_indices_layer{layer_num}.pt"
@@ -735,6 +740,7 @@ def row_attention_select_filter(output_dir, topk, prefill_file: Path, chunks: Li
 
     # !!! use new algorithm to compute row attention selection !!!
     # sum all head and group dims to get (Q, K) attention score matrix
+    print(f"shape of attention_scores before sum: {attention_scores.shape}")
     attn_score = torch.sum(attention_scores, dim=[0, 1])
     query_len = attn_score.shape[-2]
     key_len = attn_score.shape[-1]
@@ -792,26 +798,35 @@ def row_attention_select_filter(output_dir, topk, prefill_file: Path, chunks: Li
             mask2d[pos:query_len, min(pos, key_len):key_len] = 1.0
 
         print(f"Mask broadcast shape: {mask2d.shape}")
-        # print(f"attn_score: {attn_score}\nmask: {mask2d}")
         attention_scores_copy = attn_score * mask2d
+        # torch.set_printoptions(profile="full")
+        # print(f"attn_score: {attention_scores_copy[2014,:]}\nmask: {mask2d[2014, :]}")
+        # torch.set_printoptions(profile="default")
 
     # Aggregate attention mass per query index across all leading dims
     # attention_scores_copy shape may be (Q, K) or (T, H, Q, K) etc.; query dim is -2
     per_query_sum = attention_scores_copy.sum(dim=-1)
+    per_key_sum = attention_scores_copy.sum(dim=-2)
+    per_token_sum = per_query_sum + per_key_sum
 
-    # Ensure per_query_sum is 1-D (length = number of queries)
-    if per_query_sum.dim() != 1:
-        per_query_sum = per_query_sum.view(-1)
+    # # Ensure per_query_sum is 1-D (length = number of queries)
+    # if per_query_sum.dim() != 1:
+    #     per_query_sum = per_query_sum.view(-1)
 
     # !!! use topk selection based on attention mass !!!
-    k = int(topk * query_len)
-    top_indices = torch.topk(per_query_sum, k).indices
-    top_indices, _ = torch.sort(top_indices)
-    topk_sum = per_query_sum[top_indices].sum()
-    print(f"Layer {layer_num}: Sum of top-{topk} per_query_sum: {topk_sum.item()}")
-    print(f"Layer {layer_num}: selected top {k} based on attention mass out of {query_len} total queries.")
+    k = max(1, int(topk * query_len))
+    top_values, top_indices = torch.topk(per_token_sum, k, largest=True)
+    # threshold = num_kv_heads * num_queries_per_kv * 0.8
+    # mask = per_token_sum[top_indices] >= threshold
+    # top_indices = top_indices[mask]
+    # top_values = top_values[mask]
+    topk_sum = top_values.sum()
     torch.set_printoptions(profile="full")
-    print(f"Top-{topk} Indices based on attention mass: \n{top_indices}")
+    print(f"Layer {layer_num}: Sum of top-{topk} per_query_sum: {topk_sum.item()}")
+    print(f"Layer {layer_num}: selected top {top_indices.shape[0]} based on attention mass out of {query_len} total queries.")
+    print(f"Top-{topk} Indices and per_query_sum (desc):")
+    for idx, val in zip(top_indices.tolist(), top_values.tolist()):
+        print(f"{int(idx)}: {float(val):.6f}")
     torch.set_printoptions(profile="default")
 
     fname = f"row_selection_indices_layer{layer_num}.pt"
@@ -853,8 +868,9 @@ def main():
         print(f"\nProcessing prefill file: {prefill_path}")
         # row_attention_select(output_dir, prefill_path, chunks)
         # col_attention_select(output_dir, topk, prefill_path, chunks)
-        row_attention_select_no_mask(output_dir, topk, prefill_path, chunks)
-        # row_attention_select_new(output_dir, topk, prefill_path, chunks)
+        # row_attention_select_no_mask(output_dir, topk, prefill_path, chunks)
+        row_attention_select_new(output_dir, topk, prefill_path, chunks)
+        # row_attention_select_filter(output_dir, topk, prefill_path, chunks)
 
     # load all row selection indices files and calculate the selection similarity
     print("\nLoading row selection indices files for similarity computation...")
@@ -870,8 +886,6 @@ def main():
         print(f"Loading selection indices for layer {layer_num} from {sel_path}")
         data = torch.load(sel_path)
         indices = data.get("row_selection_indices", None)
-        # if layer_num == 0 or layer_num == 1:
-        #     print(f"Selection indices for layer {layer_num}: {indices}")
         if indices is None:
             print(f"failed to load {sel_path}: 'row_selection_indices' key not found.")
             return
@@ -879,15 +893,19 @@ def main():
     # compute pairwise Jaccard similarity between layers
     layer_nums = sorted(selection_indices.keys())
     print(f"\nPairwise Jaccard similarity between layers{layer_nums} selection indices:")
+    # num_total = len(selection_indices[layer_nums[0]])
+    # intersection_all = selection_indices[layer_nums[0]].copy()
     for i in range(len(layer_nums)-1):
         layer_i = layer_nums[i]
         layer_j = layer_nums[i+1]
         set_i = selection_indices[layer_i]
         set_j = selection_indices[layer_j]
+        # intersection_all = intersection_all.intersection(set_j)
         intersection = len(set_i.intersection(set_j))
-        union = len(set_i.union(set_j))
-        jaccard_sim = intersection / union if union > 0 else 0.0
-        print(f"Layers {layer_i} len {len(set_i)} & {layer_j} len {len(set_j)}: Jaccard similarity = {jaccard_sim:.4f}")
+        # union = len(set_i.union(set_j))
+        jaccard_sim = intersection / len(set_i)
+        print(f"Layers {layer_i} len {len(set_i)} & {layer_j} len {len(set_j)}: similarity = {jaccard_sim:.4f}")
+    # print(f"Overall intersection size across all layers: {len(intersection_all)} out of {num_total} total tokens. similarity = {len(intersection_all)/num_total:.4f}")
 
 
 if __name__ == "__main__":

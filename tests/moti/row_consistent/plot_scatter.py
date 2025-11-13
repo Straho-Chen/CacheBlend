@@ -46,57 +46,42 @@ def main():
 
     with open(log_file, 'r') as f:
         for line in f:
+            # Check for layer declaration and per_query_sum in format: "Layer X: Sum of top-0.2 per_query_sum: VALUE"
             layer_match = re.search(r'Layer (\d+):', line)
             if layer_match:
                 current_layer = int(layer_match.group(1))
                 collecting_indices = False
 
-                # Check if this line also contains per_query_sum
-                per_query_match = re.search(r'per_query_sum:\s*([\d.]+)', line)
+                # Check if this line contains per_query_sum in the new format
+                per_query_match = re.search(r'Sum of top-[\d.]+ per_query_sum:\s*([\d.]+)', line)
                 if per_query_match:
                     per_query_sum_value = float(per_query_match.group(1))
                     per_query_sums[current_layer] = per_query_sum_value
                 continue
 
-            # Check for per_query_sum in lines that don't have layer declaration
-            per_query_match = re.search(r'Layer (\d+):.*per_query_sum:\s*([\d.]+)', line)
-            if per_query_match:
-                layer_num = int(per_query_match.group(1))
-                per_query_sum_value = float(per_query_match.group(2))
-                per_query_sums[layer_num] = per_query_sum_value
-                continue
-
-            # Check for "Top-0.4 Indices" line - next lines will contain indices
-            if 'Top-' in line and 'Indices' in line:
+            # Check for "Top-X Indices and per_query_sum (desc):" line - next lines will contain index:value pairs
+            if 'Top-' in line and 'Indices' in line and 'per_query_sum' in line:
                 collecting_indices = True
                 continue
 
-            # If we're collecting indices for a layer
+            # If we're collecting indices for a layer, parse lines in format "index: value"
             if collecting_indices and current_layer is not None:
-                if 'tensor([' in line or (re.match(r'^\s+\d+', line) and not line.strip().startswith('device')):
-                    if 'device' in line.lower():
-                        collecting_indices = False
-                        continue
-
-                    if 'tensor([' in line:
-                        content = line.split('tensor([')[1] if 'tensor([' in line else line
-                        numbers = re.findall(r'\b\d+\b', content)
-                    else:
-                        numbers = re.findall(r'\b\d+\b', line)
-
-                    for num_str in numbers:
-                        try:
-                            index = int(num_str)
-                            if index < 10000:
-                                pairs.append((index, current_layer))
-                        except ValueError:
-                            continue
-
-                if ']' in line and 'device' in line:
+                # Stop collecting if we hit a blank line or a new "Processing" line
+                if not line.strip() or 'Processing' in line:
                     collecting_indices = False
-                elif line.strip() and not re.match(r'^\s+\d+', line) and 'tensor' not in line.lower():
-                    if 'Processing' in line or 'Layer' in line:
-                        collecting_indices = False
+                    continue
+                
+                # Parse lines in format "index: value" (e.g., "2014: 38.946289")
+                index_match = re.match(r'^\s*(\d+):\s*[\d.]+\s*$', line)
+                if index_match:
+                    try:
+                        index = int(index_match.group(1))
+                        pairs.append((index, current_layer))
+                    except ValueError:
+                        continue
+                elif 'Layer' in line or 'Processing' in line:
+                    # Stop collecting if we see a new layer or processing line
+                    collecting_indices = False
 
     # Create the plots
     if pairs or per_query_sums:
