@@ -884,8 +884,12 @@ def main():
     # print(f"total_indices: {total_indices}", f"total_values: {total_values}")
     # INSERT_YOUR_CODE
     import matplotlib.pyplot as plt
-    per_query_sum_per_total = per_query_sum_per_total / 48
-
+    
+    # Create output folder for per-head plots
+    plot_output_dir = os.path.join(output_dir, "per_head_plots")
+    os.makedirs(plot_output_dir, exist_ok=True)
+    print(f"Generating per-head plots in: {plot_output_dir}")
+    
     # Calculate document end indices from chunks
     chunk_lens = [length for _, length in chunks]
     doc_end_indices = []
@@ -895,7 +899,138 @@ def main():
             cumulative += length
             doc_end_indices.append(cumulative - 1)  # -1 because end index is inclusive
     
-    # Truncate doc_end_indices to valid range
+    # Process each layer to get per-head attention scores
+    # Aggregate across layers: {(query_group, head): [per_query_sum_tensors from all layers]}
+    per_head_data = {}  # {(query_group, head): list of per_query_sum_tensors}
+    num_query_groups = None
+    num_kv_heads = None
+    
+    for pt_file in pt_files:
+        prefill_path = Path(directory) / pt_file
+        m = re.search(r"layer[_-]?(\d+)", pt_file, flags=re.IGNORECASE)
+        if not m:
+            continue
+        layer_num = int(m.group(1))
+        
+        print(f"Processing layer {layer_num} for per-head plots...")
+        prefill_data = torch.load(prefill_path)
+        q = prefill_data.get("q", None).to(torch.float32)
+        k = prefill_data.get("k", None).to(torch.float32)
+        meta = prefill_data.get("meta", {})
+        
+        if q is None or k is None:
+            continue
+        
+        h_dim = meta.get("h_dim")
+        num_kv_heads = meta.get("num_kv_heads")
+        num_queries_per_kv = meta.get("num_queries_per_kv")
+        scaling = meta.get("scaling")
+        
+        if None in (h_dim, num_kv_heads, num_queries_per_kv):
+            continue
+        
+        if num_query_groups is None:
+            num_query_groups = num_queries_per_kv
+        
+        # Reshape and compute attention scores
+        try:
+            q_matrix = q.view(q.shape[0], num_kv_heads, num_queries_per_kv, h_dim).transpose(0, 2)
+            k_matrix = k[:, :, None, :].expand(k.shape[0], num_kv_heads, num_queries_per_kv, h_dim).transpose(0, 2)
+            
+            attn_weights = torch.matmul(q_matrix, k_matrix.transpose(2, 3)) / scaling
+            query_len, key_len = attn_weights.shape[-2], attn_weights.shape[-1]
+            
+            mask = torch.tril(torch.ones(query_len, key_len, device=attn_weights.device))
+            mask = mask.masked_fill(mask == 0, float('-inf'))
+            attn_weights = attn_weights + mask
+            
+            attention_scores = torch.nn.functional.softmax(attn_weights, dim=-1, dtype=torch.float32)
+            # attention_scores shape: (num_query_groups, num_kv_heads, query_len, key_len)
+            # Based on matmul: q_matrix (num_queries_per_kv, num_kv_heads, num_tokens, h_dim) 
+            # @ k_matrix.transpose(2,3) (num_queries_per_kv, num_kv_heads, h_dim, num_tokens)
+            # = (num_queries_per_kv, num_kv_heads, num_tokens, num_tokens)
+            
+            # Build chunk mask
+            mask2d = torch.ones((query_len, key_len), dtype=attention_scores.dtype, device=attention_scores.device)
+            starts = []
+            s = 0
+            for l in chunk_lens:
+                starts.append(s)
+                s += l
+            
+            pos = 0
+            for i, l in enumerate(chunk_lens):
+                if l <= 0:
+                    continue
+                q_start = pos
+                q_end = min(pos + l, query_len)
+                k_start = starts[i]
+                if q_start >= q_end or k_start >= key_len:
+                    pos += l
+                    continue
+                mask2d[q_start:q_end, k_start:key_len] = 0.0
+                pos += l
+            
+            if pos < query_len:
+                mask2d[pos:query_len, min(pos, key_len):key_len] = 1.0
+            
+            # Process each query group and head combination
+            for query_group in range(num_queries_per_kv):
+                for head in range(num_kv_heads):
+                    # Extract attention scores for this (query_group, head) combination
+                    # attention_scores[query_group, head, :, :] shape: (query_len, key_len)
+                    attn_score = attention_scores[query_group, head, :, :]
+                    attn_score_masked = attn_score * mask2d
+                    
+                    # Compute per_query_sum for this head
+                    per_query_sum = attn_score_masked.sum(dim=-1)  # shape: (query_len,)
+                    
+                    key = (query_group, head)
+                    if key not in per_head_data:
+                        per_head_data[key] = []
+                    per_head_data[key].append(per_query_sum)
+                    
+        except Exception as e:
+            print(f"Error processing layer {layer_num}: {e}")
+            continue
+    
+    # Average across layers and generate plots
+    print(f"Generating {len(per_head_data)} plots (aggregated across all layers)...")
+    valid_length = None
+    
+    for (query_group, head), per_query_sums in per_head_data.items():
+        # Average across all layers
+        per_query_sum_avg = torch.stack(per_query_sums).mean(dim=0)
+        
+        if valid_length is None:
+            valid_length = len(per_query_sum_avg)
+            # Truncate doc_end_indices to valid range
+            doc_end_indices = [idx for idx in doc_end_indices if idx < valid_length]
+        
+        # Generate plot
+        plt.figure(figsize=(12, 6))
+        plt.plot(per_query_sum_avg.cpu().numpy(), marker='.', linestyle='None', markersize=2)
+        
+        # Add vertical lines at document end indices
+        for doc_end_idx in doc_end_indices:
+            plt.axvline(x=doc_end_idx, color='r', linestyle='--', alpha=0.5, linewidth=1)
+        
+        plt.title(f"per_query_sum - Query Group {query_group}, Head {head} (Averaged across all layers)")
+        plt.xlabel("Index")
+        plt.ylabel("per_query_sum")
+        plt.grid(True)
+        plt.tight_layout()
+        
+        # Save plot
+        plot_filename = f"qgroup{query_group}_head{head}.png"
+        plot_path = os.path.join(plot_output_dir, plot_filename)
+        plt.savefig(plot_path)
+        plt.close()
+    
+    print(f"Generated {len(per_head_data)} plots in {plot_output_dir}")
+    
+    # Also generate the averaged plot (original behavior)
+    per_query_sum_per_total = per_query_sum_per_total / len(pt_files) / 40
     valid_length = len(per_query_sum_per_total)
     doc_end_indices = [idx for idx in doc_end_indices if idx < valid_length]
     print(f"doc_end_indices (truncated to valid range < {valid_length}): {doc_end_indices}")
@@ -907,7 +1042,7 @@ def main():
     for doc_end_idx in doc_end_indices:
         plt.axvline(x=doc_end_idx, color='r', linestyle='--', alpha=0.5, linewidth=1)
     
-    plt.title("per_query_sum_per_total vs. Index")
+    plt.title("per_query_sum_per_total vs. Index (Averaged)")
     plt.xlabel("Index")
     plt.ylabel("per_query_sum_per_total")
     plt.grid(True)

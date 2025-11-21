@@ -11,7 +11,7 @@ import os
 parser = argparse.ArgumentParser(description="Run cache-fuse blending test for musique dataset")
 parser.add_argument("--model-size", dest="model_size", type=str, default="7B")
 parser.add_argument("--enable-think", dest="enable_think", action="store_true", help="Whether to enable think marker in DeepSeek")
-parser.add_argument("--export-dir", dest="export_dir", type=str, default="./attn_exports_deepseek7b_musique", help="Directory to export attention matrices")
+parser.add_argument("--export-dir", dest="export_dir", type=str, default=None, help="Directory to export attention matrices (default: ./attn_exports_deepseek{model_size}_musique)")
 args = parser.parse_args()
 
 eval_dataset = load_dataset(f"{REPO_ROOT}/inputs/musique_s.json")
@@ -25,6 +25,10 @@ if args.model_size == "7B":
 else:
     print("Using 14B model, think mode:", args.enable_think)
     test_model = test_model_14B
+
+# Set default export directory if not provided
+if args.export_dir is None:
+    args.export_dir = f"./attn_exports_deepseek{args.model_size}_musique"
 
 llm = LLM(model=test_model, gpu_memory_utilization=0.95, dtype=torch.bfloat16, max_model_len=20000,
           #tokenizer=tokenizer,
