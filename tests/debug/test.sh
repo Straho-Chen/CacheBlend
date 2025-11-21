@@ -23,7 +23,8 @@ DATASET=("musique")
 # MODEL_SIZE=("14B" "7B")
 MODEL_SIZE=("14B")
 
-export LOG_LEVEL=DEBUG
+export LOG_LEVEL=INFO
+export CUDA_VISIBLE_DEVICES=2
 
 for size in ${MODEL_SIZE[@]}; do
     for DATASET_NAME in ${DATASET[@]}; do

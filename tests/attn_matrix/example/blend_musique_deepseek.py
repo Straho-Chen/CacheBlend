@@ -2,13 +2,16 @@ from vllm import LLM, SamplingParams
 import torch
 import numpy as np
 from transformers import AutoTokenizer
-from utils.utils import REPO_ROOT, load_dataset, build_qa_prompt_normal, compute_f1, extract_after_think
+from utils.utils import REPO_ROOT, load_dataset, build_qa_prompt_normal, compute_f1, extract_after_think, export_attention_matrices
+from itertools import chain
 import argparse
+import os
 
 # Parse command-line arguments
 parser = argparse.ArgumentParser(description="Run cache-fuse blending test for musique dataset")
 parser.add_argument("--model-size", dest="model_size", type=str, default="7B")
 parser.add_argument("--enable-think", dest="enable_think", action="store_true", help="Whether to enable think marker in DeepSeek")
+parser.add_argument("--export-dir", dest="export_dir", type=str, default="./attn_exports_deepseek7b_musique", help="Directory to export attention matrices")
 args = parser.parse_args()
 
 eval_dataset = load_dataset(f"{REPO_ROOT}/inputs/musique_s.json")
@@ -24,8 +27,7 @@ else:
     test_model = test_model_14B
 
 llm = LLM(model=test_model, gpu_memory_utilization=0.95, dtype=torch.bfloat16, max_model_len=20000,
-          #tokenizer=tokenizer, 
-        #   enforce_eager=True,
+          #tokenizer=tokenizer,
           )
 tokenizer = AutoTokenizer.from_pretrained(test_model)
 llm.set_tokenizer(tokenizer)
@@ -33,19 +35,14 @@ llm.set_tokenizer(tokenizer)
 prefix_prompt = "You will be asked a question after reading several passages. Please directly answer the question based on the given passages. Do NOT repeat the question. The answer should be within 5 words..\nPassages:\n"
 query_prompt = "\n\nAnswer the question directly based on the given passages. Do NOT repeat the question. The answer should be within 5 words. \nQuestion:"
 
-ttft_blend = []
-ttft_full_reuse = []
-ttft_full_prefill = []
-f1_blend = []
-f1_full_reuse = []
-f1_full_prefill = []
+# Create export directory
+os.makedirs(args.export_dir, exist_ok=True)
+print(f"Exporting attention matrices to: {args.export_dir}")
 
 sample = 0
 
 for ex in eval_dataset:
     sample += 1
-    if sample == 2:
-        break
     answers = ex["answers"]
     if args.enable_think:
         p_promt, doc_prompts, q_prompt = build_qa_prompt_normal("deepseek", prefix_prompt, ex, query_prompt)
@@ -55,12 +52,6 @@ for ex in eval_dataset:
     q_ids = tokenizer.encode(q_prompt)[1:]
     p_ids = tokenizer.encode(p_promt)[1:]
 
-    #import pdb
-    #pdb.set_trace()
-    
-    #while len(list(chain.from_iterable(doc_chunk_ids))) > max_ctx_len:
-    #    del_idx = len(doc_chunk_ids)-1
-    #    del doc_chunk_ids[del_idx]
     # Create a sampling params object.
     sampling_params = SamplingParams(temperature=0, max_tokens=1)
 
@@ -69,7 +60,6 @@ for ex in eval_dataset:
 
     s_start_len = len(p_ids) + 1
 
-    #s_start = [518, 25580, 29962]
     s_start = []
     s_start_1_len = len(s_start) + 1
 
@@ -79,17 +69,23 @@ for ex in eval_dataset:
     doc_chunk_ids = [p_ids] + doc_chunk_ids
     doc_chunk_ids = doc_chunk_ids + [s_start+q_ids]
 
+    # export chunk attention matrix
     last_len = len(q_ids)
 
     cache_fuse_metadata['collect'] = True
     cache_fuse_metadata["check"] = False
+    cache_fuse_metadata['attn_bias'] = None
+    cache_fuse_metadata["hack_start"] = True
     chunk_past_key_values = []
-    
+    shift = 0
     # Concatenate old KVs
+    print("len of doc_chunk_ids:", len(doc_chunk_ids))
     for i in range(len(doc_chunk_ids)):
+        cache_fuse_metadata["hack_q"] = {}
+        cache_fuse_metadata["hack_k"] = {}
         doc_chunk_ids_full = s_start_prefix + doc_chunk_ids[i]
         llm.generate(None, sampling_params, prompt_token_ids=[doc_chunk_ids_full])
-
+        shift += len(doc_chunk_ids[i])
         llm_layers = llm.llm_engine.model_executor.driver_worker.model_runner.model.model.layers
         num_layer = len(llm_layers)
         for j in range(num_layer):
@@ -104,92 +100,39 @@ for ex in eval_dataset:
             if i == 0:
                 chunk_past_key_values.append([temp_k, temp_v])
             else:
-                # print(f"key shape: {temp_k.shape}, value shape: {temp_v.shape}")
                 chunk_past_key_values[j][0] = torch.cat((chunk_past_key_values[j][0],temp_k), dim=0)
                 chunk_past_key_values[j][1] = torch.cat((chunk_past_key_values[j][1],temp_v), dim=0)
-
+            llm_layers[j].self_attn.hack_kv = None
+        export_attention_matrices(cache_fuse_metadata, name_prefix=f"chunk{i}_", export_dir=args.export_dir)
     llm.llm_engine.model_executor.driver_worker.model_runner.model.model.old_kvs = chunk_past_key_values
 
+    # Export prefill attention matrix
     input_ids = []
 
     for i in range(len(doc_chunk_ids)):
         if i == 0:
-            temp_ids = s_start_prefix+doc_chunk_ids[i]
+            temp_ids = s_start_prefix+ doc_chunk_ids[i]
         else:
             temp_ids = doc_chunk_ids[i][s_start_1_len-1:]
         input_ids += temp_ids
         
-    # print(len(input_ids))
-        
     input_prompt = tokenizer.decode(input_ids)
 
-    # # for blend
-    # sampling_params = SamplingParams(temperature=0, max_tokens=512)
-    # cache_fuse_metadata["check"] = True
-    # cache_fuse_metadata['collect'] = False
-    # cache_fuse_metadata['suffix_len'] = last_len
-    # cache_fuse_metadata['recomp_ratio'] = 0.2
-    # output = llm.generate(None, sampling_params, prompt_token_ids=[input_ids])
-    # res = output[0].outputs[0].text
-    # print("raw res:", res)
-    # if args.enable_think:
-    #     res = extract_after_think(res)
-    # print(f"blend generation: {res}")
-    # ttft = output[0].metrics.first_token_time-output[0].metrics.first_scheduled_time
-    # print(f"sample: {sample}, TTFT: {ttft}")
-    # ttft_blend.append(ttft)
-    # f1_max = 0
-    # for answer in answers:
-    #     f1, _, _ = compute_f1(res, answer, tokenizer)
-    #     f1_max = max(f1_max, f1)
-    # f1_blend.append(f1_max)
-
-    # for full reuse
-    sampling_params = SamplingParams(temperature=0, max_tokens=512)
-    cache_fuse_metadata["check"] = True
-    cache_fuse_metadata['collect'] = False
-    cache_fuse_metadata['suffix_len'] = last_len
-    cache_fuse_metadata['recomp_ratio'] = 0.8
-    output = llm.generate(None, sampling_params, prompt_token_ids=[input_ids])
-    res = output[0].outputs[0].text
-    print("raw res:", res)
-    if args.enable_think:
-        res = extract_after_think(res)
-    print(f"full reuse generation: {res}")
-    ttft = output[0].metrics.first_token_time-output[0].metrics.first_scheduled_time
-    print(f"sample: {sample}, TTFT: {ttft}")
-    ttft_full_reuse.append(ttft)
-    f1_max = 0
-    for answer in answers:
-        f1, _, _ = compute_f1(res, answer, tokenizer)
-        f1_max = max(f1_max, f1)
-    f1_full_reuse.append(f1_max)
-
+    # for full prefill
+    print("Running full prefill to export attention matrices...")
+    sampling_params = SamplingParams(temperature=0, max_tokens=1)
+    cache_fuse_metadata["check"] = False
+    cache_fuse_metadata['collect'] = True
+    cache_fuse_metadata["hack_start"] = True
+    cache_fuse_metadata["hack_q"] = {}
+    cache_fuse_metadata["hack_k"] = {}
+    output = llm.generate([input_prompt], sampling_params)
+    export_attention_matrices(cache_fuse_metadata, name_prefix=f"prefill_", export_dir=args.export_dir)
+    print("------------")
     
-#     # for full prefill
-#     sampling_params = SamplingParams(temperature=0, max_tokens=512)
-#     cache_fuse_metadata["check"] = False
-#     cache_fuse_metadata['collect'] = False
-#     output = llm.generate(None, sampling_params, prompt_token_ids=[input_ids])
-#     res = output[0].outputs[0].text
-#     print("raw res:", res)
-#     if args.enable_think:
-#         res = extract_after_think(res)
-#     print(f"full prefill generation: {res}")
-#     ttft = output[0].metrics.first_token_time-output[0].metrics.first_scheduled_time
-#     print(f"sample: {sample}, TTFT: {ttft}")
-#     ttft_full_prefill.append(ttft)
-#     f1_max = 0
-#     for answer in answers:
-#         f1, _, _ = compute_f1(res, answer, tokenizer)
-#         f1_max = max(f1_max, f1)
-#     f1_full_prefill.append(f1_max)
-#     print("------------")
+    # Only process first sample for attention matrix export
+    break
 
-# print("---------------Result Summary---------------------")
-# print(f"Avg TTFT with cache: {np.mean(ttft_blend)}")
-# print(f"Avg TTFT with full reuse: {np.mean(ttft_full_reuse)}")
-# print(f"Avg TTFT with full prefill: {np.mean(ttft_full_prefill)}")
-# print(f"Avg F1 with cache: {np.mean(f1_blend)}")
-# print(f"Avg F1 with full reuse: {np.mean(f1_full_reuse)}")
-# print(f"Avg F1 with full prefill: {np.mean(f1_full_prefill)}")
+print("---------------Attention Matrix Export Complete---------------------")
+print(f"Attention matrices exported to: {args.export_dir}")
+

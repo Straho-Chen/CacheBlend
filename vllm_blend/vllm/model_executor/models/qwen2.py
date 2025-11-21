@@ -132,7 +132,7 @@ class Qwen2Attention(nn.Module):
             self.head_dim,
             rotary_dim=self.head_dim,
             max_position=max_position,
-            base=self.rope_theta,
+            base=int(self.rope_theta),
         )
         self.attn = Attention(self.num_heads,
                               self.head_dim,
@@ -163,6 +163,9 @@ class Qwen2Attention(nn.Module):
         if status in [1,2]:
             if cache_fuse_metadata["fake_q"] is None:
                 cache_fuse_metadata['fake_q'] = torch.rand_like(q)
+            # logger.info(f"org pos: {cache_fuse_metadata['org_pos']}")
+            # logger.info(f"positions: {positions}")
+            logger.debug(f"rotary embedding: {self.rotary_emb}")
             _, old_kv[0] = self.rotary_emb(cache_fuse_metadata['org_pos'],
                                         cache_fuse_metadata['fake_q'],
                                         old_kv[0])
@@ -243,7 +246,12 @@ class Qwen2DecoderLayer(nn.Module):
         )
 
         if status == 1:
-            residual = residual[cache_fuse_metadata["imp_indices"]]
+            if residual is not None:
+                logger.debug(f"residual shape before imp selection: {residual.shape}")
+                residual = residual[cache_fuse_metadata["imp_indices"]]
+                logger.debug(f"residual shape after imp selection: {residual.shape}")
+            else:
+                logger.error("Residual is None during check")
 
         # Fully Connected
         hidden_states, residual = self.post_attention_layernorm(
@@ -274,9 +282,8 @@ class Qwen2Model(nn.Module):
         ])
         self.norm = RMSNorm(config.hidden_size, eps=config.rms_norm_eps)
 
-        self.cache_fuse_metadata = {"check_layers":[1],
+        self.cache_fuse_metadata = {"check_layers":1,
                                     "check": False,
-                                    "recomp_ratios":[0.16],
                                     "recomp_ratio":0.16,
                                     "original_slot_mapping":None,
                                     "our_slot_mapping":None,
@@ -297,17 +304,19 @@ class Qwen2Model(nn.Module):
     ) -> torch.Tensor:
         hidden_states = self.embed_tokens(input_ids)
 
+        # !!! status: 0 recompute, 1 check to select important tokens, 2 reuse use new kv relace old_kv on imp indices
         if attn_metadata.prefill_metadata:
             temp_status = 0 # full prefill
             if self.cache_fuse_metadata["check"]:
                 self.cache_fuse_metadata["org_seq_len"] = input_ids.shape[0] 
-                check_layer_idx = 0
-                self.cache_fuse_metadata["fake_q"] = None  
                 self.cache_fuse_metadata["attn_bias"] = None
                 self.cache_fuse_metadata["imp_indices"] = None
+                # use for rotary embedding
+                self.cache_fuse_metadata["fake_q"] = None  
+                self.cache_fuse_metadata['org_pos'] = positions[:]
+                # duplicate
                 self.cache_fuse_metadata["original_slot_mapping"] = None
                 self.cache_fuse_metadata["our_slot_mapping"] = None
-                self.cache_fuse_metadata['org_pos'] = positions[:]
             #FIXME(Jiayi): fix this clone for faster time (Is this still needed?)
             #self.cache_fuse_metadata["our_slot_mapping"] = input_metadata.slot_mapping.clone()
         else:
@@ -319,12 +328,11 @@ class Qwen2Model(nn.Module):
             self.cache_fuse_metadata["layer_idx"] = i
 
             if self.cache_fuse_metadata["check"]:
-                if i in self.cache_fuse_metadata["check_layers"]:
+                if i == self.cache_fuse_metadata["check_layers"]:
                     temp_status = 1 # check this layer
-                    self.cache_fuse_metadata["check_layer"] = self.cache_fuse_metadata["check_layers"][check_layer_idx]
-                    check_layer_idx += 1
-                elif i > self.cache_fuse_metadata["check_layers"][0]:
-                    temp_status = 2 # after check
+                elif i > self.cache_fuse_metadata["check_layers"]:
+                    temp_status = 2 # after check, start reuse
+            logger.debug(f"Layer {i} status: {temp_status}")
             
             old_kv = self.old_kvs[i]
 
@@ -341,10 +349,13 @@ class Qwen2Model(nn.Module):
                 old_kv=old_kv
             )
 
+            # !!! pass the imp indices to next layer through positions
             if temp_status==1:
                 #import pdb
                 #pdb.set_trace()
+                logger.debug(f"pos shape before imp selection: {positions.shape}")
                 positions = positions[self.cache_fuse_metadata["imp_indices"]]
+                logger.debug(f"pos shape after imp selection: {positions.shape}")
         
         hidden_states, _ = self.norm(hidden_states, residual)
         logger.debug(f"Final hidden states shape: {hidden_states.shape}")

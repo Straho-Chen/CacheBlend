@@ -110,30 +110,34 @@ def read_metric_from_csv(path: Path, metric_key: str = "f1"):
             y.append(yv)
 
     return np.array(x, dtype=float), np.array(y, dtype=float)
-    return np.array(x, dtype=float), np.array(y, dtype=float)
 
 
-def plot_xy(x: np.ndarray, y: np.ndarray, out_path: Path, title: Optional[str] = None):
+def plot_xy(x: np.ndarray, y: np.ndarray, out_path: Path, title: Optional[str] = None, ylabel: Optional[str] = None):
     plt.figure(figsize=(6, 4))
     plt.scatter(x, y, s=20, alpha=0.7)
     plt.xlabel("var_between (element-wise variance)")
-    plt.ylabel("f1_diff")
-    # allow callers to override ylabel via title or by passing a title explicitly
+    if ylabel is not None:
+        plt.ylabel(ylabel)
+    else:
+        plt.ylabel("f1_diff")
     if title:
         plt.title(title)
 
-    # add linear fit if possible
+    # add linear fit if possible and print correlation
     if x.size >= 2:
         try:
             coeffs = np.polyfit(x, y, 1)
             xs = np.linspace(np.min(x), np.max(x), 100)
             ys = np.polyval(coeffs, xs)
+            # Compute Pearson correlation coefficient
+            corr = np.corrcoef(x, y)[0, 1]
             plt.plot(xs, ys, color="C1", linestyle="--", label=f"fit: y={coeffs[0]:.3g}x+{coeffs[1]:.3g}")
             plt.legend()
+            # Add correlation coefficient as text in the plot (top left)
+            plt.annotate(f"corr: {corr:.3f}", xy=(0.02, 0.98), xycoords="axes fraction", ha="left", va="top", fontsize=10, bbox=dict(boxstyle="round,pad=0.15", fc="white", alpha=0.8, lw=0))
         except Exception:
             pass
 
-    # small layout tweak and save
     plt.grid(alpha=0.2)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     plt.savefig(str(out_path), dpi=200, bbox_inches="tight")
@@ -192,29 +196,8 @@ def main(argv=None):
 
             out_file = out_dir / f"{comp_name}_{short_key}.pdf"
             title = f"{comp_name.replace('_', ' ')} — {pretty}"
-            # set ylabel to the metric diff name
             plt_ylabel = f"{pretty} diff"
-            # plot with same helper but set ylabel before saving
-            plt.figure(figsize=(6, 4))
-            plt.scatter(x, y, s=20, alpha=0.7)
-            plt.xlabel("var_between (element-wise variance)")
-            plt.ylabel(plt_ylabel)
-            plt.title(title)
-
-            if x.size >= 2:
-                try:
-                    coeffs = np.polyfit(x, y, 1)
-                    xs = np.linspace(np.min(x), np.max(x), 100)
-                    ys = np.polyval(coeffs, xs)
-                    plt.plot(xs, ys, color="C1", linestyle="--", label=f"fit: y={coeffs[0]:.3g}x+{coeffs[1]:.3g}")
-                    plt.legend()
-                except Exception:
-                    pass
-
-            plt.grid(alpha=0.2)
-            out_file.parent.mkdir(parents=True, exist_ok=True)
-            plt.savefig(str(out_file), dpi=200, bbox_inches="tight")
-            plt.close()
+            plot_xy(x, y, out_file, title=title, ylabel=plt_ylabel)
             print(f"Wrote plot {out_file} ({x.size} points)")
             any_plots += 1
 

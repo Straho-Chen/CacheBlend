@@ -9,7 +9,15 @@ import argparse
 parser = argparse.ArgumentParser(description="Run cache-fuse blending test for musique dataset")
 parser.add_argument("--model-size", dest="model_size", type=str, default="7B")
 parser.add_argument("--enable-think", dest="enable_think", action="store_true", help="Whether to enable think marker in DeepSeek")
+parser.add_argument("--recomp-ratio", dest="recomp_ratio", type=float, default=0.16,
+                    help="Recomputation ratio for cache-fuse (float between 0 and 1)")
+parser.add_argument("--cache", dest="use_cache", action="store_true", help="Whether to use cache-fuse blending")
 args = parser.parse_args()
+
+if args.use_cache:
+    print(f"Using cache-fuse blending with recomputation ratio: {args.recomp_ratio}")
+else:
+    print("Full prefill")
 
 eval_dataset = load_dataset(f"{REPO_ROOT}/inputs/musique_s.json")
 
@@ -32,12 +40,8 @@ llm.set_tokenizer(tokenizer)
 prefix_prompt = "You will be asked a question after reading several passages. Please directly answer the question based on the given passages. Do NOT repeat the question. The answer should be within 5 words..\nPassages:\n"
 query_prompt = "\n\nAnswer the question directly based on the given passages. Do NOT repeat the question. The answer should be within 5 words. \nQuestion:"
 
-ttft_blend = []
-ttft_full_reuse = []
-ttft_full_prefill = []
-f1_blend = []
-f1_full_reuse = []
-f1_full_prefill = []
+ttft_v = []
+f1_v = []
 
 sample = 0
 
@@ -78,33 +82,34 @@ for ex in eval_dataset:
 
     last_len = len(q_ids)
 
-    cache_fuse_metadata['collect'] = True
-    cache_fuse_metadata["check"] = False
-    chunk_past_key_values = []
+    if args.use_cache:
+        cache_fuse_metadata['collect'] = True
+        cache_fuse_metadata["check"] = False
+        chunk_past_key_values = []
     
-    # Concatenate old KVs
-    for i in range(len(doc_chunk_ids)):
-        doc_chunk_ids_full = s_start_prefix + doc_chunk_ids[i]
-        llm.generate(None, sampling_params, prompt_token_ids=[doc_chunk_ids_full])
+        # Concatenate old KVs
+        for i in range(len(doc_chunk_ids)):
+            doc_chunk_ids_full = s_start_prefix + doc_chunk_ids[i]
+            llm.generate(None, sampling_params, prompt_token_ids=[doc_chunk_ids_full])
 
-        llm_layers = llm.llm_engine.model_executor.driver_worker.model_runner.model.model.layers
-        num_layer = len(llm_layers)
-        for j in range(num_layer):
-            past_key_values = llm_layers[j].self_attn.hack_kv
-            if i == 0:
-                temp_k = past_key_values[0][:s_start_len].clone() # do not chage with s_start_1
-                temp_v = past_key_values[1][:s_start_len].clone()
-            else:
-                temp_k = past_key_values[0][s_start_1_len:len(doc_chunk_ids[i])+1].clone()
-                temp_v = past_key_values[1][s_start_1_len:len(doc_chunk_ids[i])+1].clone()    
+            llm_layers = llm.llm_engine.model_executor.driver_worker.model_runner.model.model.layers
+            num_layer = len(llm_layers)
+            for j in range(num_layer):
+                past_key_values = llm_layers[j].self_attn.hack_kv
+                if i == 0:
+                    temp_k = past_key_values[0][:s_start_len].clone() # do not chage with s_start_1
+                    temp_v = past_key_values[1][:s_start_len].clone()
+                else:
+                    temp_k = past_key_values[0][s_start_1_len:len(doc_chunk_ids[i])+1].clone()
+                    temp_v = past_key_values[1][s_start_1_len:len(doc_chunk_ids[i])+1].clone()    
 
-            if i == 0:
-                chunk_past_key_values.append([temp_k, temp_v])
-            else:
-                chunk_past_key_values[j][0] = torch.cat((chunk_past_key_values[j][0],temp_k), dim=0)
-                chunk_past_key_values[j][1] = torch.cat((chunk_past_key_values[j][1],temp_v), dim=0)
+                if i == 0:
+                    chunk_past_key_values.append([temp_k, temp_v])
+                else:
+                    chunk_past_key_values[j][0] = torch.cat((chunk_past_key_values[j][0],temp_k), dim=0)
+                    chunk_past_key_values[j][1] = torch.cat((chunk_past_key_values[j][1],temp_v), dim=0)
 
-    llm.llm_engine.model_executor.driver_worker.model_runner.model.model.old_kvs = chunk_past_key_values
+        llm.llm_engine.model_executor.driver_worker.model_runner.model.model.old_kvs = chunk_past_key_values
 
     input_ids = []
 
@@ -119,73 +124,27 @@ for ex in eval_dataset:
         
     input_prompt = tokenizer.decode(input_ids)
 
-    # for blend
     sampling_params = SamplingParams(temperature=0, max_tokens=512)
-    cache_fuse_metadata["check"] = True
+    cache_fuse_metadata["check"] = args.use_cache
     cache_fuse_metadata['collect'] = False
     cache_fuse_metadata['suffix_len'] = last_len
-    cache_fuse_metadata['recomp_ratio'] = 0.2
+    cache_fuse_metadata['recomp_ratio'] = args.recomp_ratio
     output = llm.generate(None, sampling_params, prompt_token_ids=[input_ids])
     res = output[0].outputs[0].text
     print("raw res:", res)
     if args.enable_think:
         res = extract_after_think(res)
-    print(f"blend generation: {res}")
+    print(f"generation: {res}")
     ttft = output[0].metrics.first_token_time-output[0].metrics.first_scheduled_time
     print(f"sample: {sample}, TTFT: {ttft}")
-    ttft_blend.append(ttft)
+    ttft_v.append(ttft)
     f1_max = 0
     for answer in answers:
         f1, _, _ = compute_f1(res, answer, tokenizer)
         f1_max = max(f1_max, f1)
-    f1_blend.append(f1_max)
-
-    # for full reuse
-    sampling_params = SamplingParams(temperature=0, max_tokens=512)
-    cache_fuse_metadata["check"] = True
-    cache_fuse_metadata['collect'] = False
-    cache_fuse_metadata['suffix_len'] = last_len
-    cache_fuse_metadata['recomp_ratio'] = 0.0
-    output = llm.generate(None, sampling_params, prompt_token_ids=[input_ids])
-    res = output[0].outputs[0].text
-    print("raw res:", res)
-    if args.enable_think:
-        res = extract_after_think(res)
-    print(f"full reuse generation: {res}")
-    ttft = output[0].metrics.first_token_time-output[0].metrics.first_scheduled_time
-    print(f"sample: {sample}, TTFT: {ttft}")
-    ttft_full_reuse.append(ttft)
-    f1_max = 0
-    for answer in answers:
-        f1, _, _ = compute_f1(res, answer, tokenizer)
-        f1_max = max(f1_max, f1)
-    f1_full_reuse.append(f1_max)
-
-    
-    # for full prefill
-    sampling_params = SamplingParams(temperature=0, max_tokens=512)
-    cache_fuse_metadata["check"] = False
-    cache_fuse_metadata['collect'] = False
-    output = llm.generate(None, sampling_params, prompt_token_ids=[input_ids])
-    res = output[0].outputs[0].text
-    print("raw res:", res)
-    if args.enable_think:
-        res = extract_after_think(res)
-    print(f"full prefill generation: {res}")
-    ttft = output[0].metrics.first_token_time-output[0].metrics.first_scheduled_time
-    print(f"sample: {sample}, TTFT: {ttft}")
-    ttft_full_prefill.append(ttft)
-    f1_max = 0
-    for answer in answers:
-        f1, _, _ = compute_f1(res, answer, tokenizer)
-        f1_max = max(f1_max, f1)
-    f1_full_prefill.append(f1_max)
+    f1_v.append(f1_max)
     print("------------")
 
 print("---------------Result Summary---------------------")
-print(f"Avg TTFT with cache: {np.mean(ttft_blend)}")
-print(f"Avg TTFT with full reuse: {np.mean(ttft_full_reuse)}")
-print(f"Avg TTFT with full prefill: {np.mean(ttft_full_prefill)}")
-print(f"Avg F1 with cache: {np.mean(f1_blend)}")
-print(f"Avg F1 with full reuse: {np.mean(f1_full_reuse)}")
-print(f"Avg F1 with full prefill: {np.mean(f1_full_prefill)}")
+print(f"Avg TTFT: {np.mean(ttft_v)}")
+print(f"Avg F1: {np.mean(f1_v)}")

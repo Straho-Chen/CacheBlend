@@ -300,7 +300,6 @@ class LlamaModel(nn.Module):
 
         self.cache_fuse_metadata = {"check_layers":[1],
                                     "check": False,
-                                    "recomp_ratios":[0.16],
                                     "recomp_ratio":0.16,
                                     "original_slot_mapping":None,
                                     "our_slot_mapping":None,

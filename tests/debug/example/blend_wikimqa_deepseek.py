@@ -64,6 +64,7 @@ for ex in eval_dataset:
 
     # Create an tokenizer and LLM.
     cache_fuse_metadata = llm.llm_engine.model_executor.driver_worker.model_runner.model.model.cache_fuse_metadata
+    cache_fuse_metadata['collect'] = False
     cache_fuse_metadata['check'] = False
 
     s_start_len = len(p_ids) + 1
@@ -79,6 +80,7 @@ for ex in eval_dataset:
 
     last_len = len(q_ids)
 
+    cache_fuse_metadata['collect'] = True
     cache_fuse_metadata["check"] = False
     chunk_past_key_values = []
     
@@ -119,6 +121,7 @@ for ex in eval_dataset:
     # for blend
     sampling_params = SamplingParams(temperature=0, max_tokens=512)
     cache_fuse_metadata["check"] = True
+    cache_fuse_metadata['collect'] = False
     cache_fuse_metadata['recomp_ratio'] = 0.2
     cache_fuse_metadata['fast_attention'] = True
     cache_fuse_metadata['suffix_len'] = last_len
@@ -140,6 +143,7 @@ for ex in eval_dataset:
     # for full reuse
     sampling_params = SamplingParams(temperature=0, max_tokens=512)
     cache_fuse_metadata["check"] = True
+    cache_fuse_metadata['collect'] = False
     cache_fuse_metadata['recomp_ratio'] = 0.0
     cache_fuse_metadata['fast_attention'] = True
     cache_fuse_metadata['suffix_len'] = last_len
@@ -162,6 +166,7 @@ for ex in eval_dataset:
     # for full prefill
     sampling_params = SamplingParams(temperature=0, max_tokens=512)
     cache_fuse_metadata["check"] = False
+    cache_fuse_metadata['collect'] = False
     output = llm.generate([input_prompt], sampling_params)
     res = output[0].outputs[0].text
     print("raw res:", res)

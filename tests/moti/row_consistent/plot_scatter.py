@@ -110,7 +110,7 @@ def main():
             layer_to_color = {layer: cmap(i % cmap.N) for i, layer in enumerate(unique_layers)}
 
             # Lower scatter size for thousands of points to be small (e.g. s=0.5)
-            point_size = 0.1 if len(indices) > 1000 else 3
+            point_size = 0.5 if len(indices) > 1000 else 3
 
             # For each layer, scatter that layer's points using its color
             for il, layer in enumerate(unique_layers):
@@ -126,7 +126,7 @@ def main():
 
             ax1.set_xlabel('Index', fontsize=12, y=-0.02)
             ax1.set_ylabel('Layer', fontsize=12)
-            # ax1.set_xlim(0, 2000)
+            ax1.set_xlim(0, 1000)
             ax1.set_ylim(-1.5, max_layer + 0.5)
             ax1.set_title('Scatter Plot: Index vs Layer', fontsize=14)
 
@@ -137,11 +137,7 @@ def main():
                         ax1.axvline(x=prefix_val, color='#2C3E50', linestyle='--', linewidth=1, alpha=0.6)
 
             # Set y-ticks to integer layers if not too many
-            y_tick_count = max_layer - min_layer + 1
-            if y_tick_count <= 50:
-                ax1.set_yticks(list(range(min_layer, max_layer + 1)))
-            else:
-                ax1.set_yticks(np.linspace(min_layer, max_layer, 10, dtype=int))
+            ax1.set_yticks(np.linspace(min_layer, max_layer, 5, dtype=int))
             
             # Set x-axis at y = -1 visually (just an extra horizontal line at y=-1)
             ax1.axhline(y=-1, color='#34495E', linewidth=1, alpha=0.8)

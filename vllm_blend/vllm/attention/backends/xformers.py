@@ -190,6 +190,7 @@ class XFormersImpl(AttentionImpl):
         Returns:
             shape = [num_tokens, num_heads * head_size]
         """
+        logger.debug(f"prefill: {attn_metadata.prefill_metadata is not None}, decode: {attn_metadata.decode_metadata is not None}")
         num_tokens, hidden_size = query.shape
         logger.debug(f"num_tokens: {num_tokens}, hidden_size: {hidden_size}")
         query = query.view(-1, self.num_heads, self.head_size)
@@ -197,6 +198,7 @@ class XFormersImpl(AttentionImpl):
         value = value.view(-1, self.num_kv_heads, self.head_size)
 
         logger.debug(f"query shape after view: {query.shape}, key shape after view: {key.shape}")
+        logger.debug(f"Key Shape: {key.shape}, Value Shape: {value.shape}, Query Shape: {query.shape}")
 
         # Jiayi modified start
         # TODO(Jiayi): The following `view`s can be saved
@@ -212,8 +214,7 @@ class XFormersImpl(AttentionImpl):
             topk_num = int((total_len-last_len)*cache_fuse_metadata["recomp_ratio"])
             cache_fuse_metadata["topk_num"] = topk_num
 
-            logger.debug(f"len of new value: {value.shape}")
-            logger.debug(f"len of old value: {value_old.shape}")
+            logger.debug(f"len of new value: {value.shape}, len of old value: {value_old.shape}")
 
             temp_diff = torch.sum((value[:-last_len,:,:]-value_old[:-last_len,:,:])**2, dim=[1,2])
             top_indices = torch.topk(temp_diff, k=topk_num).indices
@@ -223,6 +224,7 @@ class XFormersImpl(AttentionImpl):
                                         torch.tensor(last_indices, device=top_indices.device)])
             query = query[top_indices]
             cache_fuse_metadata["imp_indices"] = top_indices
+            # logger.debug(f"important indices selected: {top_indices.cpu().tolist()}")
             
             #attn_bias = _make_partial_bias_gqa(cache_fuse_metadata, query.device, self.num_kv_heads, self.num_queries_per_kv)
             attn_bias = LowerTriangularFromBottomRightMask()
@@ -245,6 +247,7 @@ class XFormersImpl(AttentionImpl):
             #value = value_old
             
         
+        # replace the old_kv with new kv at important indices
         if status in [2]:
             imp_indices = cache_fuse_metadata["imp_indices"]
             key_old[imp_indices] = key 
@@ -252,6 +255,8 @@ class XFormersImpl(AttentionImpl):
             key = key_old
             value = value_old
         
+        # logger.debug(f"query shape: {query.shape}, key shape: {key.shape}, value shape: {value.shape}")
+        logger.debug(f"kvcache: {kv_cache is not None}, status: {status}")
         if kv_cache is not None:
             key_cache, value_cache = PagedAttention.split_kv_cache(
                 kv_cache, self.num_kv_heads, self.head_size)
@@ -289,6 +294,8 @@ class XFormersImpl(AttentionImpl):
             query = query
             key = key[:num_prefill_tokens]
             value = value[:num_prefill_tokens]
+
+            # logger.debug(f"num_prefill_tokens: {num_prefill_tokens}, num_decode_tokens: {num_decode_tokens}, shape of key: {key.shape}")
             
             assert query.shape[0] == len(cache_fuse_metadata["imp_indices"])
             #assert decode_query.shape[0] == num_decode_tokens
@@ -309,14 +316,14 @@ class XFormersImpl(AttentionImpl):
 
             assert query.shape[0] == num_prefill_tokens
             assert decode_query.shape[0] == num_decode_tokens
+        
+        logger.debug(f"num_prefill_tokens: {num_prefill_tokens}, num_decode_tokens: {num_decode_tokens}")
 
         if prefill_meta := attn_metadata.prefill_metadata:
             # Prompt run.
             if kv_cache is None or prefill_meta.block_tables.numel() == 0:
-                # normal attention.
-                # block tables are empty if the prompt does not have a cached
-                # prefix.
-                
+                # prefix not matched
+                # normal attention block tables are empty if the prompt does not have a cached prefix.
                 out = self._run_memory_efficient_xformers_forward(
                     query, key, value, prefill_meta, status, cache_fuse_metadata)
 
@@ -324,13 +331,13 @@ class XFormersImpl(AttentionImpl):
                 #output[:num_prefill_tokens] = out
                 # Store hack_q/hack_k per-layer so each layer keeps its own list.
                 if cache_fuse_metadata.get("hack_start", False):
-                    logger.info("normal prefill")
+                    logger.debug("normal prefill")
                     cache_fuse_metadata["h_dim"]=query.shape[-1]
                     cache_fuse_metadata["num_tokens"]=query.shape[0]
                     cache_fuse_metadata["num_kv_heads"]=self.num_kv_heads
                     cache_fuse_metadata["num_queries_per_kv"]=self.num_queries_per_kv
-                    logger.info(f"h_dim: {cache_fuse_metadata['h_dim']}, num_tokens: {cache_fuse_metadata['num_tokens']}, num_kv_heads: {cache_fuse_metadata['num_kv_heads']}, num_queries_per_kv: {cache_fuse_metadata['num_queries_per_kv']}")
-                    logger.info(f"prefill query shape: {query.shape}, key shape: {key.shape}")
+                    logger.debug(f"h_dim: {cache_fuse_metadata['h_dim']}, num_tokens: {cache_fuse_metadata['num_tokens']}, num_kv_heads: {cache_fuse_metadata['num_kv_heads']}, num_queries_per_kv: {cache_fuse_metadata['num_queries_per_kv']}")
+                    logger.debug(f"prefill query shape: {query.shape}, key shape: {key.shape}")
                     layer = cache_fuse_metadata.get("layer_idx", 0)
                     # ensure dict structure
                     if not isinstance(cache_fuse_metadata.get("hack_q"), dict):
@@ -346,6 +353,7 @@ class XFormersImpl(AttentionImpl):
                 # TODO(Hai) this triton kernel has regression issue (broke) to
                 # deal with different data types between KV and FP8 KV cache,
                 # to be addressed separately.
+                logger.debug("pageattention prefix matched")
                 out = PagedAttention.forward_prefix(
                     query,
                     key,
@@ -363,6 +371,9 @@ class XFormersImpl(AttentionImpl):
                 output[:num_prefill_tokens] = out
 
         if decode_meta := attn_metadata.decode_metadata:
+            # logger.debug(f"[Decode Triggered] Key Shape: {key.shape}, Value Shape: {value.shape}, Query Shape: {query.shape}")
+            # logger.debug(f"[Decode Info] Key Cache Shape: {key_cache.shape}, Value Cache Shape: {value_cache.shape}")
+            # logger.debug(f"decode_meta.context_lens: {decode_meta.context_lens}, decode_meta.max_context_len: {decode_meta.max_context_len}")
             output[num_prefill_tokens:] = PagedAttention.forward_decode(
                 decode_query,
                 key_cache,
@@ -418,8 +429,7 @@ class XFormersImpl(AttentionImpl):
                           None, :].expand(value.shape[0], self.num_kv_heads,
                                           self.num_queries_per_kv,
                                           value.shape[-1])
-            logger.debug(f"kv_heads: {self.num_kv_heads}, q_heads: {self.num_heads}")
-            logger.debug(f"query shape after gqa view: {query.shape}, key shape after gqa view: {key.shape}")
+            logger.debug(f"kv_heads: {self.num_kv_heads}, q_heads: {self.num_heads}, query shape after gqa view: {query.shape}, key shape after gqa view: {key.shape}")
         # Set attention bias if not provided. This typically happens at
         # the very attention layer of every iteration.
         # FIXME(woosuk): This is a hack.

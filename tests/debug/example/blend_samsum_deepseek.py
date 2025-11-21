@@ -79,6 +79,7 @@ for sample_idx, ex in enumerate(eval_dataset):
 
     last_len = len(q_ids)
 
+    cache_fuse_metadata['collect'] = True
     cache_fuse_metadata["check"] = False
     cache_fuse_metadata['attn_bias'] = None
     chunk_past_key_values = []
@@ -122,6 +123,7 @@ for sample_idx, ex in enumerate(eval_dataset):
     # for blend
     sampling_params = SamplingParams(temperature=0, max_tokens=512)
     cache_fuse_metadata["check"] = True
+    cache_fuse_metadata['collect'] = False
     cache_fuse_metadata['recomp_ratio'] = 0.2
     cache_fuse_metadata['fast_attention'] = True
     cache_fuse_metadata['suffix_len'] = last_len
@@ -142,6 +144,7 @@ for sample_idx, ex in enumerate(eval_dataset):
     # for full reuse
     sampling_params = SamplingParams(temperature=0, max_tokens=512)
     cache_fuse_metadata["check"] = True
+    cache_fuse_metadata['collect'] = False
     cache_fuse_metadata['recomp_ratio'] = 0.0
     cache_fuse_metadata['fast_attention'] = True
     cache_fuse_metadata['suffix_len'] = last_len
@@ -162,6 +165,7 @@ for sample_idx, ex in enumerate(eval_dataset):
     # for full prefill
     sampling_params = SamplingParams(temperature=0, max_tokens=512)
     cache_fuse_metadata["check"] = False
+    cache_fuse_metadata['collect'] = False
     output = llm.generate([input_prompt], sampling_params)
     res = output[0].outputs[0].text
     print("raw res:", res)

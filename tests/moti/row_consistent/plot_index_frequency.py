@@ -96,7 +96,7 @@ def main():
         ax.set_title('Frequency Count of Scatter Points per Index (Line Plot)', fontsize=14)
 
         # Set x-axis range to (0, 2000) to match the scatter plot
-        ax.set_xlim(0, 2000)
+        ax.set_xlim(0, 1000)
 
         # Add grid for better readability
         ax.grid(True, alpha=0.3, axis='y')
